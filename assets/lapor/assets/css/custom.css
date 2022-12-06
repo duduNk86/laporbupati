@@ -1,0 +1,111 @@
+.table-custom {
+  font-size: 1.4vw;
+}
+.table-custom .no,
+.table-custom .kendaraan,
+.table-custom .no_polisi,
+.table-custom .th_kendaraan,
+.table-custom .km_awal,
+.table-custom .km_akhir,
+.table-custom .catatan_berkala,
+.table-custom .tgl_ringan,
+.table-custom .km_ringan,
+.table-custom .catatan_ringan,
+.table-custom .pajak,
+.table-custom .pemegang {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  /* Fix for IE7 */
+  *display: inline;
+  /* Fix for IE7 */
+}
+.table-custom .no {
+  width: 5%;
+  text-align: center;
+}
+.table-custom .kendaraan {
+  width: 10%;
+}
+.table-custom .no_polisi {
+  width: 10%;
+  text-align: center;
+}
+.table-custom .th_kendaraan {
+  width: 10%;
+  text-align: center;
+}
+.table-custom .km_awal {
+  width: 10%;
+  text-align: center;
+}.table-custom .km_akhir {
+  width: 10%;
+  text-align: center;
+}.table-custom .tgl_ringan {
+  width: 10%;
+  text-align: center;
+}.table-custom .km_ringan {
+  width: 10%;
+  text-align: center;
+}.table-custom .catatan_ringan {
+  width: 10%;
+  text-align: center;
+}
+}.table-custom .pajak {
+  width: 10%;
+  text-align: center;
+}
+}.table-custom .pemegang {
+  width: 10%;
+  text-align: center;
+}
+.table-custom .satu {
+  text-align: center;
+  width: 100%;
+  background-color: #da4648;
+  color: white;
+}
+.table-custom header {
+  background-color: #a43f3e;
+  font-family: "OpenSansBold", Helvetica, Arial, sans-serif;
+  /*color: #2e2931;*/
+  color: white;
+  width: 100%;
+}
+.table-custom header > div {
+  padding: 1.5vh 1vh;
+}
+.table-custom main {
+  width: 100%;
+  height: 48vh;
+  overflow: hidden;
+}
+.table-custom main ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.table-custom main ul li {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.table-custom .row {
+  font-family: "OpenSansSemibold", Helvetica, Arial, sans-serif;
+}
+.table-custom .row > div {
+  padding: 1.5vh 1vh;
+}
+.table-custom .row.odd {
+  background-color: #fae4bb;
+  color: #222;
+}
+.table-custom .row.even {
+  background-color: #fef7eb;
+  color: #222;
+}
+.table-custom.dua main {
+  height: 19vh;
+}
