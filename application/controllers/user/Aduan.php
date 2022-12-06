@@ -147,9 +147,15 @@ class Aduan extends CI_Controller{
 	}
 
 	function kirim_aduan_disabilitas(){
+		// echo $_FILES['x_audio']['name'];
+		// $aud = $this->upload->data();
+		// 				$audio=$aud['file_name'];
+		// 				$nama_file=$audio;
+		// 				echo $nama_file;
+						// die();
 		$config['upload_path']   = './assets/audio/'; 
-		$config['allowed_types'] = 'wav|webm'; 
-		$config['file_name']     = 'Rekaman_'.time();
+		$config['allowed_types'] = "*"; 
+		$config['file_name']     = 'Rekaman_'.time().".webm";
         $config['overwrite']     = true;
         $config['max_size']      = 2048; // 1024, 2048
 		$this->upload->initialize($config);
@@ -157,6 +163,7 @@ class Aduan extends CI_Controller{
 		$keterangan="";
 			
 		if(!empty($_FILES['x_audio']['name'])) {
+		
 			if ($this->upload->do_upload('x_audio')) {
 						$aud = $this->upload->data();
 						$audio=$aud['file_name'];
@@ -169,12 +176,16 @@ class Aduan extends CI_Controller{
 						);
 						$table  = 'tbl_laporan_disabilitas';
 						$this->c_model->simpan($data,$table);		
+						$this->output->set_header('HTTP/1.0 200 OK');
 
-						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
-						redirect('');
+						// $this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
+						// redirect('');
+						
+					
 				}else{
-					echo $this->session->set_flashdata('gagal','warning');
-					redirect('');
+					
+					
+					$this->output->set_header('HTTP/1.0 400 BAD sudahlah');
 				}	
 			}else{
 				$data= array(
