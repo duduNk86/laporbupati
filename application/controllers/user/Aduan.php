@@ -1,17 +1,19 @@
 <?php
+
+use GuzzleHttp\Client;
+
 class Aduan extends CI_Controller{
 	function __construct(){
 		parent::__construct();
-
-		$this->load->model('m_kategori_laporan');  //belum
+		$this->load->model('m_kategori_laporan');
 		$this->load->model('m_aduan');
 		$this->load->model('c_model');
-		$this->load->model('m_laporan');   //sudah
-		$this->load->model('m_admin');  //belum
+		$this->load->model('m_laporan');
+		$this->load->model('m_admin');
 		$this->load->model('m_kepada');
-		$this->load->library('upload');    //belum
+		$this->load->library('upload');
+		$this->load->library('guzzle');
 	}
-
 
 	function index(){
 		$x['data']=$this->m_aduan->get_all_aduan();
@@ -51,7 +53,6 @@ class Aduan extends CI_Controller{
 		$this->load->view('user/v_view_aduan',$x);
 	}
 
-
 	function kirim(){
 		$config['upload_path'] = './assets/images/'; 
 		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; 
@@ -62,16 +63,21 @@ class Aduan extends CI_Controller{
 		$set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$id = substr(str_shuffle($set), 0, 15);
 
-		$kategori_laporan=1;
+		// $kategori_laporan=1;
 		$lokasi=$this->input->post('x_lokasi');
-		$judul_laporan=$this->input->post('x_judul_laporan'); //--
-		$isi_laporan=$this->input->post('x_isi_laporan');  //--
-		
-		$nama=$this->input->post('x_nama'); //--
-		$email=$this->input->post('x_email');  //--
-		$hp=$this->input->post('x_hp').'-'."Website Lapor Bupati";
+		$judul_laporan=$this->input->post('x_judul_laporan');
+		$kategori_laporan=$this->input->post('x_kategorilaporan');
+		$subkategori_laporan=$this->input->post('x_subkategorilaporan');
+		$topik_laporan=$this->input->post('x_topiklaporan');
+		$isi_laporan=$this->input->post('x_isi_laporan');
+		$nama=$this->input->post('x_nama');
+		$alamat=$this->input->post('x_alamat'); 
+		$email=$this->input->post('x_email');
+		$hp=$this->input->post('x_hp');
+		$sumber_aduan='LB';
 		$laporan_status=1;
 		$status=1;
+		$rating_jawaban=0;
 		$tayang= 'tidak';
 	
 		if (!empty($recaptcha)) {
@@ -86,73 +92,160 @@ class Aduan extends CI_Controller{
 						$config['create_thumb']= FALSE;
 						$config['maintain_ratio']= FALSE;
 						$config['quality']= '60%';
-						$config['width']= 840;
-						$config['height']= 450;
+						$config['width']= 1080; //840
+						$config['height']= 960; //450
 						$config['new_image']= './assets/images/'.$gbr['file_name'];
 						$this->load->library('image_lib', $config);
 						$this->image_lib->resize();
 						$gambar=$gbr['file_name'];
 						$foto=$gambar;
 
+						//Conversi Nomor Handphone menjadi 62
+						$this->load->library('hp_converter');
+						$phone_number = $hp;
+						$converted_phone_number = $this->hp_converter->convert($phone_number);
+
 						$data= array(
 							'id'=>$id,
 							'penginput'=>$nama,
-							'kategori_laporan'=>$kategori_laporan,
+							// 'kategori_laporan'=>$kategori_laporan,
 							'judul_laporan'=>$judul_laporan,
+							'kategori_laporan'=>$kategori_laporan,
+							'subkategori_laporan'=>$subkategori_laporan,
+							'topik_laporan'=>$topik_laporan,
 							'lokasi'=>$lokasi,
 							'isi_laporan'=>$isi_laporan,
 							'nama'=>$nama,
+							'alamat'=>$alamat,
 							'email'=>$email,
-							'hp'=>$hp,
+							'hp'=>$converted_phone_number,
+							'sumber_aduan'=>$sumber_aduan,
 							'laporan_status'=>$laporan_status,
 							'tayang'=>$tayang,
 							'status'=>$status,
+							'rating_jawaban'=>$rating_jawaban,
 							'foto'=>$foto
 						);
 						$table  = 'tbl_laporan';
 						$this->c_model->simpan($data,$table);		
 
-						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
-						redirect('');
+						// Config Send Whatsapp
+						// Ambil nomor penerima dan pesan dari post data
+						// $whatsapp = '6282111557773'; //Nomer Admin Lapor Bupati
+						// $whatsapp = array('6282111557773', '6281234567890', '6289876543210');
+						// $whatsapp = '6285727809909-1486974576'; //Group Diskominfo - Bot Diskominfo
+						// $whatsapp = '6285867450008-1497845195'; //Group DC - Bot Diskominfo
+						// $whatsapp = '6285228496532-1572318378'; //Group IKP - Bot Diskominfo
+						$whatsapp = '6282314313335-1589939868'; // Group Tim Lapor Bupati - Bot Lapor Bupati
+
+						$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*Admin Lapor Bupati Wonosobo*\n\nDengan hormat,\nDimohon untuk segera *Memproses/Verifikasi* laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLBLB-".$id."\n\n*Judul Laporan :*\n".$judul_laporan."\n\n*Proses Verifikasi Disini :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*";
+
+						// $url_whatsapp = 'https://api.whatsapp.com/send?phone=' . $whatsapp . '&text=' . urlencode($message2);
+						
+						// Inisialisasi client Guzzle
+						// $client = new Client(['base_uri' => 'https://api.chat-api.com/']); // Diganti sesuai URL Langganan API Whatsapp
+						$client = new Client(['base_uri' => 'https://pati.wablas.com/api/']);
+
+						// Set konfigurasi untuk request
+						$requestConfig = [
+							'headers' => [
+								'Content-Type' => 'application/json',
+								'Authorization' => 'ACUaUOlDCKoy8XkWsfmDBfr8hQM7zqs7sp18OStbMZ7lTWHz9pDaEAcOM5oEMnKj' // Bot Lapor Bupati
+								//'Authorization' => 'y59Vw77031Tpb0Cv8dbO5QyJVKVKi6EXoWqHCVZaVDntDUIViSMQuWvz2jkNwePM' //Bot Diskominfo
+							],
+							'json' => [
+								'phone' => $whatsapp,
+								'message' => $message2,
+								'isGroup' => 'true'
+							]
+						];
+
+						// Kirim request ke API Chat API untuk mengirim pesan WhatsApp
+						$response = $client->request('POST', 'send-message', $requestConfig);
+
+						// Ambil status code dari response
+						$statusCode = $response->getStatusCode();
+
+						// Tampilkan response dalam bentuk JSON
+						$this->output->set_content_type('application/json')->set_output(json_encode($data));
+
+						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+						redirect('home/survei');
 				}else{
 					echo $this->session->set_flashdata('gagal','warning');
 					redirect('');
 				}
 					
 			}else{
+				
+				// Conversi Nomor Handphone menjadi 62
+				$this->load->library('hp_converter');
+				$phone_number = $hp;
+				$converted_phone_number = $this->hp_converter->convert($phone_number);
+				
 				$data= array(
 					'id'=>$id,
 					'penginput'=>$nama,
-					'kategori_laporan'=>$kategori_laporan,
 					'judul_laporan'=>$judul_laporan,
+					'kategori_laporan'=>$kategori_laporan,
+					'subkategori_laporan'=>$subkategori_laporan,
+					'topik_laporan'=>$topik_laporan,
 					'lokasi'=>$lokasi,
 					'isi_laporan'=>$isi_laporan,
 					'nama'=>$nama,
+					'alamat'=>$alamat,
 					'email'=>$email,
-					'hp'=>$hp,
+					'hp'=>$converted_phone_number,
+					'sumber_aduan'=>$sumber_aduan,
 					'laporan_status'=>$laporan_status,
 					'tayang'=>$tayang,
-					'status'=>$status
+					'status'=>$status,
+					'rating_jawaban'=>$rating_jawaban
 				);
 				$table  = 'tbl_laporan';
 				$this->c_model->simpan($data,$table);
 				
-				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
-				redirect('');
+				// Config Send Whatsapp
+				// Ambil nomor penerima dan pesan dari post data
+				$whatsapp = '6282314313335-1589939868'; // Group Tim Lapor Bupati - Bot Lapor Bupati
+
+				$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*Admin Lapor Bupati Wonosobo*\n\nDengan hormat,\nDimohon untuk segera *Memproses/Verifikasi* laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLBLB-".$id."\n\n*Judul Laporan :*\n".$judul_laporan."\n\n*Proses Verifikasi Disini :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*";
+				
+				// Inisialisasi client Guzzle
+				$client = new Client(['base_uri' => 'https://pati.wablas.com/api/']);
+
+				// Set konfigurasi untuk request
+				$requestConfig = [
+					'headers' => [
+						'Content-Type' => 'application/json',
+						'Authorization' => 'ACUaUOlDCKoy8XkWsfmDBfr8hQM7zqs7sp18OStbMZ7lTWHz9pDaEAcOM5oEMnKj'
+					],
+					'json' => [
+						'phone' => $whatsapp,
+						'message' => $message2,
+						'isGroup' => 'true'
+					]
+				];
+
+				// Kirim request ke API Chat API untuk mengirim pesan WhatsApp
+				$response = $client->request('POST', 'send-message', $requestConfig);
+
+				// Ambil status code dari response
+				$statusCode = $response->getStatusCode();
+
+				// Tampilkan response dalam bentuk JSON
+				$this->output->set_content_type('application/json')->set_output(json_encode($data));
+
+				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+				redirect('home/survei');
 			}
 		}else{
-			echo $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"><span class="fa fa-close"></span></button>Isikan Captcha !!</a></div>');
+			echo $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"><span class="fa fa-close"></span></button>Isikan Captcha !!</div>');
 			redirect('');
 		}
 	}
 
 	function kirim_aduan_disabilitas(){
-		// echo $_FILES['x_audio']['name'];
-		// $aud = $this->upload->data();
-		// 				$audio=$aud['file_name'];
-		// 				$nama_file=$audio;
-		// 				echo $nama_file;
-						// die();
 		$config['upload_path']   = './assets/audio/'; 
 		$config['allowed_types'] = "*"; 
 		$config['file_name']     = 'Rekaman_'.time().".webm";
@@ -176,16 +269,45 @@ class Aduan extends CI_Controller{
 						);
 						$table  = 'tbl_laporan_disabilitas';
 						$this->c_model->simpan($data,$table);		
-						$this->output->set_header('HTTP/1.0 200 OK');
+						
+						// Config Send Whatsapp
+						// Ambil nomor penerima dan pesan dari post data
+						// $whatsapp = '6282111557773';
+						$whatsapp = '6282314313335-1589939868'; // Group Tim Lapor Bupati - Bot Lapor Bupati
 
+						$message2 = "*Notifikasi Laporan Aduan Disabilitas Baru*\n\nKepada Yth. :\n*Admin Lapor Bupati Wonosobo*\n\nDengan hormat,\nDimohon untuk segera *Memproses/Verifikasi* laporan Aduan Disabilitas baru sebagai berikut:\n\n*File Audio Aduan :*\n".$nama_file."\n\n*Proses Verifikasi Disini :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*";
+						
+						// Inisialisasi client Guzzle
+						$client = new Client(['base_uri' => 'https://pati.wablas.com/api/']);
+
+						// Set konfigurasi untuk request
+						$requestConfig = [
+							'headers' => [
+								'Content-Type' => 'application/json',
+								'Authorization' => 'ACUaUOlDCKoy8XkWsfmDBfr8hQM7zqs7sp18OStbMZ7lTWHz9pDaEAcOM5oEMnKj'
+							],
+							'json' => [
+								'phone' => $whatsapp,
+								'message' => $message2,
+								'isGroup' => 'true'
+							]
+						];
+
+						// Kirim request ke API Chat API untuk mengirim pesan WhatsApp
+						$response = $client->request('POST', 'send-message', $requestConfig);
+
+						// Ambil status code dari response
+						$statusCode = $response->getStatusCode();
+
+						// Tampilkan response dalam bentuk JSON
+						// $this->output->set_content_type('application/json')->set_output(json_encode($data));
+						
+						$this->output->set_header('HTTP/1.0 200 Ok');
 						// $this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
 						// redirect('');
 						
-					
 				}else{
-					
-					
-					$this->output->set_header('HTTP/1.0 400 BAD sudahlah');
+					$this->output->set_header('HTTP/1.0 400 Bad Request');
 				}	
 			}else{
 				$data= array(
@@ -195,206 +317,44 @@ class Aduan extends CI_Controller{
 				);
 				$table  = 'tbl_laporan_disabilitas';
 				$this->c_model->simpan($data,$table);
-				
-				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
+
+				$this->session->set_flashdata('sukses','Laporan Anda telah terkirim! silahkan menunggu Link Tracking untuk Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.');
 				redirect('');
 			}
 	}
+
+	function kirim_survei(){
+		$recaptcha = $this->input->post('g-recaptcha-response');
+		$nama=$this->input->post('x_nama');
+		$email=$this->input->post('x_email');
+		$pertanyaan1=$this->input->post('x_pertanyaan1');
+		$pertanyaan2=$this->input->post('selected_rating1');
+		$pertanyaan3=$this->input->post('selected_rating2');
+		$pertanyaan4=$this->input->post('selected_rating3');
+		$pertanyaan5=$this->input->post('selected_rating4');
+		$kritik_saran=$this->input->post('x_kritik_saran');
 	
-	function kirim_aduan_disabilitas2(){
-		$config['upload_path'] = './assets/audio/'; 
-		$config['allowed_types'] = 'wav|webm'; 
-		$config['encrypt_name'] = TRUE; 
-		$this->upload->initialize($config);
-		//$recaptcha = $this->input->post('g-recaptcha-response');
-		//////////////////////////////////////////////////////////
-		//$set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		//$id = substr(str_shuffle($set), 0, 15);
-
-		//$kategori_laporan=1;
-		$status=1;
-		$keterangan="";
-		//$isi_laporan=$this->input->post('x_isi_laporan');  //--
-		//$nama=$this->input->post('x_nama'); //--
-		//$email=$this->input->post('x_email');  //--
-		//$hp=$this->input->post('x_hp').'-'."Website Lapor Bupati";
-		//$laporan_status=1;
-		//$status=1;
-		//$tayang= 'tidak';
-			
-			 if (!isset($_POST['audio-filename']) && !isset($_POST['video-filename'])) {
-        echo 'Empty file name.';
-        return;
-    }
-
-    // do NOT allow empty file names
-    if (empty($_POST['audio-filename']) && empty($_POST['video-filename'])) {
-        echo 'Empty file name.';
-        return;
-    }
-
-    // do NOT allow third party audio uploads
-    if (false && isset($_POST['audio-filename']) && strrpos($_POST['audio-filename'], "RecordRTC-") !== 0) {
-        echo 'File name must start with "RecordRTC-"';
-        return;
-    }
-
-    // do NOT allow third party video uploads
-    if (false && isset($_POST['video-filename']) && strrpos($_POST['video-filename'], "RecordRTC-") !== 0) {
-        echo 'File name must start with "RecordRTC-"';
-        return;
-    }
-    
-    $fileName = '';
-    $tempName = '';
-    $file_idx = '';
-    
-    if (!empty($_FILES['audio-blob'])) {
-        $file_idx = 'audio-blob';
-        $fileName = $_POST['audio-filename'];
-        $tempName = $_FILES[$file_idx]['tmp_name'];
-    } else {
-        $file_idx = 'video-blob';
-        $fileName = $_POST['video-filename'];
-        $tempName = $_FILES[$file_idx]['tmp_name'];
-    }
-    
-    if (empty($fileName) || empty($tempName)) {
-        if(empty($tempName)) {
-            echo 'Invalid temp_name: '.$tempName;
-            return;
-        }
-
-        echo 'Invalid file name: '.$fileName;
-        return;
-    }
-
-    /*
-    $upload_max_filesize = return_bytes(ini_get('upload_max_filesize'));
-    if ($_FILES[$file_idx]['size'] > $upload_max_filesize) {
-       echo 'upload_max_filesize exceeded.';
-       return;
-    }
-    $post_max_size = return_bytes(ini_get('post_max_size'));
-    if ($_FILES[$file_idx]['size'] > $post_max_size) {
-       echo 'post_max_size exceeded.';
-       return;
-    }
-    */
-
-    //$filePath = 'uploads/' . $fileName;
-    
-    $filePath = 'assets/audio/' . $fileName;
-    
-    // make sure that one can upload only allowed audio/video files
-    $allowed = array(
-        'webm',
-        'wav',
-        'mp4',
-        'mkv',
-        'mp3',
-        'ogg'
-    );
-    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-    if (!$extension || empty($extension) || !in_array($extension, $allowed)) {
-        echo 'Invalid file extension: '.$extension;
-        return;
-    }
-    
-    if (!move_uploaded_file($tempName, $filePath)) {
-        if(!empty($_FILES["file"]["error"])) {
-            $listOfErrors = array(
-                '1' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-                '2' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
-                '3' => 'The uploaded file was only partially uploaded.',
-                '4' => 'No file was uploaded.',
-                '6' => 'Missing a temporary folder. Introduced in PHP 5.0.3.',
-                '7' => 'Failed to write file to disk. Introduced in PHP 5.1.0.',
-                '8' => 'A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with phpinfo() may help.'
-            );
-            $error = $_FILES["file"]["error"];
-
-            if(!empty($listOfErrors[$error])) {
-                echo $listOfErrors[$error];
-            }
-            else {
-                echo 'Not uploaded because of error #'.$_FILES["file"]["error"];
-            }
-        }
-        else {
-            echo 'Problem saving file: '.$tempName;
-        }
-        return;
-    }
-    
-    echo 'success';
-		
-
-			if(!empty($_FILES['audio-filename']['name']))
-			{
-				if ($this->upload->do_upload('audio-filename'))
-				{
-						$gbr = $this->upload->data();
-						$audio=$gbr['file_name'];
-			
-	$fileName = '';
-    $tempName = '';
-    $file_idx = '';
-    
-    if (!empty($_FILES['audio-blob'])) {
-        $file_idx = 'audio-blob';
-        $fileName = $_POST['audio-filename'];
-        $tempName = $_FILES[$file_idx]['tmp_name'];
-    } else {
-        $file_idx = 'video-blob';
-        $fileName = $_POST['video-filename'];
-        $tempName = $_FILES[$file_idx]['tmp_name'];
-    }
-    
-    if (empty($fileName) || empty($tempName)) {
-        if(empty($tempName)) {
-            echo 'Invalid temp_name: '.$tempName;
-            return;
-        }
-
-        echo 'Invalid file name: '.$fileName;
-        return;
-    }
-
-						$nama_file=$filename;
-
-						$data= array(
-							'nama_file'=>$nama_file,
-							'status'=>$status,
-							'keterangan'=>$keterangan,
-							'created_at'=>date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s'),
-							//'modifed_at'=>date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s'),
-						);
-						$table  = 'tbl_laporan_disabilitas';
-						$this->c_model->simpan($data,$table);		
-
-						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
-						redirect('');
-				}else{
-					echo $this->session->set_flashdata('gagal','warning');
-					redirect('');
-				}
-					
-			}else{
+		if (!empty($recaptcha)) {
 				$data= array(
-					//'nama_file'=>$nama_file,
-					'status'=>$status,
-					'keterangan'=>$keterangan,
+					'nama'=>$nama,
+					'email'=>$email,
+					'pertanyaan1'=>$pertanyaan1,
+					'pertanyaan2'=>$pertanyaan2,
+					'pertanyaan3'=>$pertanyaan3,
+					'pertanyaan4'=>$pertanyaan4,
+					'pertanyaan5'=>$pertanyaan5,
+					'kritik_saran'=>$kritik_saran,
 					'created_at'=>date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s'),
-					//'modifed_at'=>date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s'),
 				);
-				$table  = 'tbl_laporan_disabilitas';
+				$table  = 'tbl_survei';
 				$this->c_model->simpan($data,$table);
 				
-				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu pemberitahuan selanjutnya melalui email/kontak hp yang tercantum </a>');
-				redirect('');
-			}
-		
+				$this->session->set_flashdata('sukses','Jawaban Anda sudah terkirim, terimakasih telah mengisi Survei. Jawaban Anda akan membantu kami dalam upaya untuk meningkatkan Layanan Lapor Bupati Wonosobo.');
+				redirect('home/survei');
+		} else {
+			echo $this->session->set_flashdata('gagal','<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"><span class="fa fa-close"></span></button>Isikan Captcha !!</a></div>');
+			redirect('home/survei');
+		}
 	}
 
 	function hapus_aduan(){

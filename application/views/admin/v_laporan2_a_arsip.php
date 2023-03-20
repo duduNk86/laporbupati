@@ -142,7 +142,7 @@ $jum_komentar=$query1->num_rows();
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
                     <b>Version</b>
-                    1.0
+                    2.0
                 </div>
                 <strong>@laporbupati</strong>
             </footer>

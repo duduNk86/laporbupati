@@ -1,8 +1,6 @@
 <?php
 class M_admin extends CI_Model{
 
-
-
 	function getmaxid(){
 		$hsl=$this->db->query("SELECT MAX(id_opd + 1) as max_id FROM tbl_opd");
 		return $hsl;
@@ -74,12 +72,16 @@ class M_admin extends CI_Model{
 		$query = $this->db->get_where('tbl_admin',array('pengguna_idskpd'=>$id_kepada));
 		return $query;
 	}
+
+	public function getWhatsapp($id_kepada){
+		$query = $this->db->get_where('tbl_admin',array('pengguna_idskpd'=>$id_kepada));
+		return $query;
+	}
 	
 	public function getAll(){
 		$query = $this->db->get('tbl_admin');
 		return $query->result(); 
 	}
 	
-
 
 }

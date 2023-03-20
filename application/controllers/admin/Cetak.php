@@ -11,7 +11,8 @@ class Cetak extends CI_Controller{
 		$this->load->model('m_admin'); 
 		$this->load->model('m_kepada');
 		$this->load->model('m_cetak');
-		$this->load->library('upload');  
+		$this->load->library('upload');
+		$this->load->helper('dateindo_helper');
 	}
 	
 	function index(){
@@ -27,7 +28,7 @@ class Cetak extends CI_Controller{
 		$urut = 0;
 
 		echo '<tr>';
-			echo '<th colspan=11><b> Rekap Aduan Lapor Bupati Wonosobo</b>';
+			echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
 			echo '</th>';
 		echo '</tr>';
 
@@ -35,7 +36,8 @@ class Cetak extends CI_Controller{
 		echo '<tr>';
 		echo '</tr>';
 		echo '<tr>';
-		echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+		// echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+		echo '<th>No</th><th>Pelapor</th><th>Sumber</th><th>Tema Aduan</th><th>Tanggal Aduan</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tindaklanjut</th><th>Tanggal TL</th><th>Status</th><th>OPD</th><th>Durasi TL</th>';
 		echo '</tr>';
 
 		$this->db->order_by('nomor', 'DESC');
@@ -50,7 +52,7 @@ class Cetak extends CI_Controller{
 			}else if($br->laporan_status ==2){
 				  $laporanstatus = 'Sedang Proses';
 				}else if($br->laporan_status ==99){
-				  $laporanstatus = 'ditolak';
+				  $laporanstatus = 'Ditolak';
 			  }else{
 				$laporanstatus = 'Selesai';
 			}
@@ -61,24 +63,31 @@ class Cetak extends CI_Controller{
 				$kategori = 'Non Fisik';
 			}
 
+			// Hitung Durasi TL
+			$awal  = date_create($br->tanggal_laporan);
+            $akhir = date_create($br->tanggal_tindaklanjut);
+            $diff  = date_diff($awal,$akhir);
+
 			echo
 			'
 			<tr>
 			<td>'.$no++.'</td>
 			<td>'.$br->nama.'</td>
+			<td>'.$br->hp.'</td>
+			<td>'.$kategori.'</td>
+			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->judul_laporan.'</td>
 			<td>'.$br->isi_laporan.'</td>
 			<td>'.$br->lokasi.'</td>
-			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->tindaklanjut.'</td>
+			<td>'.$br->tanggal_tindaklanjut.'</td>
 			<td>'.$laporanstatus.'</td>
-			<td>'.$kategori.'</td>
-			<td>'.$br->hp.'</td>
 			<td>'.$br->ditujukan_kepada.'</td>
+			<td>'.$diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>').'</td>
 			</tr>
 			';
 		}
-		echo '</table>';
+		echo "</table>";
 		echo "</body>";
 		echo "</html>";
 		}
@@ -98,14 +107,15 @@ class Cetak extends CI_Controller{
 		$urut = 0;
 		echo '<table cellspacing="0" border="1">';
 		echo '<tr>';
-			echo '<th colspan=11><b> Rekap Aduan Lapor Bupati Wonosobo</b>';
+			echo '<th colspan=13><b> Rekap Aduan Lapor Bupati Wonosobo</b>';
 			echo '</th>';
 		echo '</tr>';
 		echo '<tr>';
 		echo '</tr>';
 
 		echo '<tr>';
-		echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+		// echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+		echo '<th>No</th><th>Pelapor</th><th>Sumber</th><th>Tema Aduan</th><th>Tanggal Aduan</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tindaklanjut</th><th>Tanggal TL</th><th>Status</th><th>OPD</th><th>Durasi TL</th>';
 		echo '</tr>';
 
 		$this->db->order_by('nomor', 'DESC');
@@ -119,7 +129,7 @@ class Cetak extends CI_Controller{
 			}else if($br->laporan_status ==2){
 				  $laporanstatus = 'Sedang Proses';
 				}else if($br->laporan_status ==99){
-				  $laporanstatus = 'ditolak';
+				  $laporanstatus = 'Ditolak';
 			  }else{
 				$laporanstatus = 'Selesai';
 			}
@@ -129,20 +139,28 @@ class Cetak extends CI_Controller{
 			  }else{
 				$kategori = 'Non Fisik';
 			}
+			
+			// Hitung Durasi TL
+			$awal  = date_create($br->tanggal_laporan);
+            $akhir = date_create($br->tanggal_tindaklanjut);
+            $diff  = date_diff($awal,$akhir);
+
 			echo
 			'
 			<tr>
 			<td>'.$no++.'</td>
 			<td>'.$br->nama.'</td>
+			<td>'.$br->hp.'</td>
+			<td>'.$kategori.'</td>
+			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->judul_laporan.'</td>
 			<td>'.$br->isi_laporan.'</td>
 			<td>'.$br->lokasi.'</td>
-			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->tindaklanjut.'</td>
+			<td>'.$br->tanggal_tindaklanjut.'</td>
 			<td>'.$laporanstatus.'</td>
-			<td>'.$kategori.'</td>
-			<td>'.$br->hp.'</td>
 			<td>'.$br->ditujukan_kepada.'</td>
+			<td>'.$diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>').'</td>
 			</tr>
 			';
 		}
@@ -171,14 +189,14 @@ class Cetak extends CI_Controller{
 				$urut = 0;
 				echo '<table cellspacing="0" border="1">';
 				echo '<tr>';
-					echo '<th colspan=11><b> Rekap Aduan Lapor Bupati Wonosobo</b>';
+					echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
 					echo '</th>';
 				echo '</tr>';
 				echo '<tr>';
 				echo '</tr>';
 
 				echo '<tr>';
-				echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+				echo '<th>No</th><th>Pelapor</th><th>Sumber</th><th>Tema Aduan</th><th>Tanggal Aduan</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tindaklanjut</th><th>Tanggal TL</th><th>Status</th><th>OPD</th><th>Durasi TL</th>';
 				echo '</tr>';
 
 				$this->db->order_by('nomor', 'DESC');
@@ -194,7 +212,7 @@ class Cetak extends CI_Controller{
 					}else if($br->laporan_status ==2){
 						$laporanstatus = 'Sedang Proses';
 						}else if($br->laporan_status ==99){
-						$laporanstatus = 'ditolak';
+						$laporanstatus = 'Ditolak';
 					}else{
 						$laporanstatus = 'Selesai';
 					}
@@ -204,20 +222,28 @@ class Cetak extends CI_Controller{
 					}else{
 						$kategori = 'Non Fisik';
 					}
+					
+					// Hitung Durasi TL
+					$awal  = date_create($br->tanggal_laporan);
+	                $akhir = date_create($br->tanggal_tindaklanjut);
+	                $diff  = date_diff($awal,$akhir);
+
 					echo
 					'
 					<tr>
 					<td>'.$no++.'</td>
 					<td>'.$br->nama.'</td>
+					<td>'.$br->hp.'</td>
+					<td>'.$kategori.'</td>
+					<td>'.$br->tanggal_laporan.'</td>
 					<td>'.$br->judul_laporan.'</td>
 					<td>'.$br->isi_laporan.'</td>
 					<td>'.$br->lokasi.'</td>
-					<td>'.$br->tanggal_laporan.'</td>
 					<td>'.$br->tindaklanjut.'</td>
+					<td>'.$br->tanggal_tindaklanjut.'</td>
 					<td>'.$laporanstatus.'</td>
-					<td>'.$kategori.'</td>
-					<td>'.$br->hp.'</td>
 					<td>'.$br->ditujukan_kepada.'</td>
+					<td>'.$diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>').'</td>
 					</tr>
 					';
 				}
@@ -236,7 +262,7 @@ class Cetak extends CI_Controller{
 			$urut = 0;
 	
 			echo '<tr>';
-				echo '<th colspan=11><b> Rekap Aduan Lapor Bupati Wonosobo</b>';
+				echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
 				echo '</th>';
 			echo '</tr>';
 	
@@ -244,7 +270,7 @@ class Cetak extends CI_Controller{
 			echo '<tr>';
 			echo '</tr>';
 			echo '<tr>';
-			echo '<th>No</th><th>Nama</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tanggal</th><th>Tindaklanjut</th><th>Status</th><th>Tema Aduan</th><th>Sumber</th><th>OPD</th>';
+			echo '<th>No</th><th>Pelapor</th><th>Sumber</th><th>Tema Aduan</th><th>Tanggal Aduan</th><th>Judul Aduan</th><th>Rincian</th><th>Lokasi</th><th>Tindaklanjut</th><th>Tanggal TL</th><th>Status</th><th>OPD</th><th>Durasi TL</th>';
 			echo '</tr>';
 	
 			$this->db->order_by('nomor', 'DESC');
@@ -260,7 +286,7 @@ class Cetak extends CI_Controller{
 				}else if($br->laporan_status ==2){
 					  $laporanstatus = 'Sedang Proses';
 					}else if($br->laporan_status ==99){
-					  $laporanstatus = 'ditolak';
+					  $laporanstatus = 'Ditolak';
 				  }else{
 					$laporanstatus = 'Selesai';
 				}
@@ -270,21 +296,28 @@ class Cetak extends CI_Controller{
 				  }else{
 					$kategori = 'Non Fisik';
 				}
-	
+					
+				// Hitung Durasi TL
+				$awal  = date_create($br->tanggal_laporan);
+                $akhir = date_create($br->tanggal_tindaklanjut);
+                $diff  = date_diff($awal,$akhir);
+
 				echo
 				'
 				<tr>
 				<td>'.$no++.'</td>
 				<td>'.$br->nama.'</td>
+				<td>'.$br->hp.'</td>
+				<td>'.$kategori.'</td>
+				<td>'.$br->tanggal_laporan.'</td>
 				<td>'.$br->judul_laporan.'</td>
 				<td>'.$br->isi_laporan.'</td>
 				<td>'.$br->lokasi.'</td>
-				<td>'.$br->tanggal_laporan.'</td>
 				<td>'.$br->tindaklanjut.'</td>
+				<td>'.$br->tanggal_tindaklanjut.'</td>
 				<td>'.$laporanstatus.'</td>
-				<td>'.$kategori.'</td>
-				<td>'.$br->hp.'</td>
 				<td>'.$br->ditujukan_kepada.'</td>
+				<td>'.$diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>').'</td>
 				</tr>
 				';
 			}
@@ -293,6 +326,121 @@ class Cetak extends CI_Controller{
 			echo "</html>";
 			}
 
+	   }
+	}
+
+	function antara_survei()
+	{
+		$dari=$this->input->post('x_dari');
+		$sampai=$this->input->post('x_sampai');
+		$format=$this->input->post('x_format');
+		$pengguna_level=$this->session->userdata('pengguna_level');
+		
+		if ($pengguna_level=='1'){
+			if($format=='excel'){
+				$x['title']='Cetak Laporan Survei';
+				header("Content-type: application/vnd.ms-excel");
+				header("Content-Disposition: attachment;Filename=SurveiLaporBupati_".date('Ymdhis').".xls");
+				echo "<html>";
+				echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+				echo "<body>";
+				$urut = 0;
+				echo '<table cellspacing="0" border="1">';
+				echo '<tr>';
+					echo '<th colspan=11><p align="center"><b>Rekapitulasi Hasil Survei Layanan Lapor Bupati Wonosobo</b></p>'.'<p align="center">Periode : <b>'.mediumdate_indo($dari).'</b> s/d <b>'.mediumdate_indo($sampai).'</b></p>';
+					echo '</th>';
+				echo '</tr>';
+				echo '<tr>';
+				echo '</tr>';
+
+				echo '<tr>';
+				echo '<th>No</th><th>Nama Responden</th><th>Email</th><th>Jawaban 1</th><th>Jawaban 2</th><th>Jawaban 3</th><th>Jawaban 4</th><th>Jawaban 5</th><th>Rating</th><th>Kritik dan Saran</th><th>Tanggal Survei</th>';
+				echo '</tr>';
+
+				$this->db->order_by('id', 'ASC');
+				$query = $this->db->where('created_at >=', $dari);
+				$query = $this->db->where('created_at <=', $sampai);
+				$query = $this->db->get('tbl_survei');
+
+				$no=1;
+				foreach ($query->result() as $br)
+				{
+					echo
+					'
+					<tr>
+						<td align="left">'.$no++.'</td>
+						<td>'.$br->nama.'</td>
+						<td>'.$br->email.'</td>
+						<td align="left">'.$br->pertanyaan1.'</td>
+						<td align="right">'.$br->pertanyaan2.'</td>
+						<td align="right">'.$br->pertanyaan3.'</td>
+						<td align="right">'.$br->pertanyaan4.'</td>
+						<td align="right">'.$br->pertanyaan5.'</td>
+						<td align="right"><b>'.((($br->pertanyaan2)+($br->pertanyaan3)+($br->pertanyaan4)+($br->pertanyaan5))/4).'</b></td>
+						<td>'.$br->kritik_saran.'</td>
+						<td align="center">'.date('d-m-Y H:i:s',strtotime($br->created_at)).'</td>
+					</tr>
+					';
+				}
+				echo '</table>';
+				echo "</body>";
+				echo "</html>";
+			}
+
+		if($format=='web'){
+			$x['title']='Cetak Laporan Survei';
+
+			$bulan = date('M');
+			// print_r($bulan);
+			echo "<html>";
+			echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+			echo "<body>";
+			$urut = 0;
+	
+			echo '<tr>';
+				echo '<th><p align="center"><b>Rekapitulasi Hasil Survei Layanan Lapor Bupati Wonosobo</b></p>'.'<p align="center">Periode : <b>'.mediumdate_indo($dari).'</b> s/d <b>'.mediumdate_indo($sampai).'</b></p>';
+				echo '</th>';
+			echo '</tr>';
+	
+			echo '<table cellspacing="0" border="1">';
+			echo '<tr>';
+			echo '</tr>';
+			echo '<tr>';
+			echo '<th>No</th><th>Nama Responden</th><th>Email</th><th>Jawaban 1</th><th>Jawaban 2</th><th>Jawaban 3</th><th>Jawaban 4</th><th>Jawaban 5</th><th>Rating</th><th>Kritik dan Saran</th><th>Tanggal Survei</th>';
+			echo '</tr>';
+	
+			$this->db->order_by('id', 'ASC');
+			$query = $this->db->where('created_at >=', $dari);
+			$query = $this->db->where('created_at <=', $sampai);
+			$query = $this->db->get('tbl_survei');
+			
+			$no=1;
+			foreach ($query->result() as $br)
+			{
+				echo
+				'
+				<tr>
+					<td>'.$no++.'</td>
+					<td>'.$br->nama.'</td>
+					<td>'.$br->email.'</td>
+					<td align="left">'.$br->pertanyaan1.'</td>
+					<td align="right">'.$br->pertanyaan2.'</td>
+					<td align="right">'.$br->pertanyaan3.'</td>
+					<td align="right">'.$br->pertanyaan4.'</td>
+					<td align="right">'.$br->pertanyaan5.'</td>
+					<td align="right"><b>'.((($br->pertanyaan2)+($br->pertanyaan3)+($br->pertanyaan4)+($br->pertanyaan5))/4).'</b></td>
+					<td>'.$br->kritik_saran.'</td>
+					<td align="center">'.date('d-m-Y H:i:s',strtotime($br->created_at)).'</td>
+					</tr>
+				</tr>
+				';
+					// <td align="right">'.(($br->pertanyaan2)+($br->pertanyaan3)+($br->pertanyaan4)+($br->pertanyaan5)).'</td>
+			}
+
+			echo '</table>';
+			echo "</body>";
+			echo "</html>";
+			}
 	   }
 	}
 
@@ -308,7 +456,6 @@ class Cetak extends CI_Controller{
 		$data=$this->m_cetak->cetak_laporan_admin2($id)->result();
 		echo json_encode($data);
 		// print_r($data);
-		
 	}
 	
 	function komisi_tambahan($id){

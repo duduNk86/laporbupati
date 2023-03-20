@@ -60,7 +60,7 @@ $jum_komentar=$query1->num_rows();
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo base_url('admin/dashboard');?>"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="<?php echo base_url('admin/laporan');?>">Aduan</a></li>
+            <li><a href="#">Aduan</a></li>
           </ol>
         </section>
         <!-- Main content -->
@@ -106,7 +106,7 @@ $jum_komentar=$query1->num_rows();
         <!-- /.content-wrapper -->
         <footer class="main-footer">
           <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 2.0
           </div>
           <strong>@laporbupati</strong>
         </footer>
@@ -367,9 +367,10 @@ $jum_komentar=$query1->num_rows();
             </div>
             <form class="form-horizontal" action="<?php echo base_url().'admin/laporan/hapus_laporan_disabilitas'?>" method="post" enctype="multipart/form-data">
               <div class="modal-body">
-                <input type="hidden" name="x_kode_hapus" id="x_kode_hapus"/>
-                <input type="hidden" name="x_aduan_hapus" id="x_aduan_hapus"/>
-                <p>Apakah Anda yakin mau menghapus Aduan dari <b name="x_aduan_hapus"></b>?</p>
+                <input type="hidden" name="xkode_hapus" id="xkode_hapus"/>
+                <input type="hidden" name="x_nama_file_hapus" id="x_nama_file_hapus"/>
+                <p>Apakah Anda yakin mau menghapus Aduan ini?</p>
+                <!-- <p>Apakah Anda yakin mau menghapus Aduan tentang <b name="x_keterangan_hapus"></b>?</p> -->
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
@@ -494,13 +495,13 @@ $jum_komentar=$query1->num_rows();
 
                   var laporan = data[i].status;
                   if (laporan ==1){
-                     status = '<a href="#" class="btn btn-warning btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan belum diverifikasi oleh Admin">Verifikasi</a>';
+                     status = '<a href="#" class="btn btn-danger btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan belum diverifikasi oleh Admin">Verifikasi</a>';
                   }else if(laporan ==2){
-                    status = '<a href="#" class="btn btn-info btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan telah diteruskan & dalam proses tindak lanjut oleh OPD terkait">Proses</a>';
+                    status = '<a href="#" class="btn btn-warning btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan telah diteruskan & dalam proses tindak lanjut oleh OPD terkait">Proses</a>';
                   }else if(laporan ==3){
                     status = '<a href="#" class="btn btn-success btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan telah selesai ditindaklanjuti">Selesai</a>';
                   }else{
-                    status = '<a href="#" class="btn btn-danger btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan ditolak karena alasan yang sah">Ditolak</a>';
+                    status = '<a href="#" class="btn btn-info btn-xs" style="width:60px;" data-toggle="tooltip" title="Aduan ditolak karena alasan yang sah">Ditolak</a>';
                   }
 
                   /* var fileName = data[i].foto;
@@ -546,7 +547,8 @@ $jum_komentar=$query1->num_rows();
                       "searching": true,
                       "ordering": true,
                       "info": true,
-                      "autoWidth": true
+                      "autoWidth": true,
+                      "scrollX": true
                       });
                     // tutuptambahan
 		        }
@@ -733,7 +735,6 @@ $jum_komentar=$query1->num_rows();
                 success: window.location.href = "<?php echo base_url('admin/laporan');?>"
                 //  alert("data berhasil diupdate");
               });
-            
             return false;
         });
 
@@ -743,20 +744,15 @@ $jum_komentar=$query1->num_rows();
             var id=$(this).attr('data');
             $.ajax({
                 type : "GET",
-                url  : "<?php echo base_url('admin/laporan/get_modaledit_disabilitas')?>",
+                url  : "<?php echo base_url('admin/laporan/get_modalhapus_disabilitas')?>",
                 dataType : "JSON",
                 data : {id:id},
                 success: function(data){
                 	$.each(data,function(i,field){
                  	$('#ModalHapus').modal('show');
-                   $('[name="x_judul_laporan_hapus"]').html('');
-                   $('[name="x_nama_hapus"]').html('');
-                    $('[name="x_kode_hapus"]').val(data[i].id);
-                    // $('[name="x_judul_laporan_hapus"]').html(data[i].judul_laporan);
-                    $('[name="x_nama_hapus"]').html(data[i].nama);
-                    $('[name="x_isi_laporan_hapus"]').val(data[i].isi_laporan);
-                    $('[name="x_foto_hapus"]').val(data[i].foto);
-
+                    $('[name="xkode_hapus"]').val(data[i].id);
+                    $('[name="x_keterangan_hapus"]').val(data[i].keterangan);
+                    $('[name="x_nama_file_hapus"]').val(data[i].nama_file);
             		});
                 }
             });

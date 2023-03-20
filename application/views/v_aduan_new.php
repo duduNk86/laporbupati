@@ -14,6 +14,7 @@
 
 <!-- Text to Speech -->
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=fd5OcpKB"></script> -->
 <script type="text/javascript">
     
 //Text to speech otomatis
@@ -22,7 +23,6 @@ responsiveVoice.OnVoiceReady = function() {
     console.log("speech time?");
     responsiveVoice.speak(
     "Selamat Datang di Kanal Aduan Lapor Bupati Wonosobo. Lapor Bupati Wonosobo adalah sistem pengaduan masyarakat kepada Bupati Wonosobo, yang mengintegrasikan sistem SP4N, Lapor Gubernur, Call Center, Media sosial Pimpinan Daerah, maupun sistem pengaduan pada perangkat daerah di Kabupaten Wonosobo.",
-    // "Selamat Datang di Kanal Aduan Lapor Bupati Wonosobo. Lapor Bupati Wonosobo adalah sistem pengaduan masyarakat kepada Bupati Wonosobo, yang mengintegrasikan sistem SP4N, Lapor Gubernur, Call Center, Media sosial pimpinan daerah, maupun sistem pengaduan pada perangkat daerah di Kabupaten Wonosobo. Untuk membuat pengaduan, masyarakat dapat mengisi data diri dan materi pengaduan pada formulir pengaduan yang tersedia. Khusus bagi pelapor penyandang Disabilitas dapat mengirimkan aduan melalui pesan suara pada Formulir Aduan Khusus Disabilitas. langkah pertama, pelapor harus merekam aduan dengan cara klik tombol Rekam aduan. langkah kedua, pelapor harus mendownload file audio hasil rekaman. langkah ketiga, pelapor harus meng-upload file audio rekaman pada form isian yang disediakan. langkah ke empat, untuk mengirim laporan aduan, pelapor harus meng-klik tombol Laporkan. terima kasih telah menggunakan layanan Lapor Bupati Wonosobo.",
     "Indonesian Female",
     {
     pitch: 1, 
@@ -32,6 +32,9 @@ responsiveVoice.OnVoiceReady = function() {
     );
 };
 </script>
+
+<!-- Select2 -->
+<!-- <link rel="stylesheet" href="< ?php echo base_url().'assets/plugins/select2/select2.min.css'?>"> -->
 
 <!-- <link rel="stylesheet" href="https://www.webrtc-experiment.com/style.css"> -->
  
@@ -67,56 +70,115 @@ responsiveVoice.OnVoiceReady = function() {
 
 </head>
   
-<body style="background-image: url(<?php echo base_url().'assets/frontend_aduan/images/formaduan.jpg'?>);">
+<body style="background-image: url(<?php echo base_url().'assets/frontend_aduan/images/formaduan.png'?>);">
     <section class="container-fluid">
     <?= $script_captcha; ?>
         <section class="row justify-content-right">
-            <section class="col-12 col-sm-6 col-md-4"  style="margin-bottom: 20px;"
-            >
+            <section class="col-12 col-sm-6 col-md-4"  style="margin-bottom: 20px;">
             
             <div class="d-flex justify-content-center">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#tab1">NON DISABILITAS</a>
+                        <a class="nav-link active" data-toggle="tab" href="#tab1"><b>NON DISABILITAS</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab2">DISABILITAS  </a>
+                        <a class="nav-link" data-toggle="tab" href="#tab2"><b>DISABILITAS</b></a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab3"><b>SURVEI</b></a>
+                    </li> -->
                 </ul>
             </div>  
 
                 <div class="tab-content mt-3">
+                    <!-- ADUAN NON-DISABILITAS -->
                     <div class="tab-pane show active" id="tab1" role="tabpanel">
+                        <?php echo validation_errors(); ?>
                         <form class="form-container" action="<?php echo base_url().'user/aduan/kirim'?>" method="post" enctype="multipart/form-data">
-                            <h5 class="text-center font-weight-bold"> Formulir Aduan </h5>
-                            <p><?php echo $this->session->flashdata('gagal');?></p>
-                                      <p><?php echo $this->session->flashdata('sukses');?></p>
+                            <div align="center">
+                                <img src="<?php echo base_url(); ?>assets/frontend_aduan/images/logo_laporbup.jpg" style="width: 200px; height: 90px; margin-bottom: 20px;">
+                            </div>
+                            <h5 class="text-center font-weight-bold"> FORMULIR ADUAN </h5>
+                            <p align="justify"><?php echo $this->session->flashdata('gagal');?></p>
+                            <p align="justify"><?php echo $this->session->flashdata('sukses');?></p>
+                            <div>
+                                <label for="name" style="margin-top: 10px;"><b>Data Diri Pelapor</b></label>
+                            </div>
                             <div class="form-group">
-                                <label for="name">Nama</label>
+                                <label for="name">* Nama</label>
                                 <input type="text" class="form-control" name="x_nama" required>
                             </div>
                             <div class="form-group">
-                            <label for="">No. Hp/WA (Harus Aktif)</label>
-                                <input type="text" class="form-control" name="x_hp" required>
+                              <label for="">* Alamat</label>
+                              <input type="text" class="form-control"  name="x_alamat" required>
                             </div>
                             <div class="form-group">
-                              <label for="">Email</label>
-                              <input type="text" class="form-control" name="x_email">
+                            <label for="">* No. Hp/Whatsapp <i>(Harus Aktif)</i></label>
+                                <input type="number" class="form-control" name="x_hp" title="Masukkan Nomor HP tanpa Spasi atau tanda ( - ) dan Tidak boleh mengandung huruf e atau E" required>
                             </div>
                             <div class="form-group">
-                              <label for="">Lokasi</label>
-                              <input type="text" class="form-control"  name="x_lokasi" required>
+                            <label for="">* Email <i>(Harus Aktif)</i></label>
+                            <input type="email" class="form-control" name="x_email" title="Masukkan Email Valid" required>
+                            </div>
+                            <div>
+                                <label for="name" style="margin-top: 20px;"><b>Materi Aduan</b></label>
                             </div>
                             <div class="form-group">
-                              <label for="">Judul Laporan</label>
+                              <label for="">* Judul Laporan</label>
                               <input type="text" class="form-control" name="x_judul_laporan" required>
                             </div>
                             <div class="form-group">
-                              <label for="">Uraian Laporan Anda</label>
+                              <label for="">* Kategori Laporan</label>
+                              <select class="form-control select2" name="x_kategorilaporan" id="x_kategorilaporan" required>
+                                    <option value="">- Pilih -</option>
+                                    <?php
+                                    $no=0;
+                                    foreach ($kat->result_array() as $i) :
+                                    $no++;
+                                    $kategori_id=$i['kategori_id'];
+                                    $kategori_nama=$i['kategori_nama'];
+                                    ?>
+                                    <option value="<?php echo $kategori_id;?>">
+                                        <?php
+                                            if ($kategori_id == '1') {
+                                            echo 'Fisik / Infrastruktur';
+                                            } else if ($kategori_id == '2') {
+                                            echo 'Non Fisik / Non Infrastruktur';
+                                            }
+                                        ?>
+                                    </option>
+                                <?php endforeach;?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">* Sub-Kategori Laporan</label>
+                                <select class="form-control select2" name="x_subkategorilaporan" id="x_subkategorilaporan" style="width: 100%;" required/>
+                                    <option value="">- Pilih -</option>
+                                    <?php
+                                    $no=0;
+                                    foreach ($subkat->result_array() as $i) :
+                                    $no++;
+                                    $subkategori_id=$i['subkategori_id'];
+                                    $subkategori_nama=$i['subkategori_nama'];
+                                    ?>
+                                    <option value="<?php echo $subkategori_id;?>"><?php echo $subkategori_nama;?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">* Hashtag (#) Topik Aduan</label>
+                              <input type="text" class="form-control"  name="x_topiklaporan" title="Tuliskan Hashtag (#) Aduan, Contoh : #BantuanSosial #BencanaAlam #JalanRusak #GangguanPDAM" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="">* Lokasi Aduan</label>
+                              <input type="text" class="form-control"  name="x_lokasi" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="">* Uraian Laporan Anda</label>
                               <textarea class="form-control" rows="5" name="x_isi_laporan" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="">Lampiran Foto</label>
+                                <label for="">* Lampirkan Foto</label>
                                 <input type="file" class="form-control" name="x_foto" >
                             </div>
                             <div class="form-group">
@@ -124,16 +186,19 @@ responsiveVoice.OnVoiceReady = function() {
                                     <?= $captcha; ?>
                                 </div>
                             </div>
-                            <button type="submit" style="background-color:white; margin-top: 10px;" class="btn btn-block" title="Klik untuk mengirim Aduan Anda!"><b><a style="color: red;">Laporkan !</a></b></button>
+                            <button type="submit" style="background-color:white; margin-top: 10px; margin-bottom: 10px;" class="btn btn-block" title="Klik untuk mengirim Aduan Anda!"><b><a style="color: red;">Laporkan !</a></b></button>
                         </form>
                     </div>
-                    <div class="tab-pane " id="tab2" role="tabpanel">
-                         <!-- REKAM ADUAN MODIFIKASI -->
+                    <div class="tab-pane" id="tab2" role="tabpanel">
+                        <!-- ADUAN DISABILITAS - REKAM AUDIO -->
                         <section class="experiment recordrtc">
-                                <form form class="form-container" style="margin-top: 20px;">
-                                <h5 class="text-center font-weight-bold"> Form Aduan Khusus Disabilitas </h5>
-                                    <p><?php echo $this->session->flashdata('gagal');?></p>
-                                        <p><?php echo $this->session->flashdata('sukses');?></p>
+                            <form form class="form-container" style="margin-top: 20px;">
+                                <div align="center">
+                                    <img src="<?php echo base_url(); ?>assets/frontend_aduan/images/logo_laporbup.jpg" style="width: 200px; height: 90px; margin-bottom: 20px;">
+                                </div>
+                                <h5 class="text-center font-weight-bold" style="margin-bottom: 25px;"> FORM ADUAN KHUSUS DISABILITAS </h5>
+                                    <p align="justify"><?php echo $this->session->flashdata('gagal');?></p>
+                                    <p align="justify"><?php echo $this->session->flashdata('sukses');?></p>
                                 <h4 class="header" style="display: none;">
                                 <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
                                     <select class="recording-media">
@@ -152,34 +217,194 @@ responsiveVoice.OnVoiceReady = function() {
                                     <div class="btn-group">
                                         <button style="background-color:white;" class="btn btn-block btn-sm" title="(1) Klik tombol ini untuk merekam suara Anda!"><b><a style="color: forestgreen;"><i class="fa fa-microphone"></i>&nbsp; Rekam Aduan</a></b></button>
                                         <button type="reset" class="btn btn-success btn-sm" value ="Refresh" onclick="history.go(0)" title="Batalkan rekaman?"><b><i class="fa fa-refresh"></i>&nbsp; Batal</b></button>
-                                        <button class="btn btn-primary btn-sm" id="save-to-disk" title="(2) Simpan hasil rekaman untuk di Kirim."><b><i class="fa fa-download"></i>&nbsp; Download</b></button>
+                                        <!-- <button class="btn btn-primary btn-sm" id="save-to-disk" title="(2) Simpan hasil rekaman untuk di Kirim."><b><i class="fa fa-download"></i>&nbsp; Download</b></button> -->
                                     </div>
                                 </div>
-                                </form>
-                                <form style="margin-top: -50px;" class="form-container" action="<?php echo base_url().'user/aduan/kirim_aduan_disabilitas'?>" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label for="">Upload Rekaman Aduan</label>
-                                        <input type="file" class="form-control" name="x_audio" title="(3) Upload file audio hasil rekaman disini!" required>
-                                    </div>
-                                    <div style="text-align: center; margin-bottom: 15px">
-                                        <button style="background-color:white;" class="btn btn-block" id="upload-to-server-2" title="(4) Klik untuk mengirim Aduan Anda!"><b><a style="color: red;">Laporkan !</a></b></button>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for=""><b><i>* Petunjuk Penggunaan :</i></b></label><br>
-                                        <a style="font-size: 14px;">
-                                            <ol align="justify">
-                                                <li>Rekam Aduan Anda dengan cara klik tombol <b><i>Rekam aduan</i></b>. ( Durasi Max 2 Menit )</li>
-                                                <li><b><i>Download</i></b> file Audio hasil rekaman.</li>
-                                                <li><b><i>Upload file Audio</i></b> yang telah didownload pada form Upload yang disediakan.</li>
-                                                <li>Kirim Aduan dengan cara Klik tombol <b><i>Laporkan!</i></b></li>
-                                            </ol>
-                                        </a>
-                                    </div>
-                                </form>
+                            </form>
+                            <form style="margin-top: -50px;" class="form-container">
+                            <!-- <form style="margin-top: -50px;" class="form-container" action="< ?php echo base_url().'user/aduan/kirim_aduan_disabilitas'?>" method="post" enctype="multipart/form-data"> -->
+                                <!-- <div class="form-group">
+                                    <label for="">Upload Rekaman Aduan</label>
+                                    <input type="file" class="form-control" name="x_audio" title="(3) Upload file audio hasil rekaman disini!" required>
+                                </div> -->
+                                <div style="text-align: center; margin-bottom: 15px; margin-top:6px;">
+                                    <button style="background-color:white;" class="btn btn-block" id="upload-to-server-2" title="(3) Klik untuk mengirim Aduan Anda!"><b><a style="color: red;">Laporkan !</a></b></button>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""><b><i>* Petunjuk Penggunaan :</i></b></label><br>
+                                    <a style="font-size: 14px;">
+                                        <ol align="justify">
+                                            <li>Rekam Aduan Anda dengan cara klik tombol <b><i>Rekam Aduan</i></b>. ( Durasi Rekaman Max 2 Menit )</li>
+                                            <li>Klik tombol <b><i>Stop Recording</i></b> untuk mengakhiri Rekaman Aduan.</li>
+                                            <li>Kirim Aduan dengan cara Klik tombol <b><i>Laporkan!</i></b></li>
+                                        </ol>
+                                    </a>
+                                </div>
+                            </form>
                         </section>
                     </div>
-                </div>
+                    <!-- SURVEI LAYANAN LAPOR BUPATI -->
+                    <div class="tab-pane" id="tab3" role="tabpanel">
+                        <form class="form-container" action="<?php echo base_url().'user/aduan/kirim_survei'?>" method="post" enctype="multipart/form-data">
+                            <h5 class="text-center font-weight-bold"> SURVEI LAYANAN LAPOR BUPATI </h5>
+                                <p align="justify"><?php echo $this->session->flashdata('gagal');?></p>
+                                <p align="justify"><?php echo $this->session->flashdata('sukses');?></p>
+                            <div>
+                                <label for="name" style="margin-top: 20px;"><b>Data Diri :</b></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">* Nama</label>
+                                <input type="text" class="form-control" name="x_nama" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="">* Email <i>(Harus Aktif)</i></label>
+                              <input type="email" class="form-control" name="x_email" required>
+                            </div>
+                            <div>
+                                <label for="name" style="margin-top: 20px;"><b>Daftar Pertanyaan :</b></label>
+                            </div>
+                            <div class="form-group" align="justify">
+                              <label for="">1. Darimana Anda tahu tentang layanan ini?</label>
+                              <input type="text" class="form-control" name="x_pertanyaan1" required>
+                            </div>
+                            <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating" align="justify">
+                                <span class="field-label-header">2. Apakah Anda menyukai layanan ini?</span><br>
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating1" name="selected_rating1" value="" required="required">
+                                </label>
+                                <h4 class="bold rating-header" style="">
+                                <span class="selected-rating1">0</span><small> / 5</small>
+                                </h4>
+                                <button type="button" class="btnrating1 btn btn-default btn-sm" data-attr="1" id="rating-star1-1">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating1 btn btn-default btn-sm" data-attr="2" id="rating-star1-2">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating1 btn btn-default btn-sm" data-attr="3" id="rating-star1-3">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating1 btn btn-default btn-sm" data-attr="4" id="rating-star1-4">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating1 btn btn-default btn-sm" data-attr="5" id="rating-star1-5">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating" align="justify">
+                                <span class="field-label-header">3. Apakah layanan ini mudah digunakan?</span><br>
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating2" name="selected_rating2" value="" required="required">
+                                </label>
+                                <h4 class="bold rating-header" style="">
+                                <span class="selected-rating2">0</span><small> / 5</small>
+                                </h4>
+                                <button type="button" class="btnrating2 btn btn-default btn-sm" data-attr="1" id="rating-star2-1">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating2 btn btn-default btn-sm" data-attr="2" id="rating-star2-2">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating2 btn btn-default btn-sm" data-attr="3" id="rating-star2-3">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating2 btn btn-default btn-sm" data-attr="4" id="rating-star2-4">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating2 btn btn-default btn-sm" data-attr="5" id="rating-star2-5">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating" align="justify">
+                                <span class="field-label-header">4. Apakah layanan ini membantu penyelesaian masalah anda?</span><br>
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating3" name="selected_rating3" value="" required="required">
+                                </label>
+                                <h4 class="bold rating-header" style="">
+                                <span class="selected-rating3">0</span><small> / 5</small>
+                                </h4>
+                                <button type="button" class="btnrating3 btn btn-default btn-sm" data-attr="1" id="rating-star3-1">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating3 btn btn-default btn-sm" data-attr="2" id="rating-star3-2">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating3 btn btn-default btn-sm" data-attr="3" id="rating-star3-3">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating3 btn btn-default btn-sm" data-attr="4" id="rating-star3-4">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating3 btn btn-default btn-sm" data-attr="5" id="rating-star3-5">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating" align="justify">
+                                <span class="field-label-header">5. Apakah Anda akan merekomendasikan layanan ini kepada orang lain?</span><br>
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating4" name="selected_rating4" value="" required="required">
+                                </label>
+                                <h4 class="bold rating-header" style="">
+                                <span class="selected-rating4">0</span><small> / 5</small>
+                                </h4>
+                                <button type="button" class="btnrating4 btn btn-default btn-sm" data-attr="1" id="rating-star4-1">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating4 btn btn-default btn-sm" data-attr="2" id="rating-star4-2">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating4 btn btn-default btn-sm" data-attr="3" id="rating-star4-3">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating4 btn btn-default btn-sm" data-attr="4" id="rating-star4-4">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btnrating4 btn btn-default btn-sm" data-attr="5" id="rating-star4-5">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- <div class="form-group">
+                              <label for="">2. Apakah Anda menyukai layanan kami?</label>
+                                <br>
+                                <div class="form-row">
+                                    <div class="col-2">
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="col-2">
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="col-2">
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="col-2">
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="col-2">
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                <br>
+                                <input style="width: 235px;" type="range" name="x_quest2" min="1" max="5" value="1" required>
+                                <b>0</b> <input style="width: 320px;" type="range" name="x_quest2" min="0" max="5" value="0" required> <b>5</b>
+                            </div> -->
 
+                            <div class="form-group">
+                              <label for="">6. Kritik dan Saran Anda:</label>
+                              <textarea class="form-control" rows="3" name="x_kritik_saran" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div align="center">
+                                    <?= $captcha; ?>
+                                </div>
+                            </div>
+                            <button type="submit" style="background-color:white; margin-top: 10px; margin-bottom: 10px;" class="btn btn-block" title="Klik untuk mengirim Survei Anda!"><b><a style="color: red;">Kirim Jawaban !</a></b></button>
+                        </form>
+                    </div>
+                </div>
 
             </section>
             <!-- Form Aduan Disabilitas -->
@@ -227,8 +452,8 @@ responsiveVoice.OnVoiceReady = function() {
             <!-- <section class="experiment recordrtc col-12 col-sm-6 col-md-4">
                     <form form class="form-container">
                     <h5 class="text-center font-weight-bold"> Form Aduan Khusus Disabilitas </h5>
-                        <p><?php echo $this->session->flashdata('gagal');?></p>
-                            <p><?php echo $this->session->flashdata('sukses');?></p>
+                        <p>< ?php echo $this->session->flashdata('gagal');?></p>
+                            <p>< ?php echo $this->session->flashdata('sukses');?></p>
                     <h4 class="header" style="display: none;">
                     <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
                         <select class="recording-media">
@@ -251,7 +476,7 @@ responsiveVoice.OnVoiceReady = function() {
                         </div>
                     </div>
                     </form>
-                    <form style="margin-top: -50px;" class="form-container" action="<?php echo base_url().'user/aduan/kirim_aduan_disabilitas'?>" method="post" enctype="multipart/form-data">
+                    <form style="margin-top: -50px;" class="form-container" action="< ?php echo base_url().'user/aduan/kirim_aduan_disabilitas'?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="">Upload Rekaman</label>
                             <input type="file" class="form-control" name="x_audio" >
@@ -275,6 +500,9 @@ responsiveVoice.OnVoiceReady = function() {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+    <!-- Select2 -->
+    <script src="<?php echo base_url().'assets/plugins/select2/select2.full.min.js'?>"></script>
+
     <script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>
     <script src="https://www.webrtc-experiment.com/gif-recorder.js"></script>
     <script src="https://www.webrtc-experiment.com/getScreenId.js"></script>
@@ -283,7 +511,7 @@ responsiveVoice.OnVoiceReady = function() {
     <!-- for Edige/FF/Chrome/Opera/etc. getUserMedia support -->
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             document.onkeyup = function () {
              var e = e || window.event; // for IE to cover IEs window event-object
              if(e.which == 65) {
@@ -297,6 +525,118 @@ responsiveVoice.OnVoiceReady = function() {
                 return false;
                 }
             }
+        </script> -->
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+        
+                $(".btnrating1").on('click',(function(e) {
+                
+                var previous_value = $("#selected_rating1").val();
+                
+                var selected_value = $(this).attr("data-attr");
+                $("#selected_rating1").val(selected_value);
+                
+                $(".selected-rating1").empty();
+                $(".selected-rating1").html(selected_value);
+                
+                for (i = 1; i <= selected_value; ++i) {
+                $("#rating-star1-"+i).toggleClass('btn-warning');
+                $("#rating-star1-"+i).toggleClass('btn-default');
+                }
+                
+                for (ix = 1; ix <= previous_value; ++ix) {
+                $("#rating-star1-"+ix).toggleClass('btn-warning');
+                $("#rating-star1-"+ix).toggleClass('btn-default');
+                }
+                
+                }));
+                
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+        
+                $(".btnrating2").on('click',(function(e) {
+                
+                var previous_value = $("#selected_rating2").val();
+                
+                var selected_value = $(this).attr("data-attr");
+                $("#selected_rating2").val(selected_value);
+                
+                $(".selected-rating2").empty();
+                $(".selected-rating2").html(selected_value);
+                
+                for (i = 1; i <= selected_value; ++i) {
+                $("#rating-star2-"+i).toggleClass('btn-warning');
+                $("#rating-star2-"+i).toggleClass('btn-default');
+                }
+                
+                for (ix = 1; ix <= previous_value; ++ix) {
+                $("#rating-star2-"+ix).toggleClass('btn-warning');
+                $("#rating-star2-"+ix).toggleClass('btn-default');
+                }
+                
+                }));
+                
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+        
+                $(".btnrating3").on('click',(function(e) {
+                
+                var previous_value = $("#selected_rating3").val();
+                
+                var selected_value = $(this).attr("data-attr");
+                $("#selected_rating3").val(selected_value);
+                
+                $(".selected-rating3").empty();
+                $(".selected-rating3").html(selected_value);
+                
+                for (i = 1; i <= selected_value; ++i) {
+                $("#rating-star3-"+i).toggleClass('btn-warning');
+                $("#rating-star3-"+i).toggleClass('btn-default');
+                }
+                
+                for (ix = 1; ix <= previous_value; ++ix) {
+                $("#rating-star3-"+ix).toggleClass('btn-warning');
+                $("#rating-star3-"+ix).toggleClass('btn-default');
+                }
+                
+                }));
+                
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+        
+                $(".btnrating4").on('click',(function(e) {
+                
+                var previous_value = $("#selected_rating4").val();
+                
+                var selected_value = $(this).attr("data-attr");
+                $("#selected_rating4").val(selected_value);
+                
+                $(".selected-rating4").empty();
+                $(".selected-rating4").html(selected_value);
+                
+                for (i = 1; i <= selected_value; ++i) {
+                $("#rating-star4-"+i).toggleClass('btn-warning');
+                $("#rating-star4-"+i).toggleClass('btn-default');
+                }
+                
+                for (ix = 1; ix <= previous_value; ++ix) {
+                $("#rating-star4-"+ix).toggleClass('btn-warning');
+                $("#rating-star4-"+ix).toggleClass('btn-default');
+                }
+                
+                }));
+                
+            });
         </script>
 
         <script>
@@ -965,9 +1305,10 @@ responsiveVoice.OnVoiceReady = function() {
                 return 'Please wait few seconds before your recordings are deleted from the server.';
             };
 
+            // Script Upload File Audio
             $('#upload-to-server-2').click(function(a){
                 let url = "user/aduan/kirim_aduan_disabilitas";
-               var  blob = asudahlah.recordRTC.getBlob();
+                var blob = asudahlah.recordRTC.getBlob();
                 var myformData = new FormData();    
                 myformData.append('x_audio', blob);
                 $.ajax({
@@ -975,13 +1316,12 @@ responsiveVoice.OnVoiceReady = function() {
                     url: url,
                     data: myformData,
                     success: function(a){
-                            alert("dadi");
+                            alert("Laporan Anda telah terkirim! silahkan menunggu Link Tracking untuk Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.");
                     },
                     enctype: 'multipart/form-data',
                     processData: false,
                     contentType: false,
                     cache: false,
-                   
                     });
             });
         </script>
@@ -990,6 +1330,33 @@ responsiveVoice.OnVoiceReady = function() {
         window.useThisGithubPath = 'muaz-khan/RecordRTC';
     </script>
     <script src="https://www.webrtc-experiment.com/commits.js" async></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#x_kategorilaporan').change(function(){ 
+        //   alert ('abc');
+          var id=$(this).val();
+        //   alert (id);
+          $.ajax({
+            url : "<?php echo site_url('admin/laporan/get_subkategori');?>",
+            // url : "< ?php echo site_url('admin/home/get_subkategori');?>",
+            method : "GET",
+            data : {id: id},
+            async : true,
+            dataType : 'json',
+            success: function(data){
+              var html = '';
+              var i;
+              for(i=0; i<data.length; i++){
+                  html += '<option value='+data[i].subkategori_id+'>'+data[i].subkategori_nama+'</option>';
+              }
+              $('#x_subkategorilaporan').html(html);
+            }
+          });
+          return false;
+        }); 
+      });
+    </script>
 
 </body>
 </html>

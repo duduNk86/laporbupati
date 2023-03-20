@@ -1,717 +1,544 @@
+<?php
+$pengguna_level=$this->session->userdata('pengguna_level');
+if(empty($pengguna_level)){
+   redirect ('home');
+}
+?>
+
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
-<!-- BEGIN: Head-->
-
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
+    <meta http-equiv="refresh" content="600" />
     <title><?=$title;?></title>
-    <link rel="apple-touch-icon" href="<?php echo base_url();?>assets/back/app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/back/app-assets/images/ico/favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/vendors/css/tables/datatable/datatables.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/vendors/css/file-uploaders/dropzone.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/vendors/css/tables/datatable/extensions/dataTables.checkboxes.css">
-    <!-- END: Vendor CSS-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Share+Tech+Mono">
+    <style type="text/css">
+        #clock {
+            font-family: 'Share Tech Mono', monospace;
+            color: #ffffff;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #daf6ff;
+            text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
+        }
+    </style>
 
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/themes/semi-dark-layout.css">
+    <!-- costum css -->
+    <style>
+        /* not active */
+        .nav-tabs .nav-link:not(.active) {
+            background-color: #fff;
+            color: black;
+        }
 
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/core/menu/menu-types/horizontal-menu.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/plugins/file-uploaders/dropzone.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/back/app-assets/css/pages/data-list-view.css">
-    <!-- END: Page CSS-->
+        /* active*/
+        .nav-tabs .nav-link {
+            background-color: rgb(60, 179, 113);
+            color: white;
+        }
+    </style>
 
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    <!-- END: Custom CSS-->
+        <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo base_url().'assets/font-awesome/css/font-awesome.min.css'?>">
 
-</head>
-<!-- END: Head-->
 
-<!-- BEGIN: Body-->
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" id="theme" href="<?php echo base_url().'assets/lapor/assets/css/theme-default.css'?>"/>'
+    <link rel="stylesheet" type="text/css" id="theme" href="<?php echo base_url().'assets/lapor/assets/css/custom.css'?>"/>
 
-<body class="horizontal-layout horizontal-menu 2-columns  navbar-floating footer-static  " data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php echo base_url().'assets/dist/css/AdminLTE.min.css'?>">
+    <!-- Bootstrap 3.3.6 -->
+    <!-- <link rel="stylesheet" href="< ?php echo base_url().'assets/bootstrap/css/bootstrap.min.css'?>"> -->
 
-    <!-- BEGIN: Header-->
-    
-    <!-- END: Header-->
+    <!-- EOF CSS INCLUDE -->
+    <!-- START PLUGINS -->
+    <script type="text/javascript" id="jquery" src="<?php echo base_url().'assets/lapor/assets/js/plugins/jquery/jquery.min.js'?>"></script>
+    <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/jquery/jquery-ui.min.js'?>"></script>
+    <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/bootstrap/bootstrap.min.js'?>"></script>
+    </head>
+    <body>
+      <!-- <marquee behavior="scroll" direction="down" scrollamount="2"></marquee> -->
+        <!-- START PAGE CONTAINER -->
 
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
-                <div class="content-header-left col-md-9 col-12 mb-2">
-                    <div class="row breadcrumbs-top">
-                        <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">List View</h2>
-                            <div class="breadcrumb-wrapper col-12">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="#">Data List</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">List View
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-                    <div class="form-group breadcrum-right">
-                        <div class="dropdown">
-                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-body">
-                <!-- Data list view starts -->
-                <section id="data-list-view" class="data-list-view-header">
-                    <div class="action-btns d-none">
-                        <div class="btn-dropdown mr-1 mb-1">
-                            <div class="btn-group dropdown actions-dropodown">
-                                <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><i class="feather icon-trash"></i>Delete</a>
-                                    <a class="dropdown-item" href="#"><i class="feather icon-archive"></i>Archive</a>
-                                    <a class="dropdown-item" href="#"><i class="feather icon-file"></i>Print</a>
-                                    <a class="dropdown-item" href="#"><i class="feather icon-save"></i>Another Action</a>
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:-10pt;margin-bottom: -15pt;">
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url().'home/view'?>">Statistik</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="<?php echo base_url().'home/view2'?>">Pengaduan Aktif</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url().'admin/administrator/logout'?>">Logout</a>
+      </li>
+    </ul>
+
+        <div class="panel panel-primary">            
+            <!-- PAGE CONTENT -->
+            <div class="panel-body">
+                <div class="page-content-wrap" style="font-size: medium;">
+                    <!-- START WIDGETS -->
+                    <div class="row">
+                        <div class="col-md-9"><img src="<?php echo base_url().'assets/lapor/dashboardlapor.png'?>" width="600px" height="110px"></div>
+                        <!-- <div class="col-md-3"></div>
+                        <div class="col-md-3"></div> -->
+                        
+                        <div class="col-md-3">
+                            <!-- START WIDGET CLOCK -->
+                            <div class="widget widget-primary">
+                                <div id="clock"><br>
+                                    <p class="date" style="letter-spacing: 0.0em; font-size: 16px;">LAPORBUP WONOSOBO</p>
+                                    <p class="date" style="letter-spacing: 0.1em; font-size: 14px;">{{ date }}</p>
+                                    <p class="time" style="letter-spacing: 0.05em; font-size: 16px; padding: 5px 0;">{{ time }}</p>
                                 </div>
                             </div>
+                            <!-- END WIDGET CLOCK -->
                         </div>
                     </div>
-
-                    <!-- DataTable starts -->
-                    <div class="table-responsive">
-                        <table class="table data-list-view">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>NAME</th>
-                                    <th>CATEGORY</th>
-                                    <th>POPULARITY</th>
-                                    <th>ORDER STATUS</th>
-                                    <th>PRICE</th>
-                                    <th>ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Apple Watch series 4 GPS</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-success">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:97%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$69.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Beats HeadPhones</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:83%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-success">
-                                            <div class="chip-body">
-                                                <div class="chip-text">Delivered</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$69.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Altec Lansing - Bluetooth Speaker</td>
-                                    <td class="product-category">Audio</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:57%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-danger">
-                                            <div class="chip-body">
-                                                <div class="chip-text">canceled</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Aluratek - Bluetooth Audio Receiver</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:65%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$29.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Aluratek - Bluetooth Audio Transmitter</td>
-                                    <td class="product-category">Audio</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-danger">
-                                            <div class="chip-body">
-                                                <div class="chip-text">canceled</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Basis - Peak Fitness and Sleep Tracker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:47%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Antec - Nano Diamond Thermal Compound</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:55%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-primary">
-                                            <div class="chip-body">
-                                                <div class="chip-text">pending</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$29.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Antec - SmartBean Bluetooth Adapter</td>
-                                    <td class="product-category">Computer</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:63%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-danger">
-                                            <div class="chip-body">
-                                                <div class="chip-text">canceled</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$39.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Beats by Dr. Dre - 3' USB-to-Micro USB Cable</td>
-                                    <td class="product-category">Computer</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-success">
-                                            <div class="chip-body">
-                                                <div class="chip-text">delivered</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Beats by Dr. Dre - Bike Mount for Pill Speakers</td>
-                                    <td class="product-category">Audio</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:40%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">delivered</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$49.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Bose® - SoundLink® Color Bluetooth Speaker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:90%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-primary">
-                                            <div class="chip-body">
-                                                <div class="chip-text">pending</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$129.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">BRAVEN - Portable Bluetooth Speaker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Craig - Portable Wireless Speaker</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-danger">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:20%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-danger">
-                                            <div class="chip-body">
-                                                <div class="chip-text">canceled</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Definitive Technology - Wireless Speaker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:75%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-primary">
-                                            <div class="chip-body">
-                                                <div class="chip-text">pending</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$399.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Fitbit - Charge HR Activity Tracker + Heart Rate (Large)</td>
-                                    <td class="product-category">Audio</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:60%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-primary">
-                                            <div class="chip-body">
-                                                <div class="chip-text">pending</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$149.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Fitbit - Flex 1" USB Charging Cable</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$14.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Fitbit - Activity Tracker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-danger">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:35%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-danger">
-                                            <div class="chip-body">
-                                                <div class="chip-text">canceled</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$99.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Fitbit - Charge Wireless Activity Tracker (Large)</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-primary">
-                                            <div class="chip-body">
-                                                <div class="chip-text">pending</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$129.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Craig - Tower Speaker</td>
-                                    <td class="product-category">Audio</td>
-                                    <td>
-                                        <div class="progress progress-bar-warning">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:68%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$69.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">BRAVEN - Outdoor Speaker</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:97%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-success">
-                                            <div class="chip-body">
-                                                <div class="chip-text">delivered</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Bose® - Bluetooth Speaker Travel Bag</td>
-                                    <td class="product-category">Computers</td>
-                                    <td>
-                                        <div class="progress progress-bar-primary">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:89%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-warning">
-                                            <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$44.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="product-name">Altec Lansing - Mini H2O Bluetooth Speaker</td>
-                                    <td class="product-category">Fitness</td>
-                                    <td>
-                                        <div class="progress progress-bar-success">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:87%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chip chip-success">
-                                            <div class="chip-body">
-                                                <div class="chip-text">delivered</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-price">$199.99</td>
-                                    <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- DataTable ends -->
-
-                    <!-- add new sidebar starts -->
-                    <div class="add-new-data-sidebar">
-                        <div class="overlay-bg"></div>
-                        <div class="add-new-data">
-                            <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
-                                <div>
-                                    <h4 class="text-uppercase">List View Data</h4>
+                    <!-- END WIDGETS -->                    
+                    <?php
+                    $kode=2;
+                    $hsl=$this->db->query("SELECT * FROM tbl_laporan where tayang='ya'");        
+                    $jml_tayang=$hsl->num_rows();
+                    $btl=$this->db->query("SELECT * FROM tbl_laporan where laporan_status='$kode' AND tayang='ya'");        
+                    $jml_btl=$btl->num_rows();
+                    ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-colorful">
+                                <div class="panel-heading">
+                                    <div class="panel-title-box">
+                                        <h4><b>PENGADUAN AKTIF  : <?php echo $jml_tayang;?> &nbsp;,&nbsp; SEDANG PROSES TL : <?php echo $jml_btl;?></b> </h4>
+                                    </div>
+                                    <!-- <ul class="panel-controls" style="margin-top: 1px;">
+                                        @LaporBupati
+                                        <a class="btn btn-success btn-flat" href="< ?php echo base_url().'admin/administrator/logout'?>"><span></span> Logout</a>
+                                    </ul>  -->
                                 </div>
-                                <div class="hide-data-sidebar">
-                                    <i class="feather icon-x"></i>
-                                </div>
-                            </div>
-                            <div class="data-items pb-3">
-                                <div class="data-fields px-2 mt-3">
-                                    <div class="row">
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-name">Name</label>
-                                            <input type="text" class="form-control" id="data-name">
+                                
+                                <div class="panel-body padding-0">
+                                    <div id="wrapper">
+                                        <div id="carousel">
+                                            <?php
+                                            $no=0;
+                                            foreach ($tayang->result_array() as $i) :
+                                            $no++;
+                                            $nomor=$i['nomor'];
+                                            $id=$i['id'];
+                                            $id_pelapor=$i['id_pelapor'];
+                                            $id_kepada=$i['id_kepada'];
+                                            $ditujukan_kepada=$i['ditujukan_kepada'];
+                                            $id_penginput=$i['id_penginput'];
+                                            $penginput=$i['penginput'];
+                                            $kategori_laporan=$i['kategori_laporan'];
+                                            $judul_laporan=$i['judul_laporan'];
+                                            $lokasi=$i['lokasi'];
+                                            $isi_laporan=$i['isi_laporan'];
+                                            $nama=$i['nama'];
+                                            $alamat=$i['alamat'];
+                                            $tanggal=$i['tanggal_laporan'];
+                                            $laporan_status=$i['laporan_status'];
+                                            $tindaklanjut=$i['tindaklanjut'];
+                                            $rating_jawaban=$i['rating_jawaban'];
+                                            ?>
+                                            <div class="item panel panel-colorful">
+                                                <div>
+                                                    <div class="panel-heading">
+                                                    <h4><center><span class="fa fa-user">&nbsp;<?php if ($kategori_laporan=="1") { echo "<b> Infrastruktur </b>"; }else{echo "<b> Non-Infrastruktur </b>";} ?></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="fa fa-briefcase"></span>&nbsp;<b><?php echo $ditujukan_kepada;?> </b></center></h4>
+                                                    </div>
+
+                                                <div class="panel-body">
+                                                    <div class="text">
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <div class="col-md-12">
+                                                                <center><b>Dari</b></center><hr>
+                                                                    <center><?php echo $nama;?></center>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="col-md-12">
+                                                                <center><b>Tanggal Masuk</b></center><hr>
+                                                                    <center>
+                                                                        <?php
+                                                                            $tanggal_awal = $tanggal;
+                                                                            $tanggal_baru = date('d M Y | H:i:s', strtotime($tanggal_awal));
+                                                                            echo $tanggal_baru;
+                                                                        ?>
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="col-md-12">
+                                                                <center><b>Aduan</b></center><hr>
+                                                                <center>
+                                                                    <?php echo $judul_laporan;?></center>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                              <div class="col-md-4">
+                                                                <center><b>Keterangan</b><hr>
+                                                                <b><?php if ($laporan_status=="1") { ?>
+                                                                <span class="label label-danger">Verifikasi</span>
+                                                                <?php }else if ($laporan_status=="2") { ?>
+                                                                    <span class="label label-warning">Sedang Proses</span>
+                                                                <?php }else if ($laporan_status=="3") { ?>
+                                                                    <span class="label label-success">Selesai</span>
+                                                                    <?php } ?>
+                                                                </b></center>
+                                                              </div>
+                                                              <div class="col-md-4">
+                                                                <center><b>Rating TL</b></center><hr>
+                                                                <center>
+                                                                  <?php 
+                                                                    if ($rating_jawaban == 0) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i></b>";
+                                                                    } else if ($rating_jawaban == 1) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i></b>";
+                                                                    } else if ($rating_jawaban == 2) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i></b>";
+                                                                    } else if ($rating_jawaban == 3) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-o'></i><i class='fa fa-star-o'></i></b>";
+                                                                    } else if ($rating_jawaban == 4) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-o'></i></b>";
+                                                                    } else if ($rating_jawaban == 5) {
+                                                                      echo "<b style='color:gold;'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i></b>";
+                                                                    }
+                                                                  ?>      
+                                                                </center>
+                                                                </div>   
+                                                              <div class="col-md-4">
+                                                              <b>
+                                                              <center>Detail<hr>
+                                                              <?php if ($laporan_status=="1") { ?>
+                                                                      <a href="<?= base_url('home/detail/').$id;?>" class="label label-danger" target="_blank"><?php echo 'View';?></a>
+                                                                      <?php }else if ($laporan_status=="2") { ?>
+                                                                          <a href="<?= base_url('home/detail/').$id;?>" class="label label-warning" target="_blank"><?php echo 'View';?></a>
+                                                                      <?php }else if ($laporan_status=="3") { ?>
+                                                                          <a href="<?= base_url('home/detail/').$id;?>" class="label label-success" target="_blank"><?php echo 'view';?></a>
+                                                                          <?php } ?>
+                                                                      </b></center>
+                                                              </div>
+                                                          </div>
+                                                        </div>                        
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-category"> Category </label>
-                                            <select class="form-control" id="data-category">
-                                                <option>Audio</option>
-                                                <option>Computers</option>
-                                                <option>Fitness</option>
-                                                <option>Appliance</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-status">Order Status</label>
-                                            <select class="form-control" id="data-status">
-                                                <option>Pending</option>
-                                                <option>Canceled</option>
-                                                <option>Delivered</option>
-                                                <option>On Hold</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-price">Price</label>
-                                            <input type="text" class="form-control" id="data-price">
-                                        </div>
-                                        <div class="col-sm-12 data-field-col data-list-upload">
-                                            <form action="#" class="dropzone dropzone-area" id="dataListUpload">
-                                                <div class="dz-message">Upload Image</div>
-                                            </form>
-                                        </div>
+                                            <?php endforeach;?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
-                                <div class="add-data-btn">
-                                    <button class="btn btn-primary">Add Data</button>
-                                </div>
-                                <div class="cancel-data-btn">
-                                    <button class="btn btn-outline-danger">Cancel</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <!-- add new sidebar ends -->
-                </section>
-                <!-- Data list view end -->
-
+                </div>
             </div>
         </div>
-    </div>
-    <!-- END: Content-->
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
+        <div class="panel-footer">
+           <h5> <center>Lapor Bupati Wonosobo - by @msyon & m@sguNk86</center><h5>
+        </div>
 
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light navbar-shadow">
-        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021<a class="text-bold-800 grey darken-2" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent,</a>All rights Reserved</span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i class="feather icon-heart pink"></i></span>
-            <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="feather icon-arrow-up"></i></button>
-        </p>
-    </footer>
-    <!-- END: Footer-->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+        <script type="text/javascript">
+            var clock = new Vue({
+            el: "#clock",
+            data: {
+                time: "",
+                date: ""
+            }
+        });
 
+        var week = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUM'AT", "SABTU"];
+        var timerID = setInterval(updateTime, 1000);
+        updateTime();
+        function updateTime() {
+            var cd = new Date();
+            clock.time =
+                zeroPadding(cd.getHours(), 2) +
+                ":" +
+                zeroPadding(cd.getMinutes(), 2) +
+                ":" +
+                zeroPadding(cd.getSeconds(), 2);
+            clock.date =
+                week[cd.getDay()] +
+                " " + zeroPadding(cd.getDate(), 2) +
+                "-" +
+                zeroPadding(cd.getMonth() + 1, 2) +
+                "-" +
+                zeroPadding(cd.getFullYear(), 4) +
+                " ";
+        }
 
-    <!-- BEGIN: Vendor JS-->
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/vendors.min.js"></script>
-    <!-- BEGIN Vendor JS-->
+        function zeroPadding(num, digit) {
+            var zero = "";
+            for (var i = 0; i < digit; i++) {
+                zero += "0";
+            }
+            return (zero + num).slice(-digit);
+        }
+        </script>
+        <script>
+            setTimeout(function(){
+        window.location.reload(1);
+        }, 500000);
+        </script>
+        <script type='text/javascript' src="<?php echo base_url().'assets/lapor/assets/js/plugins/icheck/icheck.min.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/scrolltotop/scrolltopcontrol.js'?>"></script>
 
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/ui/jquery.sticky.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/extensions/dropzone.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js"></script>
-    <!-- END: Page Vendor JS-->
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/morris/raphael-min.js'?>"></script>
+        <script type='text/javascript' src='<?php echo base_url().'assets/lapor/assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'?>'></script>
+        <script type='text/javascript' src='<?php echo base_url().'assets/lapor/assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'?>'></script>
+        <script type='text/javascript' src='<?php echo base_url().'assets/lapor/assets/js/plugins/bootstrap/bootstrap-datepicker.js'?>'></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/owl/owl.carousel.min.js'?>"></script>
 
-    <!-- BEGIN: Theme JS-->
-    <script src="<?php echo base_url();?>assets/back/app-assets/js/core/app-menu.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/js/core/app.js"></script>
-    <script src="<?php echo base_url();?>assets/back/app-assets/js/scripts/components.js"></script>
-    <!-- END: Theme JS-->
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/moment.min.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins/daterangepicker/daterangepicker.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/jquery.carouFredSel-6.2.1-packed.js'?>"></script>
+        <!-- END THIS PAGE PLUGINS-->  
 
-    <!-- BEGIN: Page JS-->
-    <script src="<?php echo base_url();?>assets/back/app-assets/js/scripts/ui/data-list-view.js"></script>
-    <!-- END: Page JS-->
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/demo_dashboard.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/plugins.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/actions.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'assets/lapor/assets/js/myjs.js'?>"></script>
 
-</body>
-<!-- END: Body-->
+        <!-- Bootstrap 3.3.6 -->
+        <!-- <script src="< ?php echo base_url().'assets/bootstrap/js/bootstrap.min.js'?>"></script> -->
+        <!-- AdminLTE App -->
+        <script src="<?php echo base_url().'assets/dist/js/app.min.js'?>"></script>
+        <!-- Chart JS -->
+        <script src="<?php echo base_url().'assets/plugins/chart.js/Chart.min.js'?>"></script>
+        <!-- END TEMPLATE -->
 
+        <!-- Chart -->
+        <script type="text/javascript">
+              var ctx = document.getElementById('myLineChart').getContext('2d');
+              var chart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: [
+                    <?php 
+                      if (count($linechart)>0) {
+                        foreach ($linechart as $data) {
+                          echo "'" .$data->year . " (".$data->jumlah_aduan .")" ."',";
+                        }
+                      }
+                    ?>
+                  ],
+                  datasets: [{
+                      label: 'Jumlah Aduan ',
+                      backgroundColor: '#ADD8E6',
+                      borderColor: '##93C3D2',
+                      // backgroundColor: ['rgb(255, 99, 132)', 'rgb(252, 165, 3)', 'rgb(56, 86, 255, 0.87)','rgb(60, 179, 113)'],
+                      // borderColor: ['rgb(255, 99, 132)'],
+                      data: [
+                        <?php 
+                          if (count($linechart)>0) {
+                             foreach ($linechart as $data) {
+                              echo $data->jumlah_aduan . ", ";
+                            }
+                          }
+                        ?>
+                      ]
+                  }]
+              },
+          });
+                 
+        </script>
+
+        <script type="text/javascript">
+              var ctx = document.getElementById('myBarChart').getContext('2d');
+              var chart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: [
+                    <?php 
+                      if (count($barchart)>0) {
+                        foreach ($barchart as $data) {
+                          echo "'" .$data->ditujukan_kepada . " : ".$data->total ."',";
+                        }
+                      }
+                    ?>
+                  ],
+                  datasets: [{
+                      label: 'Jumlah Aduan ',
+                      // backgroundColor: '#ADD8E6',
+                      // borderColor: '##93C3D2',
+                      backgroundColor: ['rgb(252, 3, 3)', 'rgb(255, 99, 132)', 'rgb(252, 165, 3)', 'rgb(56, 86, 255, 0.87)','rgb(60, 179, 113)'],
+                      // borderColor: ['rgb(255, 99, 132)'],
+                      data: [
+                        <?php 
+                          if (count($barchart)>0) {
+                             foreach ($barchart as $data) {
+                              echo $data->total . ", ";
+                            }
+                          }
+                        ?>
+                      ]
+                  }]
+              },
+          });        
+        </script>
+
+        <script type="text/javascript">
+              var ctx = document.getElementById('myPieChart').getContext('2d');
+              var chart = new Chart(ctx, {
+              type: 'pie',
+              data: {
+                  labels: [
+                    <?php 
+                      if (count($piechart)>0) {
+                        foreach ($piechart as $data) {
+                          if ($data->kategori_laporan==1)
+                            echo "'" ."Infrastruktur " ."',";
+                          else
+                            echo "'" ."Non-Infrastruktur " ."',";
+                        }
+                      }
+                    ?>
+                  ],
+                  datasets: [{
+                      label: 'Kategori Aduan',
+                      // backgroundColor: '#ADD8E6',
+                      // borderColor: '##93C3D2',
+                      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                      borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
+                      data: [
+                        <?php 
+                          if (count($piechart)>0) {
+                             foreach ($piechart as $data) {
+                              echo $data->total . ", ";
+                            }
+                          }
+                        ?>
+                      ]
+                  }]
+              },
+          });        
+        </script>
+
+        <script type="text/javascript">
+              var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+              var chart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                  labels: [
+                    <?php 
+                      if (count($doughnutchart)>0) {
+                        foreach ($doughnutchart as $data) {
+                          if ($data->subkategori_laporan==1)
+                            echo "'" ."Jalan dan Jembatan" ."',";
+                          else if($data->subkategori_laporan==2)
+                            echo "'" ."Bangunan dan Gedung" ."',";
+                          else if($data->subkategori_laporan==3)
+                            echo "'" ."Sarana dan Prasarana Pengairan" ."',";
+                          else if($data->subkategori_laporan==4)
+                            echo "'" ."Bidang Fisik lainnya" ."',";
+                        }
+                      }
+                    ?>
+                  ],
+                  datasets: [{
+                      label: 'Statistik Sub-Kategori Infrastruktur',
+                      // backgroundColor: '#ADD8E6',
+                      // borderColor: '##93C3D2',
+                      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                      borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                      data: [
+                        <?php 
+                          if (count($doughnutchart)>0) {
+                             foreach ($doughnutchart as $data) {
+                              echo $data->total . ", ";
+                            }
+                          }
+                        ?>
+                      ]
+                  }]
+              },
+          });        
+        </script>
+
+        <script type="text/javascript">
+              var ctx = document.getElementById('myRadarChart').getContext('2d');
+              var chart = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                  labels: [
+                    <?php 
+                      if (count($radarchart)>0) {
+                        foreach ($radarchart as $data) {
+                          if ($data->subkategori_laporan==5)
+                            echo "'" ."Pendidikan : ".$data->total ."',";
+                          else if($data->subkategori_laporan==6)
+                            echo "'" ."Kesehatan : ".$data->total ."',";
+                          else if($data->subkategori_laporan==7)
+                            echo "'" ."Kependudukan : ".$data->total ."',";
+                          else if($data->subkategori_laporan==8)
+                            echo "'" ."Kepegawaian : ".$data->total ."',";
+                          else if($data->subkategori_laporan==9)
+                            echo "'" ."Energi : ".$data->total ."',";
+                          else if($data->subkategori_laporan==10)
+                            echo "'" ."Pertanian : ".$data->total ."',";
+                          else if($data->subkategori_laporan==11)
+                            echo "'" ."Pembangunan Daerah : ".$data->total ."',";
+                          else if($data->subkategori_laporan==12)
+                            echo "'" ."Keuangan dan Aset : ".$data->total ."',";
+                          else if($data->subkategori_laporan==13)
+                            echo "'" ."Bencana : ".$data->total ."',";
+                          else if($data->subkategori_laporan==14)
+                            echo "'" ."Ekonomi dan Industri : ".$data->total ."',";
+                          else if($data->subkategori_laporan==15)
+                            echo "'" ."Sosial Masyarakat : ".$data->total ."',";
+                          else if($data->subkategori_laporan==16)
+                            echo "'" ."Lingkungan : ".$data->total ."',";
+                          else if($data->subkategori_laporan==17)
+                            echo "'" ."Pariwisata dan Budaya : ".$data->total ."',";
+                          else if($data->subkategori_laporan==18)
+                            echo "'" ."Ketentraman dan Ketertiban : ".$data->total ."',";
+                          else if($data->subkategori_laporan==19)
+                            echo "'" ."Tenaga Kerja dan Transmigrasi : ".$data->total ."',";
+                          else if($data->subkategori_laporan==20)
+                            echo "'" ."Perhubungan : ".$data->total ."',";
+                          else if($data->subkategori_laporan==21)
+                            echo "'" ."Bidang Non-Fisik lainnya : ".$data->total ."',";
+                        }
+                      }
+                    ?>
+                  ],
+                  datasets: [{
+                      label: 'Non-Infrastruktur',
+                      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                      borderColor: 'rgb(255, 99, 132)',
+                      // backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                      // borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                      data: [
+                        <?php 
+                          if (count($radarchart)>0) {
+                             foreach ($radarchart as $data) {
+                              echo $data->total . ", ";
+                            }
+                          }
+                        ?>
+                      ]
+                  }]
+              },
+          });        
+        </script>
+
+    </body>
 </html>
+
+
+
+
+
+

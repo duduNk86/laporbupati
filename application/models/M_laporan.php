@@ -7,9 +7,33 @@ class M_laporan extends CI_Model{
 		return $hsl;
 	}
 
-	//Update Dudunk
+	function get_all_laporan_verifikasi(){
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='1' ORDER BY nomor DESC");
+		return $hsl;
+	}
+
+	function get_all_laporan_progres(){
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='2' ORDER BY nomor DESC");
+		return $hsl;
+	}
+
+	function get_all_laporan_ditolak(){
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='99' ORDER BY nomor DESC");
+		return $hsl;
+	}	
+
+	function get_all_notifadmin(){		
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='1' ORDER BY nomor DESC");
+		return $hsl;
+	}
+
 	function get_all_laporan_disabilitas(){
 		$hsl=$this->db->query("SELECT tbl_laporan_disabilitas.*,DATE_FORMAT(created_at,'%d/%m/%Y') AS tanggal FROM tbl_laporan_disabilitas ORDER BY id DESC");
+		return $hsl;
+	}
+
+	function get_all_notifadmin_disabilitas(){
+		$hsl=$this->db->query("SELECT tbl_laporan_disabilitas.*,DATE_FORMAT(created_at,'%d/%m/%Y') AS tanggal FROM tbl_laporan_disabilitas WHERE status='1' ORDER BY id DESC");
 		return $hsl;
 	}
 	
@@ -26,13 +50,18 @@ class M_laporan extends CI_Model{
 
 	function get_laporan_opd($code){
 		// $hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_jenis='1' ORDER BY nomor DESC");
-		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_kepada ='$code' ORDER BY nomor DESC");
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_kepada ='$code'AND laporan_status NOT LIKE '1' ORDER BY nomor DESC");
+		return $hsl;
+	}
+
+	function get_laporan_notifopd($code){
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_kepada ='$code'AND laporan_status ='2' ORDER BY nomor DESC");
 		return $hsl;
 	}
 
 	function get_laporan_belum_teruskan(){
 		// $hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_jenis='1' ORDER BY nomor DESC");
-		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_staus ='1' ORDER BY nomor DESC");
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status ='1' ORDER BY nomor DESC");
 		return $hsl;
 	}
 
@@ -40,6 +69,414 @@ class M_laporan extends CI_Model{
 		$hsl=$this->db->query("SELECT *FROM tbl_laporan WHERE id ='$id'");
 		return $hsl;
 	}
+
+	// Chart JS - Dashboard Admin
+	function linechart()
+	{
+		$hsl=$this->db->query("SELECT
+  		EXTRACT(year FROM tanggal_laporan) AS year,
+  		COUNT(nomor) AS jumlah_aduan
+		FROM tbl_laporan
+		GROUP BY EXTRACT(year FROM tanggal_laporan)");
+		return $hsl->result();
+	}
+
+	function barchart()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan'); 
+        $this->db->select('ditujukan_kepada');
+        $this->db->select('count(*) as total');
+        $this->db->limit('10');
+        $this->db->group_by('ditujukan_kepada');
+        $this->db->order_by('total','DESC');
+        return $this->db->get()->result();
+    }
+
+    function piechart()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan'); 
+        $this->db->select('kategori_laporan');
+        $this->db->select('count(*) as total');
+        $this->db->group_by('kategori_laporan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+	function piechart2()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan'); 
+        $this->db->select('sumber_aduan');
+        $this->db->select('count(*) as total');
+        $this->db->group_by('sumber_aduan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+    function doughnutchart()
+    {
+    	$this->db->select('subkategori_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where("subkategori_laporan in ('1', '2', '3', '4')");
+		$this->db->group_by('subkategori_laporan', 'DESC');
+		return $this->db->get()->result();
+    }
+
+    function radarchart()
+    {
+    	$this->db->select('subkategori_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where("subkategori_laporan in ('5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21')");
+		$this->db->group_by('subkategori_laporan', 'DESC');
+		return $this->db->get()->result();
+    }
+
+    function tablechart1()
+    {
+    	$this->db->select('topik_laporan, count(*) as total');
+		$this->db->from('tbl_laporan'); 
+		$this->db->where("topik_laporan != ''");
+		$this->db->limit(10);
+		$this->db->group_by('topik_laporan');
+		$this->db->order_by('total','DESC');
+		return $this->db->get()->result();
+    }
+
+    function tablechart2()
+    {
+    	$this->db->select('rating_jawaban, SUM(rating_jawaban) as total1');
+		$this->db->select('ditujukan_kepada, COUNT(*) as total2');
+		$this->db->select('ROUND(SUM(rating_jawaban)/COUNT(*), 0) as hasil_bagi');
+		$this->db->from('tbl_laporan');
+		$this->db->where("rating_jawaban != ''");
+		$this->db->group_by('ditujukan_kepada');
+		$this->db->order_by('hasil_bagi', 'DESC');
+		$this->db->limit(10);
+		return $this->db->get()->result();
+    }
+
+    function opd_tlproses()
+    {
+    	$this->db->select('ditujukan_kepada, count(*) as total');
+		$this->db->from('tbl_laporan'); 
+		$this->db->where("laporan_status = '2'");
+		// $this->db->limit(10);
+		$this->db->group_by('ditujukan_kepada');
+		$this->db->order_by('total','DESC');
+		return $this->db->get()->result();
+    }
+
+    // Chart JS - Dashboard OPD
+	function linechart_opd($id_kepada)
+	{
+		$hsl=$this->db->query("SELECT
+  		EXTRACT(year FROM tanggal_laporan) AS year,
+  		COUNT(nomor) AS jumlah_aduan
+		FROM tbl_laporan
+		WHERE id_kepada = '$id_kepada'
+		GROUP BY EXTRACT(year FROM tanggal_laporan)");
+		return $hsl->result();
+	}
+
+    function piechart_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan'); 
+        $this->db->select('kategori_laporan');
+        $this->db->select('count(*) as total');
+        $this->db->where("id_kepada ='$id_kepada'");
+        $this->db->group_by('kategori_laporan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+    function tablechart1_opd($id_kepada)
+    {
+    	$this->db->select('topik_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where("id_kepada ='$id_kepada'");
+		$this->db->where("topik_laporan != ''");
+		$this->db->limit(10);
+		$this->db->group_by('topik_laporan');
+		$this->db->order_by('total','DESC');
+		return $this->db->get()->result();
+    }
+
+    function tablechart2_opd($id_kepada)
+    {
+    	$this->db->select('rating_jawaban, SUM(rating_jawaban) as total1');
+		$this->db->select('ditujukan_kepada, COUNT(*) as total2');
+		$this->db->select('ROUND(SUM(rating_jawaban)/COUNT(*), 0) as hasil_bagi');
+		$this->db->from('tbl_laporan');
+		$this->db->where("id_kepada ='$id_kepada'");
+		$this->db->where("rating_jawaban != ''");
+		$this->db->group_by('ditujukan_kepada');
+		$this->db->order_by('hasil_bagi', 'DESC');
+		return $this->db->get()->result();
+    }
+
+    // Chart JS - Dashboard 2 (Custom Statistik)
+    function linechart_custome($dari,$sampai)
+	{
+		$hsl = $this->db->query("SELECT
+	  	EXTRACT(month FROM tanggal_laporan) AS month,
+	  	EXTRACT(year FROM tanggal_laporan) AS year,
+	  	COUNT(nomor) AS jumlah_aduan
+		FROM tbl_laporan
+		WHERE tanggal_laporan >= '$dari' AND tanggal_laporan <= '$sampai'
+		GROUP BY EXTRACT(year FROM tanggal_laporan), EXTRACT(month FROM tanggal_laporan)");
+		return $hsl->result();
+	}
+
+	function linechart_custome_bulan($dari,$sampai)
+	{
+		$hsl = $this->db->query("SELECT
+	  	EXTRACT(day FROM tanggal_laporan) AS day,
+	  	EXTRACT(month FROM tanggal_laporan) AS month,
+	  	EXTRACT(year FROM tanggal_laporan) AS year,
+	  	COUNT(nomor) AS jumlah_aduan
+		FROM tbl_laporan
+		WHERE tanggal_laporan >= '$dari' AND tanggal_laporan <= '$sampai'
+		GROUP BY EXTRACT(year FROM tanggal_laporan), EXTRACT(month FROM tanggal_laporan), EXTRACT(day FROM tanggal_laporan)");
+		return $hsl->result();
+	}
+
+	function barchart_custome($dari,$sampai)
+    {
+    	$this->db->select('ditujukan_kepada, COUNT(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->group_by('ditujukan_kepada');
+		$this->db->order_by('total', 'DESC');
+		$this->db->limit(10);
+		$query = $this->db->get();
+		return $query->result();
+    }
+
+    function piechart_custome($dari,$sampai)
+    {
+    	$this->db->select('kategori_laporan, COUNT(*) as total');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->group_by('kategori_laporan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+	function piechart2_custome($dari,$sampai)
+    {
+    	$this->db->select('sumber_aduan, COUNT(*) as total');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->group_by('sumber_aduan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+    function doughnutchart_custome($dari,$sampai)
+    {
+    	$this->db->select('subkategori_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where("subkategori_laporan in ('1', '2', '3', '4')");
+		$this->db->group_by('subkategori_laporan', 'DESC');
+		return $this->db->get()->result();
+    }
+
+    function radarchart_custome($dari,$sampai)
+    {
+    	$this->db->select('subkategori_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where("subkategori_laporan in ('5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21')");
+		$this->db->group_by('subkategori_laporan', 'DESC');
+		return $this->db->get()->result();
+    }
+
+    function tablechart1_custome($dari,$sampai)
+    {
+    	$this->db->select('topik_laporan, count(*) as total');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where("topik_laporan != ''");
+		$this->db->limit(10);
+		$this->db->group_by('topik_laporan');
+		$this->db->order_by('total','DESC');
+		return $this->db->get()->result();
+    }
+
+    function tablechart2_custome($dari,$sampai)
+    {
+    	$this->db->select('rating_jawaban, SUM(rating_jawaban) as total1');
+		$this->db->select('ditujukan_kepada, COUNT(*) as total2');
+		$this->db->select('ROUND(SUM(rating_jawaban)/COUNT(*), 0) as hasil_bagi');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where("rating_jawaban != ''");
+		$this->db->group_by('ditujukan_kepada');
+		$this->db->order_by('hasil_bagi', 'DESC');
+		$this->db->limit(10);
+		return $this->db->get()->result();
+    }
+
+    // Dashboard Rekapitulasi Penanganan Aduan All
+	function get_jml_laporan()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diterima()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("laporan_status ='1'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diproses()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("laporan_status ='2'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_ditolak()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("laporan_status ='99'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_selesai()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("laporan_status ='3'");
+        return $this->db->get()->num_rows();
+    }
+
+    // Dashboard Rekapitulasi Penanganan Aduan All per OPD masing-masing
+	function get_jml_laporan_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("id_kepada = '$id_kepada'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diterima_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("id_kepada = '$id_kepada'");
+        $this->db->where("laporan_status ='1'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diproses_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("id_kepada = '$id_kepada'");
+        $this->db->where("laporan_status ='2'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_ditolak_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("id_kepada = '$id_kepada'");
+        $this->db->where("laporan_status ='99'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_selesai_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("id_kepada = '$id_kepada'");
+        $this->db->where("laporan_status ='3'");
+        return $this->db->get()->num_rows();
+    }
+
+    // Dashboard Rekapitulasi Penanganan Aduan Custome
+	function get_jml_laporan_custome($dari,$sampai)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+        $this->db->where('tanggal_laporan <=', $sampai);
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diterima_custome($dari,$sampai)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+        $this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->where("laporan_status ='1'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_diproses_custome($dari,$sampai)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+        $this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->where("laporan_status ='2'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_ditolak_custome($dari,$sampai)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+        $this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->where("laporan_status ='99'");
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_selesai_custome($dari,$sampai)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where('tanggal_laporan >=', $dari);
+        $this->db->where('tanggal_laporan <=', $sampai);
+        $this->db->where("laporan_status ='3'");
+        return $this->db->get()->num_rows();
+    }
+
+    // Dashboard Jumlah Inbox & User (Seluruh & Custome)
+    function get_jml_inbox()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_inbox');
+        return $this->db->get()->num_rows();
+    }
+
+    function get_jml_user()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_admin');
+        return $this->db->get()->num_rows();
+    }
 
 	function simpan_laporan($id,$id_pelapor,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$id_jenis,$isi_laporan,$nama,$email,$hp,$gambar,$laporan_status,$keterangan_status,$status){
 		$hsl=$this->db->query("insert into tbl_laporan(id,id_pelapor,id_kepada,ditujukan_kepada,id_komisi,kategori_laporan,judul_laporan,anggaran,lokasi,id_jenis,isi_laporan,nama,email,hp,foto,laporan_status,keterangan_status,status) values 
@@ -77,10 +514,6 @@ class M_laporan extends CI_Model{
 		return $hsl;
 	}
 
-
-
-
-
 	function update_laporan($id_laporan,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$id_jenis,$isi_laporan,$gambar,$laporan_status,$keterangan_status){
 		$hsl=$this->db->query("update tbl_laporan set 
 			id_kepada='$id_kepada',
@@ -98,7 +531,6 @@ class M_laporan extends CI_Model{
 		return $hsl;
 	}
 
-
 	function update_laporan_noimg($id_laporan,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$isi_laporan,$laporan_status,$keterangan_status){
 		$hsl=$this->db->query("update tbl_laporan set 
 			id_kepada='$id_kepada',
@@ -114,8 +546,6 @@ class M_laporan extends CI_Model{
 			keterangan_status='$keterangan_status' where id='$id_laporan'");
 		return $hsl;
 	}
-
-
 
 	function update_laporan_admin2(
 		$id_laporan,
@@ -138,7 +568,6 @@ class M_laporan extends CI_Model{
 		return $hsl;
 	}
 
-
 	function update_laporan_noimg_admin2(
 		$id_laporan,
 		$judul_laporan,
@@ -158,29 +587,20 @@ class M_laporan extends CI_Model{
 		return $hsl;
 	}
 
-
-
-
 	function update_laporan_user($id_laporan,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$id_jenis,$isi_laporan,$gambar){
 		$hsl=$this->db->query("update tbl_laporan set id_kepada='$id_kepada',ditujukan_kepada='$ditujukan_kepada',id_komisi='$id_komisi',kategori_laporan='$kategori_laporan',judul_laporan='$judul_laporan',anggaran='$anggaran',lokasi='$lokasi',id_jenis='$id_jenis',isi_laporan='$isi_laporan', foto='$gambar' where id='$id_laporan'");
 		return $hsl;
 	}
-
 
 	function update_laporan_user_noimg($id_laporan,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$id_jenis,$isi_laporan){
 		$hsl=$this->db->query("update tbl_laporan set id_kepada='$id_kepada',ditujukan_kepada='$ditujukan_kepada',id_komisi='$id_komisi',kategori_laporan='$kategori_laporan',judul_laporan='$judul_laporan',anggaran='$anggaran',lokasi='$lokasi',id_jenis='$id_jenis',isi_laporan='$isi_laporan' where id='$id_laporan'");
 		return $hsl;
 	}
 
-
 	function update_status($id,$laporan_status,$keterangan_status){
 		$hsl=$this->db->query("update tbl_laporan set laporan_status='$laporan_status',keterangan_status='$keterangan_status' where id='$id'");
 		return $hsl;
 	}
-
-
-
-
 
 	function view_laporan_byid($kode){
 		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan where id_pelapor='$kode'");
@@ -194,7 +614,7 @@ class M_laporan extends CI_Model{
 
 
 	function view_laporan_selesai($kode){
-		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan where laporan_status='$kode'");
+		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan where laporan_status='$kode' ORDER BY tanggal_laporan DESC");
 		return $hsl;
 	}
 
@@ -259,9 +679,6 @@ class M_laporan extends CI_Model{
 		$result=$this->db->query($hsl);
 		return $result->row()->komisi;
 	}
-
-
-
 
 
 	//Front-End
@@ -401,7 +818,6 @@ class M_laporan extends CI_Model{
         return $hsl;
     }
 
-
     function get_tulisan_populer(){
 		$hasil=$this->db->query("SELECT tbl_tulisan.*,DATE_FORMAT(tulisan_tanggal,'%d %M %Y') AS tanggal FROM tbl_tulisan ORDER BY tulisan_views DESC limit 10");
 		return $hasil;
@@ -417,5 +833,4 @@ class M_laporan extends CI_Model{
 		return $hasil;
 	}
 	
-
 }

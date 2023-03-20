@@ -53,8 +53,7 @@
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Post</a></li>
+        <li><a href="<?php echo base_url().'admin/dashboard'?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Kategori</li>
       </ol>
     </section>
@@ -86,11 +85,10 @@
 					   $no++;
                        $kategori_id=$i['kategori_id'];
                        $kategori_nama=$i['kategori_nama'];
-                       
                     ?>
                 <tr>
                   <td><?php echo $no;?></td>
-                  <td><?php echo $kategori_nama;?></td>
+                  <td><a href="<?php echo base_url().'admin/kategori_laporan/subkategori'?>"><?php echo $kategori_nama;?></a></td>
                   
                   <td style="text-align:right;">
                         <a class="btn" data-toggle="modal" data-target="#ModalEdit<?php echo $kategori_id;?>"><span class="fa fa-pencil"></span></a>
@@ -114,7 +112,7 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0
+      <b>Version</b> 2.0
     </div>
     <strong>@LaporBupati</strong>
   </footer>
@@ -134,14 +132,12 @@
                     </div>
                     <form class="form-horizontal" action="<?php echo base_url().'admin/kategori/simpan_kategori'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
-                                
-                                    <div class="form-group">
-                                        <label for="inputUserName" class="col-sm-4 control-label">Kategori</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" name="xkategori" class="form-control" id="inputUserName" placeholder="Kategori" required>
-                                        </div>
-                                    </div>
-
+                        <div class="form-group">
+                            <label for="inputUserName" class="col-sm-4 control-label">Kategori</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="xkategori" class="form-control" id="inputUserName" placeholder="Kategori" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
@@ -152,11 +148,10 @@
             </div>
         </div>
 		
-		
-        		<?php foreach ($data->result_array() as $i) :
-                      $kategori_id=$i['kategori_id'];
-                      $kategori_nama=$i['kategori_nama'];
-            ?>
+    	<?php foreach ($data->result_array() as $i) :
+          $kategori_id=$i['kategori_id'];
+          $kategori_nama=$i['kategori_nama'];
+        ?>
 	<!--Modal Edit Pengguna-->
         <div class="modal fade" id="ModalEdit<?php echo $kategori_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -167,15 +162,13 @@
                     </div>
                     <form class="form-horizontal" action="<?php echo base_url().'admin/kategori/update_kategori'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
-                                
-                                    <div class="form-group">
-                                        <label for="inputUserName" class="col-sm-4 control-label">Kategori</label>
-                                        <div class="col-sm-7">
-											<input type="hidden" name="kode" value="<?php echo $kategori_id;?>"/> 
-                                            <input type="text" name="xkategori" class="form-control" id="inputUserName" value="<?php echo $kategori_nama;?>" placeholder="Kategori" required>
-                                        </div>
-                                    </div>
-
+                        <div class="form-group">
+                            <label for="inputUserName" class="col-sm-4 control-label">Kategori</label>
+                            <div class="col-sm-7">
+								<input type="hidden" name="kode" value="<?php echo $kategori_id;?>"/> 
+                                <input type="text" name="xkategori" class="form-control" id="inputUserName" value="<?php echo $kategori_nama;?>" placeholder="Kategori" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
@@ -187,10 +180,10 @@
         </div>
 	<?php endforeach;?>
 	
-	<?php foreach ($data->result_array() as $i) :
-              $kategori_id=$i['kategori_id'];
-              $kategori_nama=$i['kategori_nama'];
-            ?>
+    	<?php foreach ($data->result_array() as $i) :
+          $kategori_id=$i['kategori_id'];
+          $kategori_nama=$i['kategori_nama'];
+        ?>
 	<!--Modal Hapus Pengguna-->
         <div class="modal fade" id="ModalHapus<?php echo $kategori_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -201,9 +194,8 @@
                     </div>
                     <form class="form-horizontal" action="<?php echo base_url().'admin/kategori/hapus_kategori'?>" method="post" enctype="multipart/form-data">
                     <div class="modal-body">       
-							<input type="hidden" name="kode" value="<?php echo $kategori_id;?>"/> 
-                            <p>Apakah Anda yakin mau menghapus Pengguna <b><?php echo $kategori_nama;?></b> ?</p>
-                               
+						<input type="hidden" name="kode" value="<?php echo $kategori_id;?>"/> 
+                        <p>Apakah Anda yakin mau menghapus Pengguna <b><?php echo $kategori_nama;?></b> ?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
@@ -215,9 +207,6 @@
         </div>
 	<?php endforeach;?>
 	
-	
-
-
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url().'assets/plugins/jQuery/jquery-2.2.3.min.js'?>"></script>
 <!-- Bootstrap 3.3.6 -->

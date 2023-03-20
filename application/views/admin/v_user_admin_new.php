@@ -71,19 +71,19 @@ $jum_komentar=$query1->num_rows();
                 
                 <div class="box">
                   <div class="box-header">
-                    <a class="btn btn-info btn-flat" data-toggle="modal" data-target="#ModalAddUser" id="btn_add_user"><span class="fa fa-plus"></span> Add New</a>
+                    <a class="btn btn-success btn-circle" data-toggle="modal" data-target="#ModalAddUser" id="btn_add_user"><span class="fa fa-plus"></span>&nbsp; Tambah User</a>
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
                     <table id="tbl_user" class="table table-striped" style="font-size:13px;">
                       <thead>
                       <tr>
-                        <th>Photo</th>
-                        <th>Nama</th>
-                        <th>User Name</th>
-                        <th>Email</th>
-                        <th>Kontak</th>
-                        <th>Level</th>
+                        <th style="text-align:center;">Photo</th>
+                        <th style="text-align:center;">Nama</th>
+                        <th style="text-align:center;">User Name</th>
+                        <th style="text-align:center;">Email</th>
+                        <th style="text-align:center;">Kontak</th>
+                        <th style="text-align:center;">Level</th>
                         <th style="text-align:center;">Aksi</th>
                     </tr>
                       </thead>
@@ -104,7 +104,7 @@ $jum_komentar=$query1->num_rows();
         <!-- /.content-wrapper -->
         <footer class="main-footer">
           <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 2.0
           </div>
           <strong>@laporbupati</strong>
         </footer>

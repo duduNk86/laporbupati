@@ -71,7 +71,7 @@ $jum_komentar=$query1->num_rows();
                 
                 <div class="box">
                   <div class="box-header">
-                    <!-- <a class="btn btn-success btn-flat" href="<?php echo base_url().'admin/laporan/add_laporan'?>"><span class="fa fa-plus"></span> Add New</a> -->
+                    <!-- <a class="btn btn-success btn-flat" href="< ?php echo base_url().'admin/laporan/add_laporan'?>"><span class="fa fa-plus"></span> Add New</a> -->
                    
                   </div>
                   <!-- /.box-header -->
@@ -79,15 +79,16 @@ $jum_komentar=$query1->num_rows();
                     <table id="tbl_laporan" class="table table-striped" style="font-size:13px;">
                       <thead>
                         <tr>
-                          <th>No</th>
-                          <th>Foto</th>
-                          <th>OPD</th>
-                          <th>Rincian</th>
-                          <th>Nama</th>
-                          <th>HP</th>
-                          <th>Tanggal</th>
-                          <th>Status</th>
-                          <th style="text-align:right;">Aksi</th>
+                          <th style="text-align:center;">No</th>
+                          <th style="text-align:center;">Tiket Aduan</th>
+                          <th style="text-align:center;">Tanggal</th>
+                          <th style="text-align:center;">Foto</th>
+                          <th style="text-align:center;">OPD</th>
+                          <th style="text-align:center;">Rincian</th>
+                          <!-- <th style="text-align:center;">Nama</th>
+                          <th style="text-align:center;">HP</th> -->
+                          <th style="text-align:center;">Status</th>
+                          <th style="text-align:center;">Aksi</th>
                         </tr>
                       </thead>
                       <tbody id="tbody_tbl_laporan">
@@ -108,7 +109,7 @@ $jum_komentar=$query1->num_rows();
         <!-- /.content-wrapper -->
         <footer class="main-footer">
           <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 2.0
           </div>
           <strong>@laporbupati</strong>
         </footer>
@@ -116,8 +117,6 @@ $jum_komentar=$query1->num_rows();
         <div class="control-sidebar-bg"></div>
       </div>
       <!-- ./wrapper -->
-
-
 
      <!-- Modal Tindak Lanjut -->
      <div class="modal fade" id="ModalTindaklanjut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -246,8 +245,7 @@ $jum_komentar=$query1->num_rows();
         </div>
       </div>
 
-
-
+      <!-- Modal View -->
       <div class="modal fade" id="ModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -257,10 +255,22 @@ $jum_komentar=$query1->num_rows();
             </div>
             <form class="form-horizontal" action="<?php echo base_url().'admin/laporan/update_view'?>" method="post" enctype="multipart/form-data">
               <div class="modal-body">
-              <div class="form-group">
+                <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">No. Tiket Aduan</label>
+                  <div class="col-sm-7">
+                      <input type="text" name="x_tiket_view" id="x_tiket_view" class="form-control pull-right datepicker4" disabled required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">Tanggal</label>
+                  <div class="col-sm-7">
+                    <input type="text" name="x_tanggal_laporan_view" class="form-control"  id="x_tanggal_laporan_view" disabled required>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Kategori</label>
                   <div class="col-sm-7">
-                     <select class="form-control select2" name="x_kategori_laporan_view" style="width: 100%;" required>
+                     <select class="form-control select2" name="x_kategori_laporan_view" style="width: 100%;" disabled required>
                         <option value="">-Pilih-</option>
                         <option value="1">Fisik</option>
                         <option value="2">Non Fisik</option>        
@@ -274,7 +284,6 @@ $jum_komentar=$query1->num_rows();
                     <input type="text" name="x_ditujukan_kepada_view"  class="form-control" id="x_ditujukan_kepada_view" placeholder="Nama Agenda" disabled required>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Judul Aduan</label>
                   <div class="col-sm-7">
@@ -282,84 +291,60 @@ $jum_komentar=$query1->num_rows();
                     <input type="text" name="x_judul_laporan_view"  class="form-control" id="x_judul_laporan_view" placeholder="Nama Agenda" disabled required>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Isi Aduan</label>
                   <div class="col-sm-7">
                     <textarea class="form-control" rows="3"  name="x_isi_laporan_view" id="x_isi_laporan_view" placeholder="Judul Laporan ..." disabled required></textarea>
                   </div>
                 </div>
-
-                <!-- /.form group -->
-                <!-- Date range -->
-                <div class="form-group">
-                  <label for="inputUserName" class="col-sm-4 control-label">nama</label>
+                <!-- <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">Nama</label>
                   <div class="col-sm-7">
-                    
                       <input type="text" name="x_nama_view" id="x_nama_view" class="form-control pull-right datepicker4" disabled required>
-                    
                   </div>
-                  <!-- /.input group -->
                 </div>
-     
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">NIK</label>
                   <div class="col-sm-7">
-                    
                       <input type="text" name="x_nik_view" id="x_nik_view" class="form-control pull-right datepicker4" disabled required>
-                    
                   </div>
-                  <!-- /.input group -->
-                </div>
-
+                </div> -->
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Lokasi</label>
                   <div class="col-sm-7">
                       <input type="text" name="x_lokasi_view" id="x_lokasi_view" class="form-control pull-right datepicker4" disabled required>
                   </div>
                 </div>
-
-                <!-- /.form group -->
-                <div class="form-group">
-                  <label for="inputUserName" class="col-sm-4 control-label">email</label>
+                <!-- <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">Email</label>
                   <div class="col-sm-7">
                     <input type="text" name="x_email_view" class="form-control" id="x_email_view" placeholder="Tempat" disabled required>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputUserName" class="col-sm-4 control-label">Tanggal</label>
-                  <div class="col-sm-7">
-                    <input type="text" name="x_tanggal_laporan_view" class="form-control"  id="x_tanggal_laporan_view" disabled required>
-                  </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Status</label>
                   <div class="col-sm-7">
                   <input type="text" name="x_laporan_status_view" class="form-control"  id="x_laporan_status_view" placeholder="Status" disabled required>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Keterangan</label>
                   <div class="col-sm-7">
                     <input type="text" name="x_keterangan_status_view" disabled class="form-control"  id="x_keterangan_status_view" placeholder="Keterangan" required>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label"> Tindak Lanjut</label>
                   <div class="col-sm-7">
                     <input type="text" name="x_tindaklanjut_view" class="form-control" id="x_tindaklanjut_view" disabled >
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label"> Keterangan TL</label>
                   <div class="col-sm-7">
                     <textarea rows="3" type="text" name="x_keterangan_tindaklanjut_view" class="form-control" id="x_keterangan_tindaklanjut_view" disabled ></textarea>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Foto Aduan</label>
                   <div class="col-sm-7" id="foto_view" name="foto_view">
@@ -423,13 +408,13 @@ $jum_komentar=$query1->num_rows();
                   }
                   var laporan = data[i].laporan_status;
                   if (laporan ==1){
-                     laporan_status = '<span class="label label-success">Verifikasi</span>';
+                     laporan_status = '<span class="label label-danger">Verifikasi</span>';
                   }else if(laporan ==2){
-                    laporan_status = '<span class="label label-danger">Sedang Proses</span>';
+                    laporan_status = '<span class="label label-warning">Sedang Proses</span>';
                   }else if(laporan ==99){
-                    laporan_status = '<span class="label label-warning">ditolak</span>';
+                    laporan_status = '<span class="label label-info">Ditolak</span>';
                   }else{
-                    laporan_status = '<span class="label label-info">selesai</span>';
+                    laporan_status = '<span class="label label-success">Selesai</span>';
                   }
 
                   var fileName = data[i].foto;
@@ -444,12 +429,13 @@ $jum_komentar=$query1->num_rows();
 		                html += '<tr>'+
 		                  		'<td>'+no+'</td>'+
 		                        // '<td><img src="'+ base_urlx + data[i].foto +'" style="width:90px;" alt="'+ base_urlx + data[i].foto +'"></td>'+
-		                        '<td>'+tampilimagefoto+'</td>'+
+		                        '<td>'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</td>'+
+                            '<td>'+data[i].tanggal_laporan+'</td>'+
+                            '<td>'+tampilimagefoto+'</td>'+
                             '<td>'+data[i].ditujukan_kepada+'</td>'+
-		                        '<td>'+data[i].isi_laporan+'</td>'+
-		                        '<td>'+data[i].nama+'</td>'+
-		                        '<td>'+data[i].hp+'</td>'+
-		                        '<td>'+data[i].tanggal_laporan+'</td>'+
+		                        '<td style="text-align:justify;">'+data[i].isi_laporan+'</td>'+
+		                        // '<td>'+data[i].nama+'</td>'+
+		                        // '<td>'+data[i].hp+'</td>'+
 		                        '<td>'+laporan_status+'</td>'+
 		                        '<td style="text-align:center;">'+
                                     '<a href="javascript:;" data-toggle="tooltip" title="Lihat Rincian" class="btn btn-success btn-xs item_view" data="'+data[i].id+'"><span class="fa fa-eye"></span></a>'+' '+
@@ -466,7 +452,8 @@ $jum_komentar=$query1->num_rows();
                     "searching": true,
                     "ordering": true,
                     "info": true,
-                    "autoWidth": true
+                    "autoWidth": true,
+                    "scrollX": true
                     });
                     // tutuptambahan
 		        }
@@ -489,18 +476,31 @@ $jum_komentar=$query1->num_rows();
                 data : {id:id},
                 success: function(data){
                 	$.each(data,function(i,field){                
+                  
+                  // Status Laporan
                   var laporan = data[i].laporan_status;
                   if (laporan ==1){
                      laporan_status = 'Verifikasi';
                   }else if(laporan ==2){
                     laporan_status = 'Sedang Proses';
                   }else if(laporan ==99){
-                    laporan_status = 'ditolak';
+                    laporan_status = 'Ditolak';
                   }else{
-                    laporan_status = 'selesai';
+                    laporan_status = 'Selesai';
                   }
+
+                  // Tiket Laporan
+                  var sumber_aduan = data[i].sumber_aduan;
+                  var id = data[i].id;
+                  if (id !==''){
+                    nomor_tiket = 'LB'+data[i].sumber_aduan+'-'+data[i].id;
+                  } else {
+                    nomor_tiket = '';
+                  }
+
                 $('#ModalView').modal('show');
                 $('[name="xkode_view"]').val(data[i].id);
+                $('[name="x_tiket_view"]').val(nomor_tiket);
                 $('[name="x_ditujukan_kepada_view"]').val(data[i].ditujukan_kepada);
                 $('[name="x_judul_laporan_view"]').val(data[i].judul_laporan);
                 $('[name="x_kategori_laporan_view"]').val(data[i].kategori_laporan);
