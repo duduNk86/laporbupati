@@ -1338,8 +1338,8 @@ responsiveVoice.OnVoiceReady = function() {
           var id=$(this).val();
         //   alert (id);
           $.ajax({
-            url : "<?php echo site_url('admin/laporan/get_subkategori');?>",
-            // url : "< ?php echo site_url('admin/home/get_subkategori');?>",
+            // url : "< ?php echo site_url('admin/laporan/get_subkategori');?>",
+            url : "<?php echo site_url('/home/get_subkategori_home');?>",
             method : "GET",
             data : {id: id},
             async : true,

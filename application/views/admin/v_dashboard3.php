@@ -252,7 +252,7 @@
                     <div class="card-body text-bg-light" style="margin-top:20pt;">
                       <div class="chart-area">
                         <canvas id="myPieChart2"></canvas>
-                        <table style="margin-top:20pt;">
+                        <table style="margin-top:10pt;">
                           <?php 
                             foreach ($piechart2_custome as $i) :
                             ?>
@@ -303,7 +303,7 @@
                     <div class="card-body text-bg-light" style="margin-top:20pt;">
                       <div class="chart-area">
                         <canvas id="myPieChart"></canvas>
-                        <table style="margin-top:39pt;">
+                        <table style="margin-top:10pt;">
                           <?php 
                             foreach ($piechart_custome as $i) :
                             ?>

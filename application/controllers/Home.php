@@ -129,6 +129,16 @@ class Home extends CI_Controller{
 
 	}
 
+	function get_subkategori_home(){
+        $kategori_id = $this->input->get('id',TRUE);
+        $data = $this->m_kategori_laporan->get_subkategori_laporan($kategori_id)->result();
+        // print_r($data);
+        // die;
+  		// echo $kategori_id;
+		// die;
+		echo json_encode($data);
+	}
+
 
 
 }
