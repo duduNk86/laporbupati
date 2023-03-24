@@ -12,7 +12,7 @@ class M_kategori_laporan extends CI_Model{
 	// }	
 	
 	function get_all_subkategori_laporan(){
-    	$hsl = $this->db->query("SELECT * FROM tbl_subkategori_laporan JOIN tbl_kategori_laporan ON subkategori_kategori_id=kategori_id GROUP BY subkategori_id ASC");
+    	$hsl = $this->db->query("SELECT * FROM tbl_subkategori_laporan JOIN tbl_kategori_laporan ON subkategori_kategori_id=kategori_id GROUP BY subkategori_id ORDER BY subkategori_id ASC");
     	return $hsl;
 	}
 
