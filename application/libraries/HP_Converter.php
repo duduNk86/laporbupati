@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Hp_converter {
+class HP_Converter {
 
     protected $CI;
 

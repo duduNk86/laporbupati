@@ -101,7 +101,7 @@ class Aduan extends CI_Controller{
 						$foto=$gambar;
 
 						//Conversi Nomor Handphone menjadi 62
-						$this->load->library('hp_converter');
+						$this->load->library('HP_Converter');
 						$phone_number = $hp;
 						$converted_phone_number = $this->hp_converter->convert($phone_number);
 
@@ -179,7 +179,7 @@ class Aduan extends CI_Controller{
 			}else{
 				
 				// Conversi Nomor Handphone menjadi 62
-				$this->load->library('hp_converter');
+				$this->load->library('HP_Converter');
 				$phone_number = $hp;
 				$converted_phone_number = $this->hp_converter->convert($phone_number);
 				
