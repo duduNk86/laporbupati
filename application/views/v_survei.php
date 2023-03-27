@@ -63,7 +63,7 @@
                     <div class="tab-pane show active" id="tab1" role="tabpanel">
                         <form class="form-container" action="<?php echo base_url().'user/aduan/kirim_survei'?>" method="post" enctype="multipart/form-data">
                             <div align="center">
-                                <img src="<?php echo base_url(); ?>assets/frontend_aduan/images/logo_laporbup.jpg" style="width: 200px; height: 90px; margin-bottom: 20px;">
+                                <img src="<?php echo base_url(); ?>assets/frontend_aduan/images/logo_laporbup.png" style="width: 200px; height: 135px; margin-bottom: 20px;">
                             </div>
                             <h5 class="text-center font-weight-bold"> SURVEI LAYANAN LAPOR BUPATI </h5>
                             <p align="justify"><?php echo $this->session->flashdata('gagal');?></p>
