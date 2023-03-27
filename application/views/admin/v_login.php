@@ -28,7 +28,7 @@
   <!-- /.login-logo -->
   <?= $script_captcha; ?>
   <div class="login-box-body">
-    <p class="login-box-msg"> <center><img src="<?php echo base_url().'theme/images/mylogo.jpg'?>"></center></p><hr/>
+    <p class="login-box-msg"> <center><img src="<?php echo base_url().'theme/images/mylogo.png'?>" style="width:300px; height: 200px;"></center></p><hr/>
     
     <form action="<?php echo base_url().'admin/administrator/auth'?>" method="post">
       <div class="form-group has-feedback">
@@ -54,8 +54,7 @@
         <!-- /.col -->
       </div>
     </form>
-
-    
+  
     <!-- /.social-auth-links -->
     <hr/>
     <!-- <p><center>Lapor Bupati</center></p> -->

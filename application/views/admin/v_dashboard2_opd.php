@@ -74,8 +74,26 @@
     <hr>
 
     <!-- Main content -->
-    <section class="content" style="margin-top:-40pt;">
+    <section class="content">
       <section class="content-header">
+
+        <!-- Custome Statistik -->
+        <div class="row" style="margin-top: -25pt; margin-bottom: -5pt;">
+          <div class="col">
+            <div class="col-xl-6 col-lg-6">
+              <!-- <div class="btn-group" role="group">
+                <button type="button" title="Custom Rekap & Statistik Aduan"><a href="#" data-toggle="modal" data-target="#ModalCustomStatistik"><i class="fa fa-bar-chart"></i></a></button>
+                <button type="button" title="Reset Data"><a href="<?php echo base_url().'admin/dashboard'?>"><i class="fa fa-refresh"></i></a></button>
+              </div> -->
+            </div>
+            <div class="col-xl-6 col-lg-6">
+              <div class="btn-group pull-right" role="group">
+                <button id="clock"  class="date" style="letter-spacing: 0.1em; font-size: 14px;" disabled><b>{{ date }}</b> | <b style="color:red;">{{ time }}</b></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <h3 align="center">
           <b>Rekap Penanganan Aduan</b>
         </h3>
@@ -229,11 +247,21 @@
               <div class="box box-warning">
                 <div class="box-header with-border">
                   <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-                    <h3 class="m-0 font-weight-bold text-black" align="center"><b>Statistik Kategori Aduan</b></h3>
+                    <h3 class="m-0 font-weight-bold text-black" align="center"><b>Sumber Kanal Aduan</b></h3>
                   </div>
                   <div class="card-body text-bg-light" style="margin-top:20pt;">
                     <div class="chart-area">
-                      <canvas id="myPieChart"></canvas>
+                    <canvas id="myPieChart2"></canvas>
+                      <table style="margin-top:10pt;">
+                        <?php 
+                          foreach ($piechart2_opd as $i) :
+                          ?>
+                          <tr>
+                            <td style="font-size: 10pt;"><b><?php if($i->sumber_aduan=='LB') echo "Website Lapor Bupati"; else if($i->sumber_aduan=='LG') echo "Website Lapor Gubernur"; else if($i->sumber_aduan=='SP') echo "SP4N LAPOR"; else if($i->sumber_aduan=='WA') echo "Whatsapp"; else if($i->sumber_aduan=='SM') echo "SMS"; else if($i->sumber_aduan=='IG') echo "Instagram"; else if($i->sumber_aduan=='FB') echo "Facebook"; else if($i->sumber_aduan=='TW') echo "Twitter"; else echo "Belum Verifikasi";?></b></td>
+                            <td style="font-size: 10pt;"><b><?php echo "&nbsp; : &nbsp;".$i->total;?></b></td>
+                          </tr>
+                        <?php endforeach;?>
+                      </table>
                     </div>
                     <br>
                   </div>
@@ -248,6 +276,33 @@
 
     <section class="content" style="margin-top: -30pt;">
       <div class="row">
+          <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-12">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+                    <h3 class="m-0 font-weight-bold text-black" align="center"><b>Statistik Kategori Aduan</b></h3>
+                  </div>
+                  <div class="card-body text-bg-light" style="margin-top:20pt;">
+                    <div class="chart-area">
+                      <canvas id="myPieChart"></canvas>
+                      <table style="margin-top:10pt;">
+                        <?php 
+                          foreach ($piechart_opd as $i) :
+                          ?>
+                          <tr>
+                            <td style="font-size: 10pt;"><b><?php if($i->kategori_laporan==1) echo "Infrastruktur"; else if($i->kategori_laporan==2) echo "Non-Infrastruktur"; else echo "Belum Verifikasi";?></b></td>
+                            <td style="font-size: 10pt;"><b><?php echo "&nbsp; : &nbsp;".$i->total;?></b></td>
+                          </tr>
+                        <?php endforeach;?>
+                      </table>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="col-xl-6 col-lg-6">
             <div class="card">
                 <div class="box box-danger">
@@ -270,6 +325,13 @@
                 </div>
             </div>
           </div>
+      </div>
+    </section>
+
+    <br>
+
+    <section class="content" style="margin-top: -30pt;">
+      <div class="row">
           <div class="col-xl-6 col-lg-6">
             <div class="card">
                 <div class="box box-success">
@@ -312,21 +374,22 @@
   </section>
 
   <!-- Main row -->
-  <section class="content">
+  <section class="content" style="margin-top: -30pt;">
     <section class="content-header">
-      <h3 align="center" style="margin-bottom: 15pt; margin-top: -50pt;">
+      <!-- <h3 align="center" style="margin-bottom: 15pt; margin-top: -50pt;">
         <b>Top #5 Aduan Terbaru</b>
-      </h3>
+      </h3> -->
       <div class="row">
         <!-- Left col -->
         <div class="col-md-12">
           <!-- MAP & BOX PANE -->
-              <!-- <h3 class="box-title">Aduan Terbaru</h3> -->
+              <h3 align="center" class="box-title" style="margin-bottom: 15pt; margin-top: -60pt;"><b>Top #5 Aduan Terbaru</b></h3>
           <div class="box box-primary">
             <div class="box-header with-border">
               <table class="table">
               <thead>
                 <tr>
+                  <th align="center">#</th>
                   <th align="center">Aduan Terbaru</th>
                   <th align="center">Isi</th>
                   <th align="center">Tanggal</th>
@@ -335,13 +398,15 @@
               <tbody>      
                 <?php 
                     $code=$this->session->userdata("pengguna_idskpd");
-                    $query=$this->db->query("SELECT * FROM tbl_laporan WHERE id_kepada = '$code' ORDER BY nomor DESC limit 5 ");
+                    $query=$this->db->query("SELECT * FROM tbl_laporan WHERE id_kepada = '$code' ORDER BY nomor DESC limit 5");
+                    $no=1;
                     foreach ($query->result_array() as $i) :
                         $judul_laporan=$i['judul_laporan'];
                         $isi_laporan=$i['isi_laporan'];
                         $tanggal_laporan=$i['tanggal_laporan'];
                 ?>
                 <tr>
+                  <td align="justify"><?= $no++; ?></td>
                   <td align="justify"><?php echo $judul_laporan;?></td>
                   <td align="justify"><?php echo $isi_laporan;?></td>
                   <td align="left"><?php echo $tanggal_laporan;?></td>
@@ -476,6 +541,47 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url().'assets/dist/js/demo.js'?>"></script>
 
+<!-- Jam JS -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+<script type="text/javascript">
+    var clock = new Vue({
+    el: "#clock",
+    data: {
+        time: "",
+        date: ""
+    }
+  });
+
+var week = ["Minggu,", "Senin,", "Selasa,", "Rabu,", "Kamis,", "Jum'at,", "Sabtu,"];
+var timerID = setInterval(updateTime, 1000);
+updateTime();
+function updateTime() {
+    var cd = new Date();
+    clock.time =
+        zeroPadding(cd.getHours(), 2) +
+        ":" +
+        zeroPadding(cd.getMinutes(), 2) +
+        ":" +
+        zeroPadding(cd.getSeconds(), 2);
+    clock.date =
+        week[cd.getDay()] +
+        " " + zeroPadding(cd.getDate(), 2) +
+        "-" +
+        zeroPadding(cd.getMonth() + 1, 2) +
+        "-" +
+        zeroPadding(cd.getFullYear(), 4) +
+        " ";
+}
+
+function zeroPadding(num, digit) {
+    var zero = "";
+    for (var i = 0; i < digit; i++) {
+        zero += "0";
+    }
+    return (zero + num).slice(-digit);
+}
+</script>
+
 <!-- Chart -->
 <script type="text/javascript">
       var ctx = document.getElementById('myLineChart').getContext('2d');
@@ -486,7 +592,7 @@
             <?php 
               if (count($linechart_opd)>0) {
                 foreach ($linechart_opd as $data) {
-                  echo "'" .$data->year ."',";
+                  echo "'" .$data->year ." (".$data->jumlah_aduan .")" ."',";
                 }
               }
             ?>
@@ -510,6 +616,75 @@
       },
   });
          
+</script>
+
+<script type="text/javascript">
+      var ctx = document.getElementById('myPieChart2').getContext('2d');
+      var chart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: [
+            <?php 
+              if (count($piechart2_opd)>0) {
+                foreach ($piechart2_opd as $data) {
+                  if ($data->sumber_aduan=='LB')
+                    echo "'" ."Website Lapor Bupati" ."',";
+                  else if ($data->sumber_aduan=='LG')
+                    echo "'" ."Website Lapor Gubernur" ."',";
+                  else if ($data->sumber_aduan=='SP')
+                    echo "'" ."SP4N LAPOR" ."',";
+                  else if ($data->sumber_aduan=='WA')
+                    echo "'" ."Whatsapp" ."',";
+                  else if ($data->sumber_aduan=='SM')
+                    echo "'" ."SMS" ."',";
+                  else if ($data->sumber_aduan=='IG')
+                    echo "'" ."Instagram" ."',";
+                    else if ($data->sumber_aduan=='FB')
+                    echo "'" ."Facebook" ."',";
+                  // else if ($data->kategori_laporan=='TW')
+                  //   echo "'" ."Twitter" ."',";
+                  else
+                    echo "'" ."Twitter" ."',";
+                }
+              }
+            ?>
+          ],
+          datasets: [{
+              label: 'Sumber Kanal Aduan',
+              // backgroundColor: '#ADD8E6',
+              // borderColor: '##93C3D2',
+              backgroundColor: [
+                'rgba(204, 204, 204, 0.2)',
+			          'rgba(54, 162, 235, 0.2)',
+			          'rgba(255, 206, 86, 0.2)',
+                'rgba(189, 8, 92, 0.2)',
+			          'rgba(153, 102, 255, 0.2)',
+			          'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+              ],
+              borderColor: [
+                'rgba(204, 204, 204, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(189, 8, 92, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(75, 192, 192, 1)'
+              ],
+              data: [
+                <?php 
+                  if (count($piechart2_opd)>0) {
+                     foreach ($piechart2_opd as $data) {
+                      echo $data->total . ", ";
+                    }
+                  }
+                ?>
+              ]
+          }]
+      },
+  });        
 </script>
 
 <!-- <script type="text/javascript">

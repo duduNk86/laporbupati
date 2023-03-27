@@ -19,7 +19,7 @@ class Laporan extends CI_Controller{
 
 	function index(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$x['subkatall']=$this->m_kategori_laporan->get_all_subkategori_laporan();
 		// $x['data']=$this->m_laporan->get_all_laporan();
@@ -33,7 +33,7 @@ class Laporan extends CI_Controller{
 
 	function opd(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		if ($pengguna_level=='2'){
 		$this->load->view('admin/v_laporan2_a_opd',$x);
@@ -42,7 +42,7 @@ class Laporan extends CI_Controller{
 
 	function notifadmin(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$x['data']=$this->m_laporan->get_all_notifadmin();
 		$x['subkatall']=$this->m_kategori_laporan->get_all_subkategori_laporan();
@@ -56,7 +56,7 @@ class Laporan extends CI_Controller{
 
 	function notifadmin_disabilitas(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$x['data']=$this->m_laporan->get_all_notifadmin_disabilitas();
 		if ($pengguna_level=='1'){
@@ -69,7 +69,7 @@ class Laporan extends CI_Controller{
 
 	function notifopd(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		if ($pengguna_level=='2'){
 		$this->load->view('admin/v_laporan2_a_opd_notif',$x);
@@ -78,7 +78,7 @@ class Laporan extends CI_Controller{
 
 	function disabilitas(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$x['data']=$this->m_laporan->get_all_laporan_disabilitas();
 		if ($pengguna_level=='1'){
@@ -90,7 +90,7 @@ class Laporan extends CI_Controller{
 	}
 
 	function notifikasi(){
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$level=$this->session->userdata('pengguna_level');
 		if ($level==='1'){
@@ -104,7 +104,7 @@ class Laporan extends CI_Controller{
 	function semua(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
 		$level=$this->session->userdata('pengguna_level');
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		if ($pengguna_level=='2'){
 			$this->load->view('admin/v_laporan2_a_opd',$x);
@@ -115,71 +115,71 @@ class Laporan extends CI_Controller{
 	}
 
 	function get_opd(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$code=$this->session->userdata("pengguna_idskpd");
 		$data=$this->m_laporan->get_laporan_opd($code)->result();
 		echo json_encode($data);
 	}
 
 	function get_notifopd(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$code=$this->session->userdata("pengguna_idskpd");
 		$data=$this->m_laporan->get_laporan_notifopd($code)->result();
 		echo json_encode($data);
 	}
 
 	function get_belum_teruskan(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$code=$this->session->userdata("pengguna_idskpd");
 		$data=$this->m_laporan->get_laporan_belum_teruskan()->result();
 		echo json_encode($data);
 	}
 
 	function get_semua(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_laporan()->result();
 		echo json_encode($data);
 	}
 
 	function get_progres(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_laporan_progres()->result();
 		echo json_encode($data);
 	}
 
 	function get_verifikasi(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_laporan_verifikasi()->result();
 		echo json_encode($data);
 	}
 
 	function get_ditolak(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_laporan_ditolak()->result();
 		echo json_encode($data);
 	}	
 
 	//Update Dudunk
 	function get_semua_notifadmin(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_notifadmin()->result();
 		echo json_encode($data);
 	}
 
 	function get_semua_disabilitas(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_laporan_disabilitas()->result();
 		echo json_encode($data);
 	}	
 
 	function get_semua_notifdisabilitas(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$data=$this->m_laporan->get_all_notifadmin_disabilitas()->result();
 		echo json_encode($data);
 	}
 
 	function get_modalview(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_by_kode($kode);
 		echo json_encode($data);
@@ -187,28 +187,28 @@ class Laporan extends CI_Controller{
 
 	//Update Dudunk
 	function get_modalview_disabilitas(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_disabilitas_by_kode($kode);
 		echo json_encode($data);
 	}
 
 	function get_modalteruskan(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_by_kode($kode);
 		echo json_encode($data);
 	}
 
 	function get_modaltindaklanjut(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_by_kode($kode);
 		echo json_encode($data);
 	}
 
 	function get_modaledit(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_by_kode($kode)->result();
 		echo json_encode($data);
@@ -216,28 +216,28 @@ class Laporan extends CI_Controller{
 
 	//Update Dudunk
 	function get_modaledit_disabilitas(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_disabilitas_by_kode($kode)->result();
 		echo json_encode($data);
 	}
 
 	function get_modalhapus_disabilitas(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->input->get('id');
 		$data=$this->m_laporan->get_laporan_disabilitas_by_kode($kode)->result();
 		echo json_encode($data);
 	}
 
 	function byid(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$code=$this->session->userdata("komisi");
 		$x['data']=$this->m_laporan->view_laporan_komisi($code);
 		$this->load->view('admin/v_laporan2_a',$x);
 	}
 
 	function add_laporan(){    
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kategori_id = $this->input->post('id',TRUE);
 		$x['kat']=$this->m_kategori_laporan->get_all_kategori_laporan();
 		$x['subkat']=$this->m_kategori_laporan->get_subkategori_laporan($kategori_id);
@@ -256,14 +256,14 @@ class Laporan extends CI_Controller{
     }
 
 	function add_tambahan(){    
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['kat']=$this->m_kategori_laporan->get_all_kategori_laporan();
 		$x['kpd']=$this->m_kepada->get_all_kepada();
 		$this->load->view('admin$kategori_id/v_add_laporan_tambahan2',$x);
 	}
 
 	function get_edit_laporan(){
-		$x['title']="Lapor Bupati";
+		$x['title']='Lapor Bupati Wonosobo';
 		$kode=$this->uri->segment(4); //ambil yuri
 		$x['data']=$this->m_tulisan->get_tulisan_by_kode($kode);
 		$x['kat']=$this->m_kategori->get_all_kategori();
@@ -751,27 +751,6 @@ class Laporan extends CI_Controller{
 				redirect('admin/laporan/disabilitas');
 	}
 
-
-	// Kirim WA Guzzle
-	// public function send_whatsapp_message($whatsapp, $message2, $token) {
-    //     $client = new Client();
-    //     $url = 'https://api.chat-api.com/instance' . $token . '/sendMessage';
-
-    //     $data = [
-	// 		'phone' => $whatsapp,
-    //         'body' => $message2
-    //     ];
-
-    //     $response = $client->post($url, [
-    //         'headers' => [
-    //             'Content-Type' => 'application/json'
-    //         ],
-    //         'json' => $data
-    //     ]);
-
-    //     return $response->getBody()->getContents();
-    // }
-
 	function update_teruskan(){
 		$id=$this->input->post('x_kode_teruskan');
 		$datalaporan=$this->m_laporan->get_laporan_by_kode($id);
@@ -851,7 +830,7 @@ class Laporan extends CI_Controller{
         // $recipient = $this->input->post('recipient');
         // $message = $this->input->post('message');
 
-	  	$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*".$nama." Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB".$sumber_aduan."-".$tiketaduan."\n\n*Judul Laporan :*\n".$Judul_laporan."\n\n*Tindaklanjuti laporan dengan kunjungi :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui email : *laporwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
+	  	$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*".$nama." Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB".$sumber_aduan."-".$tiketaduan."\n\n*Judul Laporan :*\n".$judul_laporan."\n\n*Tindaklanjuti laporan dengan kunjungi :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui email : *laporwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
 
 		// $url_whatsapp = 'https://api.whatsapp.com/send?phone=' . $whatsapp . '&text=' . urlencode($message2);
 		
@@ -916,7 +895,7 @@ class Laporan extends CI_Controller{
 		// $this->email->print_debugger();
 
 		if($this->email->send()){
-			$this->session->set_flashdata('message','email');
+			$this->session->set_flashdata('message','email2');
 		}
 		else{
 			$this->session->set_flashdata('message', 'email gagal');

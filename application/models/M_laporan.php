@@ -77,7 +77,8 @@ class M_laporan extends CI_Model{
   		EXTRACT(year FROM tanggal_laporan) AS year,
   		COUNT(nomor) AS jumlah_aduan
 		FROM tbl_laporan
-		GROUP BY EXTRACT(year FROM tanggal_laporan)");
+		GROUP BY EXTRACT(year FROM tanggal_laporan)
+		ORDER BY EXTRACT(year FROM tanggal_laporan) ASC");
 		return $hsl->result();
 	}
 
@@ -176,7 +177,8 @@ class M_laporan extends CI_Model{
   		COUNT(nomor) AS jumlah_aduan
 		FROM tbl_laporan
 		WHERE id_kepada = '$id_kepada'
-		GROUP BY EXTRACT(year FROM tanggal_laporan)");
+		GROUP BY EXTRACT(year FROM tanggal_laporan)
+		ORDER BY EXTRACT(year FROM tanggal_laporan) ASC");
 		return $hsl->result();
 	}
 
@@ -188,6 +190,18 @@ class M_laporan extends CI_Model{
         $this->db->select('count(*) as total');
         $this->db->where("id_kepada ='$id_kepada'");
         $this->db->group_by('kategori_laporan');
+        $this->db->order_by('total','ASC');
+        return $this->db->get()->result();
+    }
+
+	function piechart2_opd($id_kepada)
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan'); 
+        $this->db->select('sumber_aduan');
+        $this->db->select('count(*) as total');
+		$this->db->where("id_kepada ='$id_kepada'");
+        $this->db->group_by('sumber_aduan');
         $this->db->order_by('total','ASC');
         return $this->db->get()->result();
     }

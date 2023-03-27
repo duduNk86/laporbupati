@@ -15,7 +15,7 @@ class Dashboard2 extends CI_Controller{
 		$dari=$this->input->post('x_dari');
 		$sampai=$this->input->post('x_sampai');
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['total_laporan'] = $this->m_dashboard->total_laporan();
 		$x['jml']=$this->m_laporan->get_jml();
 		$x['jml_laporan']=$this->m_laporan->get_jml_laporan_custome($dari,$sampai);
@@ -47,7 +47,7 @@ class Dashboard2 extends CI_Controller{
 
 	function opd(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['total_laporan'] = $this->m_dashboard->total_laporan();
 		$x['jml']=$this->m_laporan->get_jml();
 		if ($pengguna_level=='2'){

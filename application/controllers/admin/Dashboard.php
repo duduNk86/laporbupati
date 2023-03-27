@@ -12,7 +12,7 @@ class Dashboard extends CI_Controller{
 	
 	function index(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['total_laporan'] = $this->m_dashboard->total_laporan();
 		$x['jml']=$this->m_laporan->get_jml();
 		$x['jml_laporan']=$this->m_laporan->get_jml_laporan();
@@ -42,7 +42,7 @@ class Dashboard extends CI_Controller{
 	function opd(){
 		$pengguna_level=$this->session->userdata('pengguna_level');
 		$id_kepada=$this->session->userdata('pengguna_idskpd');
-		$x['title']='Lapor Bupati';
+		$x['title']='Lapor Bupati Wonosobo';
 		$x['total_laporan'] = $this->m_dashboard->total_laporan();
 		$x['jml']=$this->m_laporan->get_jml();
 		$x['jml_laporan_opd']=$this->m_laporan->get_jml_laporan_opd($id_kepada);
@@ -54,6 +54,7 @@ class Dashboard extends CI_Controller{
 		$x['jml_user']=$this->m_laporan->get_jml_user();
 		$x['linechart_opd'] = $this->m_laporan->linechart_opd($id_kepada);
 		$x['piechart_opd'] = $this->m_laporan->piechart_opd($id_kepada);
+		$x['piechart2_opd'] = $this->m_laporan->piechart2_opd($id_kepada);
 		$x['tablechart1_opd'] = $this->m_laporan->tablechart1_opd($id_kepada);
 		$x['tablechart2_opd'] = $this->m_laporan->tablechart2_opd($id_kepada);
 		if ($pengguna_level=='2'){

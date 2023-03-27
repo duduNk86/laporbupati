@@ -11,7 +11,7 @@ $uri4=$this->uri->segment(4);
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-           <center> <li class="header"><img src="<?php echo base_url().'theme/images/mylogomini.jpg'?>"></li></center>
+           <center> <li class="header"><img src="<?php echo base_url().'theme/images/mylogomini.png'?>"></li></center>
             <li>
               <a href="<?php echo base_url().'admin/dashboard'?>">
                 <i class="fa fa-home"></i> <span>Dashboard</span>
