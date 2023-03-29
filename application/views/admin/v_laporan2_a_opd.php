@@ -80,14 +80,15 @@ $jum_komentar=$query1->num_rows();
                       <thead>
                         <tr>
                           <th style="text-align:center;">No</th>
-                          <th style="text-align:center;">Tiket Aduan</th>
-                          <th style="text-align:center;">Tanggal</th>
-                          <th style="text-align:center;">Foto</th>
-                          <th style="text-align:center;">OPD</th>
-                          <th style="text-align:center;">Rincian</th>
+                          <th style="text-align:center;">Tiket | Tgl-Jam | Sumber Aduan</th>
+                          <!-- <th style="text-align:center;">Tanggal</th> -->
+                          <!-- <th style="text-align:center;">Bukti Dukung</th> -->
+                          <th style="text-align:center;">Judul | Rincian | Bukti Dukung</th>
+                          <th style="text-align:center;" title="Perangkat Daerah Terkait Penanganan Aduan">OPD</th>
                           <!-- <th style="text-align:center;">Nama</th>
                           <th style="text-align:center;">HP</th> -->
-                          <th style="text-align:center;">Status</th>
+                          <!-- <th style="text-align:center;">Status</th> -->
+                          <th style="text-align:center;" title="Status Aduan / Durasi TL / Rating Jawaban">Status | Durasi | Rating</th>
                           <th style="text-align:center;">Aksi</th>
                         </tr>
                       </thead>
@@ -272,9 +273,24 @@ $jum_komentar=$query1->num_rows();
                   <div class="col-sm-7">
                      <select class="form-control select2" name="x_kategori_laporan_view" style="width: 100%;" disabled required>
                         <option value="">-Pilih-</option>
-                        <option value="1">Fisik</option>
-                        <option value="2">Non Fisik</option>        
+                        <option value="1">Fisik / Infrastruktur</option>
+                        <option value="2">Non Fisik / Non Infrastruktur</option>        
                       </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">Sub Kategori</label>
+                  <div class="col-sm-7">
+                     <select class="form-control select2" name="x_subkategori_laporan_view" id="x_subkategori_laporan_view" style="width: 100%;" disabled required>
+                        <option value="">- Pilih -</option>
+                        <option value=""><?php echo $subkategori_nama;?></option>
+                      </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">Topik</label>
+                  <div class="col-sm-7">
+                    <input type="text" name="x_topik_laporan_view"  class="form-control" id="x_topik_laporan_view" placeholder="Hashtag (#) Topik Aduan" disabled required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -287,7 +303,6 @@ $jum_komentar=$query1->num_rows();
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Judul Aduan</label>
                   <div class="col-sm-7">
-                    <input type="hidden" name="kode" id="kode">
                     <input type="text" name="x_judul_laporan_view"  class="form-control" id="x_judul_laporan_view" placeholder="Nama Agenda" disabled required>
                   </div>
                 </div>
@@ -417,31 +432,75 @@ $jum_komentar=$query1->num_rows();
                     laporan_status = '<span class="label label-success">Selesai</span>';
                   }
 
+                  var rating = data[i].rating_jawaban;
+                  if (rating ==1){
+                     rating = '<b href="javascript:;" style="color:gold;" title="1 Bintang" data="'+data[i].id+'"><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></b>';
+                  }else if(rating ==2){
+                    rating = '<b href="javascript:;" style="color:gold;" title="2 Bintang" data="'+data[i].id+'"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></b>';
+                  }else if(rating ==3){
+                    rating = '<b href="javascript:;" style="color:gold;" title="3 Bintang" data="'+data[i].id+'"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></b>';
+                  }else if(rating ==4){
+                    rating = '<b href="javascript:;" style="color:gold;" title="4 Bintang" data="'+data[i].id+'"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></b>';
+                  }else if(rating ==5){
+                    rating = '<b href="javascript:;" style="color:gold;" title="5 Bintang" data="'+data[i].id+'"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></b>';
+                  }else{
+                    rating = '<b href="javascript:;" style="color:gold;" title="0 Bintang" data="'+data[i].id+'"><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></b>';
+                  }
+
+                  var sumber = data[i].sumber_aduan;
+                  if (sumber =='LB') {
+                    sumber = 'LaporBup';
+                  } else if (sumber =='LG') {
+                    sumber = 'LaporGub';
+                  } else if (sumber =='SP') {
+                    sumber = 'SP4N Lapor';
+                  } else if (sumber =='SM') {
+                    sumber = 'SMS';
+                  } else if (sumber =='WA') {
+                    sumber = 'Whatsapp';
+                  } else if (sumber =='IG') {
+                    sumber = 'Instagram';
+                  } else if (sumber =='FB') {
+                    sumber = 'Facebook';
+                  } else {
+                    sumber = 'Twitter';
+                  }
+
+                  // Durasi TL
+                  var awal  = new Date(data[i].tanggal_laporan);
+                  var akhir = new Date(data[i].tanggal_tindaklanjut);
+
+                  selisihDetik = Math.floor((akhir - (awal))/1000);
+                  selisihMenit = Math.floor(selisihDetik/60);
+                  selisihJam = Math.floor(selisihMenit/60);
+                  selisihHari = Math.floor(selisihJam/24);
+
+                  jamTl = selisihJam-(selisihHari*24);
+                  menitTl = selisihMenit-(selisihHari*24*60)-(jamTl*60);
+                  detikTl = selisihDetik-(selisihHari*24*60*60)-(jamTl*60*60)-(menitTl*60);
+
                   var fileName = data[i].foto;
                   var fileExtension = fileName.split('.').pop(); 
                   if (fileExtension == "pdf") {
                     tampilimagefoto = '<embed src="'+ base_urlx + data[i].foto +'" width="90px" height="90px" /> <center><a href="'+ base_urlx + data[i].foto +'" style="width:90px;">view Pdf</a></center>';
-                    
+                  }else if(fileExtension === "") {
+                    tampilimagefoto = '-';
                   }else{
                     tampilimagefoto = '<img src="'+ base_urlx + data[i].foto +'" style="width:90px;">';
                   }
 
 		                html += '<tr>'+
-		                  		'<td>'+no+'</td>'+
-		                        // '<td><img src="'+ base_urlx + data[i].foto +'" style="width:90px;" alt="'+ base_urlx + data[i].foto +'"></td>'+
-		                        '<td>'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</td>'+
-                            '<td>'+data[i].tanggal_laporan+'</td>'+
-                            '<td>'+tampilimagefoto+'</td>'+
-                            '<td>'+data[i].ditujukan_kepada+'</td>'+
-		                        '<td style="text-align:justify;">'+data[i].isi_laporan+'</td>'+
-		                        // '<td>'+data[i].nama+'</td>'+
-		                        // '<td>'+data[i].hp+'</td>'+
-		                        '<td>'+laporan_status+'</td>'+
-		                        '<td style="text-align:center;">'+
-                                    '<a href="javascript:;" data-toggle="tooltip" title="Lihat Rincian" class="btn btn-success btn-xs item_view" data="'+data[i].id+'"><span class="fa fa-eye"></span></a>'+' '+
-                                    '<a href="javascript:;" data-toggle="tooltip" title="Tindaklanjut" class="btn btn-warning btn-xs item_tindaklanjut" data="'+data[i].id+'"><span class="fa fa-arrow-right"></span></a>'+' '+
-                                    '<a href="javascript:;" data-toggle="tooltip" title="Tolak Aduan" class="btn btn-danger btn-xs item_tolak" data="'+data[i].id+'"><span class="fa fa-close"></span></a>'+' '+
-                                '</td>'+
+                              '<td>'+no+'</td>'+
+                              '<td><b style="color:blue;">'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</b><br><br>'+data[i].tanggal_laporan+'<br><br>'+sumber+'</td>'+
+                              // '<td>'+tampilimagefoto+'</td>'+
+                              '<td style="text-align:justify;">'+'<b>['+data[i].judul_laporan+']</b><br><br>'+data[i].isi_laporan+'<br><br>'+tampilimagefoto+'</td>'+
+                              '<td>'+data[i].ditujukan_kepada+'</td>'+
+                              '<td style="text-align:center;">'+laporan_status+'<br><br>'+'<b>'+selisihHari +'</b>'+ " hari " +'<br><b>'+ jamTl +'</b>'+ " jam " +'<b>'+ menitTl +'</b>'+ " menit " +'<b>'+ detikTl +'</b>'+ " detik"+'<br><br>'+rating+'</td>'+
+                              '<td style="text-align:center;">'+
+                                  '<a href="javascript:;" data-toggle="tooltip" title="Lihat Rincian" class="btn btn-success btn-xs item_view" data="'+data[i].id+'"><span class="fa fa-eye">&nbsp; Detail &nbsp;&nbsp;&nbsp;</span></a>'+'<br>'+
+                                  '<a href="javascript:;" data-toggle="tooltip" title="Tindaklanjut" class="btn btn-warning btn-xs item_tindaklanjut" data="'+data[i].id+'"><span class="fa fa-arrow-right">&nbsp; Input TL</span></a>'+'<br>'+
+                                  '<a href="javascript:;" data-toggle="tooltip" title="Tolak Aduan" class="btn btn-danger btn-xs item_tolak" data="'+data[i].id+'"><span class="fa fa-close">&nbsp; Tolak &nbsp;&nbsp;&nbsp;&nbsp;</span></a>'+'<br>'+
+                              '</td>'+
 		                        '</tr>';
 		            }
                     $('#tbody_tbl_laporan').html(html);
@@ -504,6 +563,8 @@ $jum_komentar=$query1->num_rows();
                 $('[name="x_ditujukan_kepada_view"]').val(data[i].ditujukan_kepada);
                 $('[name="x_judul_laporan_view"]').val(data[i].judul_laporan);
                 $('[name="x_kategori_laporan_view"]').val(data[i].kategori_laporan);
+                $('[name="x_subkategori_laporan_view"]').val(data[i].subkategori_laporan);
+                $('[name="x_topik_laporan_view"]').val(data[i].topik_laporan);
                 $('[name="x_isi_laporan_view"]').val(data[i].isi_laporan);
                 $('[name="x_nik_view"]').val(data[i].nik);
                 $('[name="x_nama_view"]').val(data[i].nama);

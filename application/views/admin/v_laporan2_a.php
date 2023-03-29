@@ -194,8 +194,8 @@ $jum_komentar=$query1->num_rows();
                   <div class="col-sm-7">
                      <select class="form-control select2" name="x_kategori_laporan_view" style="width: 100%;" disabled required>
                         <option value="">- Pilih -</option>
-                        <option value="1">Fisik</option>
-                        <option value="2">Non Fisik</option>        
+                        <option value="1">Fisik / Infrastruktur</option>
+                        <option value="2">Non Fisik / Non Infrastruktur</option>        
                       </select>
                   </div>
                 </div>
