@@ -11,20 +11,15 @@ class M_cetak extends CI_Model{
 		return $hsl;
 	}
 
-
-
 	function cetak_laporan_admin2($id){
 		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_jenis='1' AND id_komisi ='$id' ORDER BY ditujukan_kepada ASC");
 		return $hsl;
 	}
 
-
 	function cetak_laporan_admin2_tambahan($id){
 		$hsl=$this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE id_jenis='1' AND id_komisi ='$id' AND tambahan = '2' ORDER BY ditujukan_kepada ASC");
 		return $hsl;
 	}
-
-
 
 	function get_jml_semua(){
 		$hsl= "SELECT sum(anggaran) as anggaran FROM tbl_laporan WHERE id_jenis='1'";
@@ -32,21 +27,18 @@ class M_cetak extends CI_Model{
 		return $result->row()->anggaran;
 	}
 
-
 	function get_jml_komisi($id){
 		$hsl= "SELECT sum(anggaran) as anggaran FROM tbl_laporan WHERE id_komisi='$id'";
 		$result=$this->db->query($hsl);
 		return $result->row()->anggaran;
 	}
 
-
 	function get_jml_semua_tambahan(){
 		$hsl= "SELECT sum(anggaran) as anggaran FROM tbl_laporan WHERE id_jenis='1' AND tambahan='2'";
 		$result=$this->db->query($hsl);
 		return $result->row()->anggaran;
 	}
-
-
+	
 	function get_jml_komisi_tambahan($id){
 		$hsl= "SELECT sum(anggaran) as anggaran FROM tbl_laporan WHERE id_komisi='$id' AND tambahan='2'";
 		$result=$this->db->query($hsl);

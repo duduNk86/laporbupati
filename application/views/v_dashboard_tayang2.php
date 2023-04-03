@@ -14,7 +14,7 @@ if(empty($pengguna_level)){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="<?= base_url('theme/');?>images/Lambang Wonosobo.png" rel="shortcut icon" />
     <!-- END META SECTION -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Share+Tech+Mono">
     <style type="text/css">
@@ -87,7 +87,7 @@ if(empty($pengguna_level)){
                 <div class="page-content-wrap" style="font-size: medium;">
                     <!-- START WIDGETS -->
                     <div class="row">
-                        <div class="col-md-9"><img src="<?php echo base_url().'assets/lapor/dashboardlapor.png'?>" width="600px" height="110px"></div>
+                        <div class="col-md-9"><img src="<?php echo base_url().'assets/lapor/dashboardlapor-v2.png'?>" width="600px" height="110px"></div>
                         <!-- <div class="col-md-3"></div>
                         <div class="col-md-3"></div> -->
                         
@@ -104,26 +104,21 @@ if(empty($pengguna_level)){
                         </div>
                     </div>
                     <!-- END WIDGETS -->                    
-                    <?php
+                    <!-- < ?php
                     $kode=2;
                     $hsl=$this->db->query("SELECT * FROM tbl_laporan where tayang='ya'");        
                     $jml_tayang=$hsl->num_rows();
                     $btl=$this->db->query("SELECT * FROM tbl_laporan where laporan_status='$kode' AND tayang='ya'");        
                     $jml_btl=$btl->num_rows();
-                    ?>
+                    ?> -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-colorful">
                                 <div class="panel-heading">
                                     <div class="panel-title-box">
-                                        <h4><b>PENGADUAN AKTIF  : <?php echo $jml_tayang;?> &nbsp;,&nbsp; SEDANG PROSES TL : <?php echo $jml_btl;?></b> </h4>
+                                        <h4><b>PENGADUAN AKTIF  : <?php echo $jml_tayang;?> &nbsp;,&nbsp; SEDANG PROSES TL : <?php echo $jml_prosestl;?></b> </h4>
                                     </div>
-                                    <!-- <ul class="panel-controls" style="margin-top: 1px;">
-                                        @LaporBupati
-                                        <a class="btn btn-success btn-flat" href="< ?php echo base_url().'admin/administrator/logout'?>"><span></span> Logout</a>
-                                    </ul>  -->
                                 </div>
-                                
                                 <div class="panel-body padding-0">
                                     <div id="wrapper">
                                         <div id="carousel">
@@ -142,8 +137,9 @@ if(empty($pengguna_level)){
                                             $judul_laporan=$i['judul_laporan'];
                                             $lokasi=$i['lokasi'];
                                             $isi_laporan=$i['isi_laporan'];
-                                            $nama=$i['nama'];
-                                            $alamat=$i['alamat'];
+                                            $sumber_aduan=$i['sumber_aduan'];
+                                            // $nama=$i['nama'];
+                                            // $alamat=$i['alamat'];
                                             $tanggal=$i['tanggal_laporan'];
                                             $laporan_status=$i['laporan_status'];
                                             $tindaklanjut=$i['tindaklanjut'];
@@ -160,8 +156,8 @@ if(empty($pengguna_level)){
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <div class="col-md-12">
-                                                                <center><b>Dari</b></center><hr>
-                                                                    <center><?php echo $nama;?></center>
+                                                                <center><b>Tiket Aduan</b></center><hr>
+                                                                    <center style="color:red;"><b><?php echo "LB".$sumber_aduan."-".$id;?></b></center>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
@@ -244,7 +240,7 @@ if(empty($pengguna_level)){
         </div>
 
         <div class="panel-footer">
-           <h5> <center>Lapor Bupati Wonosobo - by @msyon & m@sguNk86</center><h5>
+           <h5> <center>Lapor Bupati Wonosobo v.2 - by @msyon & m@sguNk86</center><h5>
         </div>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>

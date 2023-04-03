@@ -169,7 +169,10 @@ class Aduan extends CI_Controller{
 						// Tampilkan response dalam bentuk JSON
 						$this->output->set_content_type('application/json')->set_output(json_encode($data));
 
-						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+						// $this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+
+						$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Nomor WhatsApp (WA) yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+
 						redirect('home/survei');
 				}else{
 					echo $this->session->set_flashdata('gagal','warning');
@@ -236,7 +239,10 @@ class Aduan extends CI_Controller{
 				// Tampilkan response dalam bentuk JSON
 				$this->output->set_content_type('application/json')->set_output(json_encode($data));
 
-				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+				// $this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Email/HP/WhatsApp yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+
+				$this->session->set_flashdata('sukses','Laporan Anda sudah terkirim, silahkan menunggu Notifikasi melalui Nomor WhatsApp (WA) yang dicantumkan. Selanjutnya, luangkan waktu Anda sejenak untuk mengisi Survey Layanan dibawah ini. Jawaban Anda digunakan sebagai bahan Evaluasi Kinerja kami. Terima Kasih.');
+
 				redirect('home/survei');
 			}
 		}else{
@@ -318,7 +324,10 @@ class Aduan extends CI_Controller{
 				$table  = 'tbl_laporan_disabilitas';
 				$this->c_model->simpan($data,$table);
 
-				$this->session->set_flashdata('sukses','Laporan Anda telah terkirim! silahkan menunggu Link Tracking untuk Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.');
+				// $this->session->set_flashdata('sukses','Laporan Anda telah terkirim! silahkan menunggu Link Tracking untuk Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.');
+
+				$this->session->set_flashdata('sukses','Laporan Anda telah terkirim! silahkan menunggu Link Tracking untuk Progres Tindaklanjutnya yang akan dikirimkan melalui Nomor WhatsApp (WA) yang telah disampaikan.');
+
 				redirect('');
 			}
 	}

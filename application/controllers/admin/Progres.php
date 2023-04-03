@@ -744,17 +744,17 @@ class Progres extends CI_Controller{
 		$table  = 'tbl_laporan';
 
 		$config = array(
-			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.gmail.com', 
-			'smtp_port' => 465,
-			'smtp_user' => 'laporwonosobo@gmail.com',
-			'smtp_pass' => 'nqudkgrsfhhsimbf',
-			'smtp_username' => 'laporwonosobo@gmail.com',
-			'mailtype' => 'html',
-			'charset' => 'iso-8859-1',
-			'Content-Type'=>'text/plain',
-			'Content-Transfer-Encoding'=>'8bit',
-			'wordwrap' => TRUE
+			'protocol' 		=> 'smtp',
+			'smtp_host' 	=> 'ssl://smtp.gmail.com', 
+			'smtp_port' 	=> 465,
+			'smtp_user' 	=> 'laporbupatiwonosobo@gmail.com',
+			'smtp_pass' 	=> 'nbubebgyefzppslm',
+			// 'smtp_username' => 'laporbupatiwonosobo@gmail.com',
+			'mailtype' 		=> 'html',
+			'charset' 		=> 'iso-8859-1',
+			'Content-Type'	=> 'text/plain',
+			'Content-Transfer-Encoding'=> '8bit',
+			'wordwrap' 		=> TRUE
 	        );
 
 		$message = 	"
@@ -763,13 +763,13 @@ class Progres extends CI_Controller{
 				<title>Laporan Masuk </title>
 			</head>
 			<body>
-				<h2>Laporan baru mohon Kepada ".$nama." untuk segera ditindaklanjuti</h2>
+				<h3>Laporan baru mohon Kepada ".$nama." untuk segera ditindaklanjuti</h3>
 				<p></p>
-				<p>No. Tiket Aduan  : LB".$sumber_aduan."-".$tiketaduan."</p>
+				<p>No. Tiket Aduan  : <b>LB".$sumber_aduan."-".$tiketaduan."</b></p>
 				<p>Judul Laporan    : ".$judul_laporan."</p>
 				<p>Rincian Laporan  : ".$isi_laporan."</p>
-				<p>Tindaklanjuti laporan dengan kunjungi <a href=https://laporbupati.wonosobokab.go.id/admin>Lapor Bupati Wonosobo</a> </p>
-				<p>Lapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke website kami.  Jika anda menerima email yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami di contact laporwonosobo@gmail.com untuk penyelidikan lebih lanjut.</p>
+				<p>Tindaklanjuti laporan dengan kunjungi <a href=https://laporbupati.wonosobokab.go.id/admin><b>Lapor Bupati Wonosobo</b></a> </p>
+				<p>Lapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui kontak Email : <b>laporbupatiwonosobo@gmail.com</b> untuk penyelidikan lebih lanjut.</p>
 			</body>
 			</html>
 			";
@@ -777,7 +777,7 @@ class Progres extends CI_Controller{
 			// var_dump($message);
 			// die;
 		
-		$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*".$nama." Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB".$sumber_aduan."-".$tiketaduan."\n\n*Judul Laporan :*\n".$judul_laporan."\n\n*Tindaklanjuti laporan dengan kunjungi :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui email : *laporwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
+		$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*".$nama." Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB".$sumber_aduan."-".$tiketaduan."\n\n*Judul Laporan :*\n".$judul_laporan."\n\n*Tindaklanjuti laporan dengan kunjungi :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui email : *laporbupatiwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
 
 		// Inisialisasi client Guzzle
         $client = new Client(['base_uri' => 'https://pati.wablas.com/api/']);
@@ -816,7 +816,7 @@ class Progres extends CI_Controller{
 		$this->email->attach(base_url('assets/images/').$foto);
 		// $this->email->print_debugger();
 		if($this->email->send()){
-			$this->session->set_flashdata('message','email2');
+			$this->session->set_flashdata('message','email');
 		}
 		else{
 			$this->session->set_flashdata('message', 'email gagal');
@@ -846,13 +846,13 @@ class Progres extends CI_Controller{
 			'protocol' 		=> 'smtp',
 			'smtp_host' 	=> 'ssl://smtp.gmail.com', 
 			'smtp_port' 	=> 465,
-			'smtp_user' 	=> 'laporwonosobo@gmail.com',
-			'smtp_pass' 	=> 'nqudkgrsfhhsimbf',
-			'smtp_username' => 'laporwonosobo@gmail.com',
+			'smtp_user' 	=> 'laporbupatiwonosobo@gmail.com',
+			'smtp_pass' 	=> 'nbubebgyefzppslm',
+			// 'smtp_username' => 'laporbupatiwonosobo@gmail.com',
 			'mailtype' 		=> 'html',
 			'charset' 		=> 'iso-8859-1',
-			'Content-Type'	=>'text/plain',
-			'Content-Transfer-Encoding'=>'8bit',
+			'Content-Type'	=> 'text/plain',
+			'Content-Transfer-Encoding'=> '8bit',
 			'wordwrap' 		=> TRUE
 	        );
 
@@ -862,16 +862,16 @@ class Progres extends CI_Controller{
 				<title>Tracking Progres Aduan Lapor Bupati Wonosobo</title>
 			</head>
 			<body>
-				<h2>Kepada Yth.: ".$nama."</h2>
+				<h3>Kepada Yth.: ".$nama."</h3>
 				<p></p>
 				<p>Berikut Kami sampaikan Link Pantauan Aduan Saudara pada Kanal Lapor Bupati Wonosobo, sebagai berikut:</p>
-				<p>No. Tiket Aduan  : LB".$sumber_aduan."-".$tiketaduan."</p>
+				<p>No. Tiket Aduan  : <b>LB".$sumber_aduan."-".$tiketaduan."</b></p>
 				<p>Judul Laporan    : ".$judul_laporan."</p>
 				<p>Rincian Laporan  : ".$isi_laporan."</p>
 				<p></p>
-				<p>Silahkan Klik Link ini untuk melihat progres tindak lanjut : <a href=https://laporbupati.wonosobokab.go.id/home/detail/".$tiketaduan.">Pantau Progres Aduan</a></p>
+				<p>Silahkan Klik Link ini untuk melihat progres tindak lanjut : <a href=https://laporbupati.wonosobokab.go.id/home/detail/".$tiketaduan."><b>Pantau Progres Aduan</b></a></p>
 				<p></p>
-				<p>Lapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke website kami.  Jika anda menerima email yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami di contact laporwonosobo@gmail.com untuk penyelidikan lebih lanjut.</p>
+				<p>Lapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui kontak Email : laporbupatiwonosobo@gmail.com untuk penyelidikan lebih lanjut.</p>
 			</body>
 			</html>
 			";

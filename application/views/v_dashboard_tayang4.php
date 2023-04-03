@@ -13,8 +13,7 @@ if(empty($pengguna_level)){
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon" /> -->
+    
     <link href="<?= base_url('theme/');?>images/Lambang Wonosobo.png" rel="shortcut icon" />
     <!-- END META SECTION -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Share+Tech+Mono">
@@ -89,7 +88,7 @@ if(empty($pengguna_level)){
                 <div class="page-content-wrap" style="font-size: medium;">
                     <!-- START WIDGETS -->
                     <div class="row">
-                        <div class="col-md-9"><img src="<?php echo base_url().'assets/lapor/dashboardlapor-v2.png'?>" width="600px" height="110px"></div>
+                        <div class="col-md-9"><img src="<?php echo base_url().'assets/lapor/dashboardlapor.png'?>" width="600px" height="110px"></div>
                         <!-- <div class="col-md-3"></div>
                         <div class="col-md-3"></div> -->
                         
@@ -132,6 +131,7 @@ if(empty($pengguna_level)){
                                           <div class="btn-group" role="group">
                                             <button type="button" title="Custom Rekap & Statistik"><a href="#" data-toggle="modal" data-target="#ModalCustomStatistik"><i class="fa fa-bar-chart"></i></a></button>
                                             <button type="button" title="Reset Data"><a href="<?php echo base_url().'home/view'?>"><i class="fa fa-refresh"></i></a></button>
+                                            &nbsp;Statistik &nbsp;:&nbsp; <b style="color:red;"><?php echo mediumdate_indo($tanggal_dari);?></b> s/d <b style="color:red;"><?php echo mediumdate_indo($tanggal_sampai); ?></b>
                                           </div>
                                         </div>
                                       </div>
@@ -285,9 +285,9 @@ if(empty($pengguna_level)){
                                               <div class="card-body text-bg-light" style="margin-top:20pt;">
                                                 <div class="chart-area">
                                                   <canvas id="myPieChart"></canvas>
-                                                  <table style="margin-top:39pt;">
+                                                  <table style="margin-top: 39pt;">
                                                       <?php 
-                                                        foreach ($piechart as $i) :
+                                                        foreach ($piechart_custome as $i) :
                                                         ?>
                                                         <tr>
                                                           <td style="font-size: 10pt;"><b><?php if($i->kategori_laporan==1) echo "Infrastruktur"; else echo "Non-Infrastruktur";?></b></td>
@@ -314,7 +314,7 @@ if(empty($pengguna_level)){
                                                   <canvas id="myDoughnutChart"></canvas>
                                                   <table style="margin-top: 10pt;">
                                                       <?php 
-                                                        foreach ($doughnutchart as $i) :
+                                                        foreach ($doughnutchart_custome as $i) :
                                                         ?>
                                                         <tr>
                                                           <td style="font-size: 10pt;"><b><?php if($i->subkategori_laporan==1) echo "Jalan dan Jembatan"; else if($i->subkategori_laporan==2) echo "Bangunan dan Gedung"; else if($i->subkategori_laporan==3) echo "Sarana dan Prasarana Pengairan"; else echo "Bidang Fisik lainnya";?></b></td>
@@ -362,7 +362,7 @@ if(empty($pengguna_level)){
                                               <table class="table">
                                                 <tbody>       
                                                   <?php 
-                                                    foreach ($tablechart1 as $i) :
+                                                    foreach ($tablechart1_custome as $i) :
                                                     ?>
                                                     <tr>
                                                       <td style="color:red;"><b><?php echo $i->topik_laporan;?></b></td>
@@ -392,7 +392,7 @@ if(empty($pengguna_level)){
                                                 <tbody>       
                                                   <?php
                                                     $no=1;
-                                                    foreach ($tablechart2 as $i) :
+                                                    foreach ($tablechart2_custome as $i) :
                                                     ?>
                                                     <tr>
                                                       <td align="center"><b>#<?= $no++; ?></b></td>
@@ -433,7 +433,7 @@ if(empty($pengguna_level)){
                                                   <canvas id="myPieChart2"></canvas>
                                                   <table style="margin-top:10pt;">
                                                     <?php 
-                                                      foreach ($piechart2 as $i) :
+                                                      foreach ($piechart2_custome as $i) :
                                                       ?>
                                                       <tr>
                                                         <td style="font-size: 10pt;"><b><?php if($i->sumber_aduan=='LB') echo "Website Lapor Bupati"; else if($i->sumber_aduan=='LG') echo "Website Lapor Gubernur"; else if($i->sumber_aduan=='SP') echo "SP4N LAPOR"; else if($i->sumber_aduan=='WA') echo "Whatsapp"; else if($i->sumber_aduan=='SM') echo "SMS"; else if($i->sumber_aduan=='IG') echo "Instagram"; else if($i->sumber_aduan=='FB') echo "Facebook"; else if($i->sumber_aduan=='TW') echo "Twitter"; else echo "Belum Verifikasi";?></b></td>
@@ -544,7 +544,6 @@ if(empty($pengguna_level)){
             return (zero + num).slice(-digit);
         }
         </script>
-        
         <script>
             setTimeout(function(){
         window.location.reload(1);
@@ -584,25 +583,48 @@ if(empty($pengguna_level)){
               var chart = new Chart(ctx, {
               type: 'line',
               data: {
-                  labels: [
+                  labels: [ 
                     <?php 
-                      if (count($linechart)>0) {
-                        foreach ($linechart as $data) {
-                          echo "'" .$data->year . " (".$data->jumlah_aduan .")" ."',";
+                      if (count($linechart_custome_bulan)>0) {
+                        foreach ($linechart_custome_bulan as $data) {
+                          if ($data->month==1)
+                            echo "'" .$data->day ." Jan ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==2)
+                            echo "'" .$data->day ." Feb ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==3)
+                            echo "'" .$data->day ." Mar ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==4)
+                            echo "'" .$data->day ." Apr ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==5)
+                            echo "'" .$data->day ." Mei ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==6)
+                            echo "'" .$data->day ." Jun ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==7)
+                            echo "'" .$data->day ." Jul ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==8)
+                            echo "'" .$data->day ." Agu ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==9)
+                            echo "'" .$data->day ." Sep ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==10)
+                            echo "'" .$data->day ." Okt ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==11)
+                            echo "'" .$data->day ." Nov ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==12)
+                            echo "'" .$data->day ." Des ".$data->year ." (".$data->jumlah_aduan .")" ."',";
                         }
                       }
                     ?>
                   ],
                   datasets: [{
-                      label: 'Jumlah Aduan ',
+                      label: 'Jumlah Aduan per Hari',
                       backgroundColor: '#ADD8E6',
                       borderColor: '##93C3D2',
                       // backgroundColor: ['rgb(255, 99, 132)', 'rgb(252, 165, 3)', 'rgb(56, 86, 255, 0.87)','rgb(60, 179, 113)'],
                       // borderColor: ['rgb(255, 99, 132)'],
                       data: [
                         <?php 
-                          if (count($linechart)>0) {
-                             foreach ($linechart as $data) {
+                          if (count($linechart_custome_bulan)>0) {
+                             foreach ($linechart_custome_bulan as $data) {
                               echo $data->jumlah_aduan . ", ";
                             }
                           }
@@ -621,8 +643,8 @@ if(empty($pengguna_level)){
               data: {
                   labels: [
                     <?php 
-                      if (count($barchart)>0) {
-                        foreach ($barchart as $data) {
+                      if (count($barchart_custome)>0) {
+                        foreach ($barchart_custome as $data) {
                           echo "'" .$data->ditujukan_kepada . " : ".$data->total ."',";
                         }
                       }
@@ -636,8 +658,8 @@ if(empty($pengguna_level)){
                       // borderColor: ['rgb(255, 99, 132)'],
                       data: [
                         <?php 
-                          if (count($barchart)>0) {
-                             foreach ($barchart as $data) {
+                          if (count($barchart_custome)>0) {
+                             foreach ($barchart_custome as $data) {
                               echo $data->total . ", ";
                             }
                           }
@@ -655,12 +677,12 @@ if(empty($pengguna_level)){
               data: {
                   labels: [
                     <?php 
-                      if (count($piechart)>0) {
-                        foreach ($piechart as $data) {
+                      if (count($piechart_custome)>0) {
+                        foreach ($piechart_custome as $data) {
                           if ($data->kategori_laporan==1)
-                            echo "'" ."Infrastruktur " ."',";
+                            echo "'" ."Infrastruktur" ."',";
                           else
-                            echo "'" ."Non-Infrastruktur " ."',";
+                            echo "'" ."Non-Infrastruktur" ."',";
                         }
                       }
                     ?>
@@ -673,8 +695,8 @@ if(empty($pengguna_level)){
                       borderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
                       data: [
                         <?php 
-                          if (count($piechart)>0) {
-                             foreach ($piechart as $data) {
+                          if (count($piechart_custome)>0) {
+                             foreach ($piechart_custome as $data) {
                               echo $data->total . ", ";
                             }
                           }
@@ -685,15 +707,15 @@ if(empty($pengguna_level)){
           });        
         </script>
 
-        <script type="text/javascript">
+<script type="text/javascript">
             var ctx = document.getElementById('myPieChart2').getContext('2d');
             var chart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: [
                   <?php 
-                    if (count($piechart2)>0) {
-                      foreach ($piechart2 as $data) {
+                    if (count($piechart2_custome)>0) {
+                      foreach ($piechart2_custome as $data) {
                         if ($data->sumber_aduan=='LB')
                           echo "'" ."Website Lapor Bupati" ."',";
                         else if ($data->sumber_aduan=='LG')
@@ -740,8 +762,8 @@ if(empty($pengguna_level)){
                     ],
                     data: [
                       <?php 
-                        if (count($piechart2)>0) {
-                          foreach ($piechart2 as $data) {
+                        if (count($piechart2_custome)>0) {
+                          foreach ($piechart2_custome as $data) {
                             echo $data->total . ", ";
                           }
                         }
@@ -759,8 +781,8 @@ if(empty($pengguna_level)){
               data: {
                   labels: [
                     <?php 
-                      if (count($doughnutchart)>0) {
-                        foreach ($doughnutchart as $data) {
+                      if (count($doughnutchart_custome)>0) {
+                        foreach ($doughnutchart_custome as $data) {
                           if ($data->subkategori_laporan==1)
                             echo "'" ."Jalan dan Jembatan" ."',";
                           else if($data->subkategori_laporan==2)
@@ -781,8 +803,8 @@ if(empty($pengguna_level)){
                       borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
                       data: [
                         <?php 
-                          if (count($doughnutchart)>0) {
-                             foreach ($doughnutchart as $data) {
+                          if (count($doughnutchart_custome)>0) {
+                             foreach ($doughnutchart_custome as $data) {
                               echo $data->total . ", ";
                             }
                           }
@@ -800,8 +822,8 @@ if(empty($pengguna_level)){
               data: {
                   labels: [
                     <?php 
-                      if (count($radarchart)>0) {
-                        foreach ($radarchart as $data) {
+                      if (count($radarchart_custome)>0) {
+                        foreach ($radarchart_custome as $data) {
                           if ($data->subkategori_laporan==5)
                             echo "'" ."Pendidikan : ".$data->total ."',";
                           else if($data->subkategori_laporan==6)
@@ -848,8 +870,8 @@ if(empty($pengguna_level)){
                       // borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
                       data: [
                         <?php 
-                          if (count($radarchart)>0) {
-                             foreach ($radarchart as $data) {
+                          if (count($radarchart_custome)>0) {
+                             foreach ($radarchart_custome as $data) {
                               echo $data->total . ", ";
                             }
                           }

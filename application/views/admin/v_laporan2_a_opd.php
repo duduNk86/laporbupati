@@ -10,7 +10,7 @@ $jum_komentar=$query1->num_rows();
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?echo $title;?></title>
+    <title><?= $title;?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shorcut icon" type="text/css" href="<?php echo base_url().'assets/images/favicon.png'?>">
@@ -81,13 +81,8 @@ $jum_komentar=$query1->num_rows();
                         <tr>
                           <th style="text-align:center;">No</th>
                           <th style="text-align:center;">Tiket | Tgl-Jam | Sumber Aduan</th>
-                          <!-- <th style="text-align:center;">Tanggal</th> -->
-                          <!-- <th style="text-align:center;">Bukti Dukung</th> -->
                           <th style="text-align:center;">Judul | Rincian | Bukti Dukung</th>
                           <th style="text-align:center;" title="Perangkat Daerah Terkait Penanganan Aduan">OPD</th>
-                          <!-- <th style="text-align:center;">Nama</th>
-                          <th style="text-align:center;">HP</th> -->
-                          <!-- <th style="text-align:center;">Status</th> -->
                           <th style="text-align:center;" title="Status Aduan / Durasi TL / Rating Jawaban">Status | Durasi | Rating</th>
                           <th style="text-align:center;">Aksi</th>
                         </tr>
@@ -483,16 +478,15 @@ $jum_komentar=$query1->num_rows();
                   var fileExtension = fileName.split('.').pop(); 
                   if (fileExtension == "pdf") {
                     tampilimagefoto = '<embed src="'+ base_urlx + data[i].foto +'" width="90px" height="90px" /> <center><a href="'+ base_urlx + data[i].foto +'" style="width:90px;">view Pdf</a></center>';
-                  }else if(fileExtension === "") {
-                    tampilimagefoto = '-';
-                  }else{
+                  } else if (fileExtension === "") {
+                    tampilimagefoto = '[ - ]';
+                  } else {
                     tampilimagefoto = '<img src="'+ base_urlx + data[i].foto +'" style="width:90px;">';
                   }
 
 		                html += '<tr>'+
                               '<td>'+no+'</td>'+
-                              '<td><b style="color:blue;">'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</b><br><br>'+data[i].tanggal_laporan+'<br><br>'+sumber+'</td>'+
-                              // '<td>'+tampilimagefoto+'</td>'+
+                              '<td><b style="color:red;">'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</b><br><br>'+data[i].tanggal_laporan+'<br><br>'+sumber+'</td>'+
                               '<td style="text-align:justify;">'+'<b>['+data[i].judul_laporan+']</b><br><br>'+data[i].isi_laporan+'<br><br>'+tampilimagefoto+'</td>'+
                               '<td>'+data[i].ditujukan_kepada+'</td>'+
                               '<td style="text-align:center;">'+laporan_status+'<br><br>'+'<b>'+selisihHari +'</b>'+ " hari " +'<br><b>'+ jamTl +'</b>'+ " jam " +'<b>'+ menitTl +'</b>'+ " menit " +'<b>'+ detikTl +'</b>'+ " detik"+'<br><br>'+rating+'</td>'+

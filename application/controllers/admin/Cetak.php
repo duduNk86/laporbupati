@@ -47,6 +47,7 @@ class Cetak extends CI_Controller{
 		$no=1;
 		foreach ($query->result() as $br)
 		{
+			// Status Aduan
 			if ($br->laporan_status ==1){
 				$laporanstatus = 'Verifikasi';
 			}else if($br->laporan_status ==2){
@@ -57,10 +58,30 @@ class Cetak extends CI_Controller{
 				$laporanstatus = 'Selesai';
 			}
 
+			// Jenis Aduan
 			if ($br->kategori_laporan ==1){
-				$kategori = 'Fisik';
+				$kategori = 'Infrastruktur';
 			  }else{
-				$kategori = 'Non Fisik';
+				$kategori = 'Non Infrastruktur';
+			}
+
+			// Sumber Aduan
+			if ($br->sumber_aduan =='LB') {
+				$sumber = 'Website Lapor Bupati';
+			} else if ($br->sumber_aduan =='LG') {
+				$sumber = 'Website Lapor Gubernur';
+			} else if ($br->sumber_aduan =='SP') {
+				$sumber = 'SP4N Lapor';
+			} else if ($br->sumber_aduan =='SM') {
+				$sumber = 'SMS';
+			} else if ($br->sumber_aduan =='WA') {
+				$sumber = 'Whatsapp';
+			} else if ($br->sumber_aduan =='IG') {
+				$sumber = 'Instagram';
+			} else if ($br->sumber_aduan =='FB') {
+				$sumber = 'Facebook';
+			} else {
+				$sumber = 'Twitter';
 			}
 
 			// Hitung Durasi TL
@@ -73,7 +94,7 @@ class Cetak extends CI_Controller{
 			<tr>
 			<td>'.$no++.'</td>
 			<td>'.$br->nama.'</td>
-			<td>'.$br->hp.'</td>
+			<td>'.$sumber.'</td>
 			<td>'.$kategori.'</td>
 			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->judul_laporan.'</td>
@@ -124,6 +145,7 @@ class Cetak extends CI_Controller{
 		$no=1;
 		foreach ($query->result() as $br)
 		{
+			// Status Aduan
 			if ($br->laporan_status ==1){
 				$laporanstatus = 'Verifikasi';
 			}else if($br->laporan_status ==2){
@@ -134,12 +156,32 @@ class Cetak extends CI_Controller{
 				$laporanstatus = 'Selesai';
 			}
 
+			// Kategori Aduan
 			if ($br->kategori_laporan ==1){
-				$kategori = 'Fisik';
+				$kategori = 'Infrastruktur';
 			  }else{
-				$kategori = 'Non Fisik';
+				$kategori = 'Non Infrastruktur';
 			}
 			
+			// Sumber Aduan
+			if ($br->sumber_aduan =='LB') {
+				$sumber = 'Website Lapor Bupati';
+			} else if ($br->sumber_aduan =='LG') {
+				$sumber = 'Website Lapor Gubernur';
+			} else if ($br->sumber_aduan =='SP') {
+				$sumber = 'SP4N Lapor';
+			} else if ($br->sumber_aduan =='SM') {
+				$sumber = 'SMS';
+			} else if ($br->sumber_aduan =='WA') {
+				$sumber = 'Whatsapp';
+			} else if ($br->sumber_aduan =='IG') {
+				$sumber = 'Instagram';
+			} else if ($br->sumber_aduan =='FB') {
+				$sumber = 'Facebook';
+			} else {
+				$sumber = 'Twitter';
+			}
+
 			// Hitung Durasi TL
 			$awal  = date_create($br->tanggal_laporan);
             $akhir = date_create($br->tanggal_tindaklanjut);
@@ -150,7 +192,7 @@ class Cetak extends CI_Controller{
 			<tr>
 			<td>'.$no++.'</td>
 			<td>'.$br->nama.'</td>
-			<td>'.$br->hp.'</td>
+			<td>'.$sumber.'</td>
 			<td>'.$kategori.'</td>
 			<td>'.$br->tanggal_laporan.'</td>
 			<td>'.$br->judul_laporan.'</td>
@@ -189,7 +231,8 @@ class Cetak extends CI_Controller{
 				$urut = 0;
 				echo '<table cellspacing="0" border="1">';
 				echo '<tr>';
-					echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
+					// echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
+					echo '<th colspan=13><p align="center"><b>Rekap Aduan Lapor Bupati Wonosobo</b></p>'.'<p align="center">Periode : <b>'.mediumdate_indo($dari).'</b> s/d <b>'.mediumdate_indo($sampai).'</b></p>';
 					echo '</th>';
 				echo '</tr>';
 				echo '<tr>';
@@ -207,6 +250,7 @@ class Cetak extends CI_Controller{
 				$no=1;
 				foreach ($query->result() as $br)
 				{
+					// Status Aduan
 					if ($br->laporan_status ==1){
 						$laporanstatus = 'Verifikasi';
 					}else if($br->laporan_status ==2){
@@ -217,12 +261,32 @@ class Cetak extends CI_Controller{
 						$laporanstatus = 'Selesai';
 					}
 
+					// Kategori Aduan
 					if ($br->kategori_laporan ==1){
-						$kategori = 'Fisik';
+						$kategori = 'Infrastruktur';
 					}else{
-						$kategori = 'Non Fisik';
+						$kategori = 'Non Infrastruktur';
 					}
 					
+					// Sumber Aduan
+					if ($br->sumber_aduan =='LB') {
+						$sumber = 'Website Lapor Bupati';
+					} else if ($br->sumber_aduan =='LG') {
+						$sumber = 'Website Lapor Gubernur';
+					} else if ($br->sumber_aduan =='SP') {
+						$sumber = 'SP4N Lapor';
+					} else if ($br->sumber_aduan =='SM') {
+						$sumber = 'SMS';
+					} else if ($br->sumber_aduan =='WA') {
+						$sumber = 'Whatsapp';
+					} else if ($br->sumber_aduan =='IG') {
+						$sumber = 'Instagram';
+					} else if ($br->sumber_aduan =='FB') {
+						$sumber = 'Facebook';
+					} else {
+						$sumber = 'Twitter';
+					}
+
 					// Hitung Durasi TL
 					$awal  = date_create($br->tanggal_laporan);
 	                $akhir = date_create($br->tanggal_tindaklanjut);
@@ -233,7 +297,7 @@ class Cetak extends CI_Controller{
 					<tr>
 					<td>'.$no++.'</td>
 					<td>'.$br->nama.'</td>
-					<td>'.$br->hp.'</td>
+					<td>'.$sumber.'</td>
 					<td>'.$kategori.'</td>
 					<td>'.$br->tanggal_laporan.'</td>
 					<td>'.$br->judul_laporan.'</td>
@@ -262,7 +326,8 @@ class Cetak extends CI_Controller{
 			$urut = 0;
 	
 			echo '<tr>';
-				echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
+				// echo '<th colspan=13><b>Rekap Aduan Lapor Bupati Wonosobo</b>';
+				echo '<th colspan=13><p align="center"><b>Rekap Aduan Lapor Bupati Wonosobo</b></p>'.'<p align="center">Periode : <b>'.mediumdate_indo($dari).'</b> s/d <b>'.mediumdate_indo($sampai).'</b></p>';
 				echo '</th>';
 			echo '</tr>';
 	
@@ -281,6 +346,7 @@ class Cetak extends CI_Controller{
 			$no=1;
 			foreach ($query->result() as $br)
 			{
+				// Status Aduan
 				if ($br->laporan_status ==1){
 					$laporanstatus = 'Verifikasi';
 				}else if($br->laporan_status ==2){
@@ -290,13 +356,33 @@ class Cetak extends CI_Controller{
 				  }else{
 					$laporanstatus = 'Selesai';
 				}
-	
+				
+				// Kategori Aduan
 				if ($br->kategori_laporan ==1){
-					$kategori = 'Fisik';
+					$kategori = 'Infrastruktur';
 				  }else{
-					$kategori = 'Non Fisik';
+					$kategori = 'Non Infrastruktur';
 				}
-					
+				
+				// Sumber Aduan
+				if ($br->sumber_aduan =='LB') {
+					$sumber = 'Website Lapor Bupati';
+				} else if ($br->sumber_aduan =='LG') {
+					$sumber = 'Website Lapor Gubernur';
+				} else if ($br->sumber_aduan =='SP') {
+					$sumber = 'SP4N Lapor';
+				} else if ($br->sumber_aduan =='SM') {
+					$sumber = 'SMS';
+				} else if ($br->sumber_aduan =='WA') {
+					$sumber = 'Whatsapp';
+				} else if ($br->sumber_aduan =='IG') {
+					$sumber = 'Instagram';
+				} else if ($br->sumber_aduan =='FB') {
+					$sumber = 'Facebook';
+				} else {
+					$sumber = 'Twitter';
+				}
+
 				// Hitung Durasi TL
 				$awal  = date_create($br->tanggal_laporan);
                 $akhir = date_create($br->tanggal_tindaklanjut);
@@ -307,7 +393,7 @@ class Cetak extends CI_Controller{
 				<tr>
 				<td>'.$no++.'</td>
 				<td>'.$br->nama.'</td>
-				<td>'.$br->hp.'</td>
+				<td>'.$sumber.'</td>
 				<td>'.$kategori.'</td>
 				<td>'.$br->tanggal_laporan.'</td>
 				<td>'.$br->judul_laporan.'</td>

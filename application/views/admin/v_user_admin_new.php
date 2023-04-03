@@ -10,7 +10,7 @@ $jum_komentar=$query1->num_rows();
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?echo $title;?></title>
+    <title><?= $title;?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shorcut icon" type="text/css" href="<?php echo base_url().'assets/images/favicon.png'?>">
@@ -183,8 +183,6 @@ $jum_komentar=$query1->num_rows();
           </div>
         </div>
       </div>
-
-
 
       <!-- Modal Tambah User -->
       <div class="modal fade" id="ModalAddUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -405,7 +403,6 @@ $jum_komentar=$query1->num_rows();
                                     '<a href="javascript:;" data-toggle="tooltip" title="reset password" class="btn btn-warning btn-xs item_reset" data="'+data[i].pengguna_id+'"><span class="fa fa-refresh"></span></a>'+' '+
                                     '<a href="javascript:;" data-toggle="tooltip" title="hapus data" class="btn btn-danger btn-xs item_hapus" data="'+data[i].pengguna_id+'"><span class="fa fa-trash"></span></a>'+' '+
                                 '</td>'+
-
 		                        '</tr>';
 		            }
                     $('#tbody_tbl_user').html(html);
@@ -416,7 +413,8 @@ $jum_komentar=$query1->num_rows();
                     "searching": true,
                     "ordering": true,
                     "info": true,
-                    "autoWidth": true
+                    "autoWidth": true,
+                    "scrollX": true
                     });
                     // tutuptambahan
 		        }

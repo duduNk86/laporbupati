@@ -10,7 +10,7 @@ $jum_komentar=$query1->num_rows();
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?echo $title;?></title>
+    <title><?= $title;?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shorcut icon" type="text/css" href="<?php echo base_url().'assets/images/favicon.png'?>">
@@ -80,13 +80,11 @@ $jum_komentar=$query1->num_rows();
                       <thead>
                         <tr>
                           <th style="text-align:center;">No</th>
-                          <th style="text-align:center;">Foto</th>
-                          <th style="text-align:center;">OPD</th>
-                          <th style="text-align:center;">Rincian</th>
-                          <th style="text-align:center;">Nama</th>
-                          <th style="text-align:center;">HP/Sumber</th>
-                          <th style="text-align:center;">Tanggal</th>
-                          <th style="text-align:center;" title="Status Aduan / Durasi TL / Rating Jawaban">Sts/Dur/Rat</th>
+                          <th style="text-align:center;">Tiket Aduan | Tgl. | Sumber</th>
+                          <th style="text-align:center;">Rincian Laporan | Bukti Dukung</th>
+                          <th style="text-align:center;" title="Nama / HP/WA / ID Medsos Pelapor">Nama | HP/WA/ID</th>
+                          <th style="text-align:center;" title="Perangkat Daerah Terkait">OPD</th>
+                          <th style="text-align:center;" title="Status Aduan / Durasi TL / Rating Jawaban">Sts | Dur | Rat</th>
                           <th style="text-align:center;">Tayang</th>
                           <th style="text-align:center;">Action</th>
                         </tr>
@@ -942,16 +940,12 @@ $jum_komentar=$query1->num_rows();
 
                   var laporan = data[i].laporan_status;
                   if (laporan ==1){
-                    //  laporan_status = '<span class="label label-success">Verifikasi</span>';
                      laporan_status = '<a href="javascript:;" data-toggle="tooltip" title="Aduan Belum Direspon, segera Teruskan ke OPD terkait" class="btn btn-danger btn-xs item_teruskan" data="'+data[i].id+'" style="width:90px;">Verifikasi</a>';
                   }else if(laporan ==2){
-                    // laporan_status = '<span class="label label-danger">Sedang Proses</span>';
                     laporan_status = '<a href="#" data-toggle="tooltip" title="Aduan Sedang di Proses oleh OPD terkait" class="btn btn-warning btn-xs item_kirim_pemberitahuan" style="width:90px;">Sedang Proses</a>';
                   }else if(laporan ==99){
                     laporan_status = '<a href="javascript:;" data-toggle="tooltip" title="Teruskan Aduan ke OPD lain yang terkait" class="btn btn-info btn-xs item_teruskan" data="'+data[i].id+'" style="width:90px;">Ditolak</a>';
-                    // laporan_status = '<span class="label label-warning">ditolak</span>';
                   }else{
-                    // laporan_status = '<span class="label label-info">selesai</span>';
                     laporan_status = '<a href="javascript:;" data-toggle="tooltip" title="Lihat Rincian Aduan & Beri Rating Jawaban TL" class="btn btn-success btn-xs item_view" data="'+data[i].id+'" style="width:90px;">Selesai</a>';
                   }
 
@@ -1007,40 +1001,23 @@ $jum_komentar=$query1->num_rows();
                   var fileName = data[i].foto;
                   var fileExtension = fileName.split('.').pop(); 
                   if (fileExtension == "pdf") {
-                    // tampilimagefoto = '<a href="'+ base_urlx + data[i].foto +'" style="width:90px;">view Pdf</a>';
                     tampilimagefoto = '<embed src="'+ base_urlx + data[i].foto +'" width="90px" height="90px" /> <center><a href="'+ base_urlx + data[i].foto +'" style="width:90px;">view Pdf</a></center>';
-                    
-                    // tampilimagefoto = '<embed type="application/pdf" src="'+ base_urlx + data[i].foto +'" style="width:90px;">view</embed>';
-                    // <embed type="application/pdf" src="contoh.pdf" width="600" height="400"></embed>
-                  }else{
+                  } else if (fileExtension === "") {
+                    tampilimagefoto = '[ - ]';
+                  } else {
                     tampilimagefoto = '<img src="'+ base_urlx + data[i].foto +'" style="width:90px;">';
                   }
 
 		                html += '<tr>'+
                                   '<td>'+no+'</td>'+
-                                  
-                                  // '<td><img src="'+ base_urlx + data[i].foto +'" style="width:90px;" alt="no img"></td>'+
-                                  '<td>'+tampilimagefoto+'</td>'+
+                                  '<td>'+'<b style="color:red;">'+'LB'+data[i].sumber_aduan+'-'+data[i].id+'</b><br><br>'+data[i].tanggal_laporan+'<br><br>'+sumber+'</td>'+
+                                  '<td style="text-align:justify;">'+data[i].isi_laporan+"<br><br>"+tampilimagefoto+'</td>'+
+                                  '<td>'+data[i].nama+'<br>'+data[i].hp+'</td>'+
                                   '<td>'+data[i].ditujukan_kepada+'</td>'+
-                                  '<td style="text-align:justify;">'+data[i].isi_laporan+'</td>'+
-                                  '<td>'+data[i].nama+'</td>'+
-                                  '<td>'+data[i].hp+'<br>'+sumber+'</td>'+
-                                  '<td>'+data[i].tanggal_laporan+'</td>'+
                                   '<td style="text-align:center;">'+laporan_status+'<br><br>'+'<b>'+selisihHari +'</b>'+ " hari " +'<b>'+ jamTl +'</b>'+ " jam " +'<b>'+ menitTl +'</b>'+ " menit " +'<b>'+ detikTl +'</b>'+ " detik"
                                   +'<br><br>'+rating+'</td>'+
                                   // pemberitahuan_kirim+'</td>'+
                                   '<td style="text-align:center;">'+'<a href="javascript:;" class="btn btn-primary btn-xs item_tayang" data="'+data[i].id+'">'+data[i].tayang+'</a>'+'</td>'+
-                                  
-                                  // <div class="btn-group" role="group">
-                                  //   <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                  //     Dropdown
-                                  //   </button>
-                                  //   <div class="dropdown-menu">
-                                  //     <a class="dropdown-item" href="#">Dropdown link</a>
-                                  //     <a class="dropdown-item" href="#">Dropdown link</a>
-                                  //   </div>
-                                  // </div>
-
                                   '<td style="text-align:left;">'+
                                       '<div class="btn-group" role="group">'+
                                         '<button type="button" class="btn btn-danger btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="fa fa-gear"></span></button>'+
@@ -1506,7 +1483,7 @@ $jum_komentar=$query1->num_rows();
       showHideTransition: 'slide',
       icon: 'success',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#7EC857'
       });
       </script>
@@ -1518,7 +1495,7 @@ $jum_komentar=$query1->num_rows();
       showHideTransition: 'slide',
       icon: 'info',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#00C9E6'
       });
       </script>
@@ -1526,11 +1503,11 @@ $jum_komentar=$query1->num_rows();
       <script type="text/javascript">
       $.toast({
       heading: 'Info',
-      text: "Email Notifikasi Gagal Dikirim",
+      text: "Pesan Notifikasi Gagal Dikirim! Cek Email & WhatsApp.",
       showHideTransition: 'slide',
       icon: 'info',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#00C9E6'
       });
       </script>
@@ -1538,11 +1515,11 @@ $jum_komentar=$query1->num_rows();
       <script type="text/javascript">
       $.toast({
       heading: 'Info',
-      text: "Laporan Berhasil diteruskan! Notifikasi Email & Whatsapp ke Admin OPD telah terkirim.",
+      text: "Laporan Berhasil diteruskan! Notifikasi Telah Dikirim ke Admin OPD.",
       showHideTransition: 'slide',
       icon: 'info',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#00C9E6'
       });
       </script>
@@ -1550,11 +1527,11 @@ $jum_komentar=$query1->num_rows();
       <script type="text/javascript">
       $.toast({
       heading: 'Info',
-      text: "Notifikasi Tracking Telah Terkirim ke Pelapor!",
+      text: "Notifikasi Tracking Telah Dikirim ke Pelapor!",
       showHideTransition: 'slide',
       icon: 'info',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#00C9E6'
       });
       </script>
@@ -1566,7 +1543,7 @@ $jum_komentar=$query1->num_rows();
       showHideTransition: 'slide',
       icon: 'success',
       hideAfter: false,
-      position: 'top-right',
+      position: 'bottom-right',
       bgColor: '#7EC857'
       });
       </script>

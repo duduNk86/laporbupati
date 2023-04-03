@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Lapor Bupati Wonosobo</title>
+	<link href="<?= base_url('theme/');?>images/Lambang Wonosobo.png" rel="shortcut icon" />
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -89,10 +90,9 @@
 		<div class="container">
 			<div class="row mb-2">
 				<div class="col-sm-12">
-				    
 					<!-- <h1 class="m-0 text-dark">Detail Laporan Aduan Masyarakat</h1> -->
 					<!-- <center><div class="col-md-6"><img src="< ?php echo base_url().'assets/lapor/dashboardlapor.png'?>" width="400px" ></div></center> -->
-					<center><div class="col-md-6"><img src="<?php echo base_url().'assets/lapor/dashboardlapor.png'?>" height="60px" width="350px" ></div></center>
+					<center><div class="col-md-6"><img src="<?php echo base_url().'assets/lapor/dashboardlapor-v2.png'?>" height="60px" width="350px" ></div></center>
 				</div><!-- /.col -->
 
 			</div><!-- /.row -->
@@ -135,7 +135,6 @@
 					<h3 class="card-title">Foto Aduan</h3>
 				</div>
 				<div class="card-body">
-					<!-- <div id="map" style="width: 100%; height: 400px;"></div> -->
 					<?php $fileName = $foto; ?>
                     <?php $ext = pathinfo($fileName, PATHINFO_EXTENSION);?>
 
@@ -157,16 +156,6 @@
 				</div>
 				<div class="card-body">
 					<table class="table">
-						<!-- <tr>
-							<th width="150px">Nama Pelapor</th>
-							<th width="50px">:</th>
-							<td>< ?php echo $nama;?></td>
-						</tr>
-						<tr>
-							<th width="150px">Sumber/Medsos/HP</th>
-							<th width="50px">:</th>
-							<td>< ?php echo $hp;?></td>
-						</tr> -->
 						<tr>
 							<th width="150px">No. Tiket Aduan</th>
 							<th width="50px">:</th>
@@ -175,7 +164,6 @@
 						<tr>
 							<th>Tanggal Aduan</th>
 							<th>:</th>
-							<!-- <td>< ?php echo $tanggal_laporan; ?></td> -->
 							<td>
 								<?php
 							 		$tanggal_awal = $tanggal_laporan;
@@ -288,7 +276,6 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12">
-							<!-- <a href="#" data-toggle="lightbox" data-title="Lahan 6" data-gallery="gallery"> -->
 							<a href="#" data-toggle="lightbox" data-title="Aduan" data-gallery="gallery">
 							<?php $fileNameTL = $foto_tindaklanjut; ?>
 							<?php $ext = pathinfo($fileNameTL, PATHINFO_EXTENSION);?>

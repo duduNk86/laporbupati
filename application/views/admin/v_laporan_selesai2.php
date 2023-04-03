@@ -79,18 +79,11 @@ $jum_komentar=$query1->num_rows();
                       <thead>
                         <tr>
                           <th style="text-align:center;">No</th>
-                          <!-- <th>id_kepada</th> -->
-                          <th style="text-align:center;">Kepada</th>
-                          <!-- <th style="text-align:center;">Jenis</th> -->
-                          <th style="text-align:center;">Foto</th>
-                          <th style="text-align:center;">Rincian</th>
-                          <th style="text-align:center;">Lokasi</th>
-                          <th style="text-align:center;">Pelapor</th>
-                          <!-- <th style="text-align:center;">Alamat</th> -->
-                          <th style="text-align:center;">HP/Sumber</th>
-                          <th style="text-align:center;">Tanggal</th>
+                          <th style="text-align:center;">Tiket Aduan | Tgl. | Sumber</th>
+                          <th style="text-align:center;">Rincian Laporan | Lokasi | Bukti Dukung</th>
+                          <th style="text-align:center;" title="Nama / HP/WA / ID Medsos Pelapor">Pelapor | HP/WA/ID</th>
+                          <th style="text-align:center;" title="Perangkat Daerah Terkait">OPD</th>
                           <th style="text-align:center;" title="Status TL / Durasi TL / Rating Jawaban">Status/Durasi/Rating</th>
-                          <!-- <th style="text-align:center;">Aksi</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -101,7 +94,6 @@ $jum_komentar=$query1->num_rows();
                         $id=$i['id'];
                         $id_kepada=$i['id_kepada'];
                         $ditujukan_kepada=$i['ditujukan_kepada'];
-                        // $id_jenis=$i['id_jenis'];
                         $isi_laporan=$i['isi_laporan'];
                         $lokasi=$i['lokasi'];
                         $nama=$i['nama'];
@@ -116,42 +108,28 @@ $jum_komentar=$query1->num_rows();
                         ?>
                         <tr>
                           <td><?php echo $no;?></td>
-                          <!-- <td>< ?php echo $id_kepada;?></td> -->
-                          <td><?php echo $ditujukan_kepada;?></td>
-                          <!-- <td>
-                            < ?php if ($i['id_jenis']=="1") { ?>
-                            Aduan
-                            < ?php }else if ($i['id_jenis']=="2") { ?>
-                            Aduan
-                            < ?php } ?>
-                          </td> -->
-                          <td><img src="<?php echo base_url().'assets/images/'.$foto;?>" style="width:90px;"></td>
-                          <td align="justify"><?php echo $isi_laporan;?></td>
-                          <td><?php echo $lokasi;?></td>
-                          <td><?php echo $nama;?></td>
-                          <!-- <td>< ?php echo $alamat;?></td> -->
                           <td>
-                            <!-- < ?php echo $hp.'<br>'.$sumber_aduan;?> -->
                             <?php if ($i['sumber_aduan']=='LB') { ?>
-                              <?php echo $hp.'<br>'.'Website Lapor Bupati' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Website Lapor Bupati';?>
                             <?php }else if ($i['laporan_status']=="LG") { ?>
-                              <?php echo $hp.'<br>'.'Website Lapor Gubernur' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Website Lapor Gubernur';?>
                             <?php }else if ($i['laporan_status']=="SP") { ?>
-                              <?php echo $hp.'<br>'.'SP4N LAPOR' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'SP4N LAPOR';?>
                             <?php }else if ($i['laporan_status']=="WA"){ ?>
-                              <?php echo $hp.'<br>'.'Whatsapp Laporbup' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Whatsapp Laporbup';?>
                             <?php }else if ($i['laporan_status']=="SM"){ ?>
-                              <?php echo $hp.'<br>'.'SMS Laporbup' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'SMS Laporbup';?>
                             <?php }else if ($i['laporan_status']=="IG"){ ?>
-                              <?php echo $hp.'<br>'.'Instagram Laporbup' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Instagram Laporbup';?>
                             <?php }else if ($i['laporan_status']=="FB"){ ?>
-                              <?php echo $hp.'<br>'.'Facebook Laporbup' ?>
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Facebook Laporbup';?>
                             <?php }else if ($i['laporan_status']=="TW"){ ?>
-                              <?php echo $hp.'<br>'.'Twitter Laporbup' ?>
-                            <?php }else echo $hp ?>
-                            <!-- < ?php } ?> -->
+                              <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Twitter Laporbup';?>
+                            <?php }else echo "-"; ?>
                           </td>
-                          <td><?php echo $tanggal_laporan;?></td>
+                          <td align="justify"><?php echo $isi_laporan.'<br><br>'.'<i class="fa fa-map-marker" aria-hidden="true"></i> '.$lokasi.'<br><br>';?><img src="<?php echo base_url().'assets/images/'.$foto;?>" style="width:90px;"></td>
+                          <td><?php echo $nama.'<br>'.$hp;?></td>
+                          <td><?php echo $ditujukan_kepada;?></td>
                           <td>
                             <?php if ($i['laporan_status']=="1") { ?>
                             <span class="label label-danger">Verifikasi</span>
@@ -160,7 +138,6 @@ $jum_komentar=$query1->num_rows();
                             <?php }else if ($i['laporan_status']=="99") { ?>
                             <span class="label label-info">Ditolak</span>
                             <?php }else if ($i['laporan_status']=="3"){ ?>
-                            <!-- <span class="label label-success">selesai</span> -->
                             <a class="btn btn-xs btn-success btn-circle" data-toggle="modal" data-target="#ModalView<?php echo $id;?>" title="View Detail"><span class="fa fa-eye"></span>&nbsp; Selesai</a>
                             <?php } ?>
                             <br><br>
@@ -377,17 +354,17 @@ $jum_komentar=$query1->num_rows();
               <div class="modal-body">
                 <h4 class="modal-title" align="center"><p style="color:red; font-size:21px;"><b>Data Aduan</b></p></h4>
                 <hr>
-                <!-- <div class="form-group">
-                  <label for="inputUserName" class="col-sm-4 control-label">Kepada</label>
+                <div class="form-group">
+                  <label for="inputUserName" class="col-sm-4 control-label">No. Tiket Aduan</label>
                   <div class="col-sm-7">
-                    <input type="hidden" name="kode" value="< ?php echo $id;?>">
-                    <input type="text" name="xnama_agenda" disabled class="form-control" value="< ?php echo $ditujukan_kepada;?>" id="inputUserName" placeholder="Nama Agenda" required>
+                    <input type="text" name="xid" disabled class="form-control" value="<?php echo 'LB'.$sumber_aduan.'-'.$id;?>" id="inputUserName" placeholder="No. Tiket Aduan" required>
                   </div>
-                </div> -->
+                </div>
+
                 <div class="form-group">
                   <label for="inputUserName" class="col-sm-4 control-label">Tgl. Aduan Masuk</label>
                   <div class="col-sm-7">
-                    <input type="text" name="xwaktu" disabled class="form-control" value="<?php echo $tanggal_laporan;?>" id="inputUserName"  required>
+                    <input type="text" name="xwaktu" disabled class="form-control" value="<?php echo $tanggal_laporan;?>" id="inputUserName" required>
                   </div>
                 </div>
 

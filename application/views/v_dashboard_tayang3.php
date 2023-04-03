@@ -13,8 +13,8 @@ if(empty($pengguna_level)){
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    
+    <link href="<?= base_url('theme/');?>images/Lambang Wonosobo.png" rel="shortcut icon" />
     <!-- END META SECTION -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Share+Tech+Mono">
     <style type="text/css">
@@ -131,6 +131,7 @@ if(empty($pengguna_level)){
                                           <div class="btn-group" role="group">
                                             <button type="button" title="Custom Rekap & Statistik"><a href="#" data-toggle="modal" data-target="#ModalCustomStatistik"><i class="fa fa-bar-chart"></i></a></button>
                                             <button type="button" title="Reset Data"><a href="<?php echo base_url().'home/view'?>"><i class="fa fa-refresh"></i></a></button>
+                                            &nbsp;Statistik &nbsp;:&nbsp; <b style="color:red;"><?php echo mediumdate_indo($tanggal_dari);?></b> s/d <b style="color:red;"><?php echo mediumdate_indo($tanggal_sampai); ?></b>
                                           </div>
                                         </div>
                                       </div>
@@ -420,6 +421,33 @@ if(empty($pengguna_level)){
                                             </div>
                                         </div>
                                       </div>
+                                      <div class="col-xl-6 col-lg-6">
+                                        <div class="card shadow mb-12">
+                                          <div class="box box-warning">
+                                            <div class="box-header with-border">
+                                              <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+                                                <h3 class="m-0 font-weight-bold text-black" align="center"><b>Sumber Kanal Aduan</b></h3>
+                                              </div>
+                                              <div class="card-body text-bg-light" style="margin-top:20pt;">
+                                                <div class="chart-area">
+                                                  <canvas id="myPieChart2"></canvas>
+                                                  <table style="margin-top:10pt;">
+                                                    <?php 
+                                                      foreach ($piechart2_custome as $i) :
+                                                      ?>
+                                                      <tr>
+                                                        <td style="font-size: 10pt;"><b><?php if($i->sumber_aduan=='LB') echo "Website Lapor Bupati"; else if($i->sumber_aduan=='LG') echo "Website Lapor Gubernur"; else if($i->sumber_aduan=='SP') echo "SP4N LAPOR"; else if($i->sumber_aduan=='WA') echo "Whatsapp"; else if($i->sumber_aduan=='SM') echo "SMS"; else if($i->sumber_aduan=='IG') echo "Instagram"; else if($i->sumber_aduan=='FB') echo "Facebook"; else if($i->sumber_aduan=='TW') echo "Twitter"; else echo "Belum Verifikasi";?></b></td>
+                                                        <td style="font-size: 10pt;"><b><?php echo "&nbsp; : &nbsp;".$i->total;?></b></td>
+                                                      </tr>
+                                                    <?php endforeach;?>
+                                                  </table>
+                                                </div>
+                                                <br>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
                                   </div>
                                 </section>
 
@@ -430,7 +458,7 @@ if(empty($pengguna_level)){
             </div>
         </div>
         <div class="panel-footer">
-           <h5> <center>Lapor Bupati Wonosobo - by @msyon & m@sguNk86</center><h5>
+           <h5> <center>Lapor Bupati Wonosobo v.2 - by @msyon & m@sguNk86</center><h5>
         </div>
 
         <!-- MODAL CUSTOM -->
@@ -445,6 +473,16 @@ if(empty($pengguna_level)){
                 <form id="form_cetak_antara" class="form-horizontal" action="<?php echo base_url().'home/view3'?>" method="post" enctype="multipart/form-data">
                   <div class="modal-body">
                     <div class="form-group">
+                      <label for="inputUserName" class="col-sm-3 control-label">Format</label>
+                      <div class="col-sm-9">
+                        <select class="form-control select2" name="x_format" required>
+                          <option value="">- Pilih -</option>
+                          <option value="tahun">Tahunan</option>
+                          <option value="bulan">Bulanan</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label for="inputUserName" class="col-sm-3 control-label">Dari</label>
                       <div class="col-sm-9">
                         <input type="date" name="x_dari"  class="form-control" id="x_dari" >
@@ -458,8 +496,8 @@ if(empty($pengguna_level)){
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-sm btn-circle" id="cetak">Proses</button>
                     <button type="reset" class="btn btn-danger btn-sm btn-circle">Reset</button>
+                    <button type="submit" class="btn btn-primary btn-sm btn-circle" id="cetak">Proses</button>
                   </div>
                 </form>
               </div>
@@ -549,13 +587,36 @@ if(empty($pengguna_level)){
                     <?php 
                       if (count($linechart_custome)>0) {
                         foreach ($linechart_custome as $data) {
-                          echo "'" .$data->year . " (".$data->jumlah_aduan .")" ."',";
+                          if ($data->month==1)
+                            echo "'" ."Jan ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==2)
+                            echo "'" ."Feb ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==3)
+                            echo "'" ."Mar ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==4)
+                            echo "'" ."Apr ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==5)
+                            echo "'" ."Mei ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==6)
+                            echo "'" ."Jun ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==7)
+                            echo "'" ."Jul ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==8)
+                            echo "'" ."Agu ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==9)
+                            echo "'" ."Sep ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==10)
+                            echo "'" ."Okt ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==11)
+                            echo "'" ."Nov ".$data->year ." (".$data->jumlah_aduan .")" ."',";
+                          else if ($data->month==12)
+                            echo "'" ."Des ".$data->year ." (".$data->jumlah_aduan .")" ."',";
                         }
                       }
                     ?>
                   ],
                   datasets: [{
-                      label: 'Jumlah Aduan',
+                      label: 'Jumlah Aduan per Bulan',
                       backgroundColor: '#ADD8E6',
                       borderColor: '##93C3D2',
                       // backgroundColor: ['rgb(255, 99, 132)', 'rgb(252, 165, 3)', 'rgb(56, 86, 255, 0.87)','rgb(60, 179, 113)'],
@@ -643,6 +704,73 @@ if(empty($pengguna_level)){
                       ]
                   }]
               },
+          });        
+        </script>
+
+<script type="text/javascript">
+            var ctx = document.getElementById('myPieChart2').getContext('2d');
+            var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [
+                  <?php 
+                    if (count($piechart2_custome)>0) {
+                      foreach ($piechart2_custome as $data) {
+                        if ($data->sumber_aduan=='LB')
+                          echo "'" ."Website Lapor Bupati" ."',";
+                        else if ($data->sumber_aduan=='LG')
+                          echo "'" ."Website Lapor Gubernur" ."',";
+                        else if ($data->sumber_aduan=='SP')
+                          echo "'" ."SP4N LAPOR" ."',";
+                        else if ($data->sumber_aduan=='WA')
+                          echo "'" ."Whatsapp" ."',";
+                        else if ($data->sumber_aduan=='SM')
+                          echo "'" ."SMS" ."',";
+                        else if ($data->sumber_aduan=='IG')
+                          echo "'" ."Instagram" ."',";
+                          else if ($data->sumber_aduan=='FB')
+                          echo "'" ."Facebook" ."',";
+                        // else if ($data->kategori_laporan=='TW')
+                        //   echo "'" ."Twitter" ."',";
+                        else
+                          echo "'" ."Twitter" ."',";
+                      }
+                    }
+                  ?>
+                ],
+                datasets: [{
+                    label: 'Sumber Kanal Aduan',
+                    backgroundColor: [
+                      'rgba(204, 204, 204, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(189, 8, 92, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(204, 204, 204, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(189, 8, 92, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)',
+                      'rgba(255,99,132,1)',
+                      'rgba(75, 192, 192, 1)'
+                    ],
+                    data: [
+                      <?php 
+                        if (count($piechart2_custome)>0) {
+                          foreach ($piechart2_custome as $data) {
+                            echo $data->total . ", ";
+                          }
+                        }
+                      ?>
+                    ]
+                }]
+            },
           });        
         </script>
 
@@ -756,9 +884,3 @@ if(empty($pengguna_level)){
 
     </body>
 </html>
-
-
-
-
-
-

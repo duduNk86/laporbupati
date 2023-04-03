@@ -437,8 +437,7 @@
                     $('[name="x_keterangan_status_edit"]').val(data[i].keterangan_status);
                     $('[name="x_foto_tindaklanjut"]').val(data[i].foto_tindaklanjut);
                     $('[name="x_foto"]').val(data[i].foto);
-
-
+                    
                   gbr2 += '<img src="'+ base_urlx + data[i].foto +'" style="height:190px;">';
                   $('[name="foto_view"]').append(gbr2);
                   $('[name="foto_view"]').refresh;
@@ -447,8 +446,6 @@
             });
             return false;
         });
-
-
 
     </script>
 
@@ -462,7 +459,8 @@
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "scrollX": true
     });
   });
 </script>

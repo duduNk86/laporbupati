@@ -492,6 +492,25 @@ class M_laporan extends CI_Model{
         return $this->db->get()->num_rows();
     }
 
+	// Dashboard Bupati
+	function get_jml_tayang_dashboard_bupati()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("tayang ='ya'");
+        return $this->db->get()->num_rows();
+    }
+
+	function get_jml_prosestl_dashboard_bupati()
+    {
+    	$this->db->select('*');
+        $this->db->from('tbl_laporan');
+        $this->db->where("laporan_status ='2'");
+		$this->db->where("tayang ='ya'");
+        return $this->db->get()->num_rows();
+    }
+
+
 	function simpan_laporan($id,$id_pelapor,$id_kepada,$ditujukan_kepada,$id_komisi,$kategori_laporan,$judul_laporan,$anggaran,$lokasi,$id_jenis,$isi_laporan,$nama,$email,$hp,$gambar,$laporan_status,$keterangan_status,$status){
 		$hsl=$this->db->query("insert into tbl_laporan(id,id_pelapor,id_kepada,ditujukan_kepada,id_komisi,kategori_laporan,judul_laporan,anggaran,lokasi,id_jenis,isi_laporan,nama,email,hp,foto,laporan_status,keterangan_status,status) values 
 			('$id','$id_pelapor','$id_kepada','$ditujukan_kepada','$id_komisi','$kategori_laporan','$judul_laporan','$anggaran','$lokasi','$id_jenis','$isi_laporan','$nama','$email','$hp','$gambar','$laporan_status','$keterangan_status','$status')");
