@@ -111,19 +111,19 @@ $jum_komentar=$query1->num_rows();
                           <td>
                             <?php if ($i['sumber_aduan']=='LB') { ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Website Lapor Bupati';?>
-                            <?php }else if ($i['laporan_status']=="LG") { ?>
+                            <?php }else if ($i['sumber_aduan']=="LG") { ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Website Lapor Gubernur';?>
-                            <?php }else if ($i['laporan_status']=="SP") { ?>
+                            <?php }else if ($i['sumber_aduan']=="SP") { ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'SP4N LAPOR';?>
-                            <?php }else if ($i['laporan_status']=="WA"){ ?>
+                            <?php }else if ($i['sumber_aduan']=="WA"){ ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Whatsapp Laporbup';?>
-                            <?php }else if ($i['laporan_status']=="SM"){ ?>
+                            <?php }else if ($i['sumber_aduan']=="SM"){ ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'SMS Laporbup';?>
-                            <?php }else if ($i['laporan_status']=="IG"){ ?>
+                            <?php }else if ($i['sumber_aduan']=="IG"){ ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Instagram Laporbup';?>
-                            <?php }else if ($i['laporan_status']=="FB"){ ?>
+                            <?php }else if ($i['sumber_aduan']=="FB"){ ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Facebook Laporbup';?>
-                            <?php }else if ($i['laporan_status']=="TW"){ ?>
+                            <?php }else if ($i['sumber_aduan']=="TW"){ ?>
                               <?php echo '<b style="color:red;">LB'.$sumber_aduan.'-'.$id.'</b><br><br>'.$tanggal_laporan.'<br><br>'.'Twitter Laporbup';?>
                             <?php }else echo "-"; ?>
                           </td>
