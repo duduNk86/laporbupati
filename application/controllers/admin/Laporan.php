@@ -39,6 +39,7 @@ class Laporan extends CI_Controller
 		$pengguna_level = $this->session->userdata('pengguna_level');
 		$x['title'] = 'Lapor Bupati Wonosobo';
 		$x['kpd'] = $this->m_kepada->get_all_kepada();
+		$x['subkatall'] = $this->m_kategori_laporan->get_all_subkategori_laporan();
 		if ($pengguna_level == '2') {
 			$this->load->view('admin/v_laporan2_a_opd', $x);
 		}
@@ -78,6 +79,7 @@ class Laporan extends CI_Controller
 		$pengguna_level = $this->session->userdata('pengguna_level');
 		$x['title'] = 'Lapor Bupati Wonosobo';
 		$x['kpd'] = $this->m_kepada->get_all_kepada();
+		$x['subkatall'] = $this->m_kategori_laporan->get_all_subkategori_laporan();
 		if ($pengguna_level == '2') {
 			$this->load->view('admin/v_laporan2_a_opd_notif', $x);
 		}
