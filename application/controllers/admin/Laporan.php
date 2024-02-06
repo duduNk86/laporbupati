@@ -241,6 +241,14 @@ class Laporan extends CI_Controller
 		echo json_encode($data);
 	}
 
+	function get_cetaksubkategori()
+	{
+		$x['title'] = 'Lapor Bupati Wonosobo';
+		$kode = $this->input->get('id');
+		$data = $this->m_laporan->get_laporan_by_kode_cetak($kode)->result();
+		echo json_encode($data);
+	}
+
 	//Update Dudunk
 	function get_modaledit_disabilitas()
 	{
@@ -806,6 +814,7 @@ class Laporan extends CI_Controller
 		$datawhatsapp = $this->m_admin->getWhatsapp($id_kepada);
 		$da = $datawhatsapp->row_array();
 		$whatsapp = $da['pengguna_nohp'];
+		$whatsapp_pimpinan = $da['pengguna_nohp_pimpinan'];
 
 		$data = array(
 			'laporan_status'	=> 2,
@@ -856,12 +865,12 @@ class Laporan extends CI_Controller
 		// var_dump($email_tembusan);
 		// die;
 
-		// Config Send Whatsapp
+		// Config Send Whatsapp ke Admin OPD
 		// Ambil nomor penerima dan pesan dari post data
 		// $recipient = $this->input->post('recipient');
 		// $message = $this->input->post('message');
 
-		$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*" . $nama . " Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB" . $sumber_aduan . "-" . $tiketaduan . "\n\n*Judul Laporan :*\n" . $judul_laporan . "\n\n*Tindaklanjuti laporan dengan kunjungi :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui kontak Email : *laporbupatiwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
+		$message2 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*" . $nama . " Kab. Wonosobo*\n\nDengan hormat,\nDimohon untuk segera menindaklanjuti laporan Aduan baru sebagai berikut:\n\n*No. Tiket Aduan :*\nLB" . $sumber_aduan . "-" . $tiketaduan . "\n\n*Judul Laporan :*\n" . $judul_laporan . "\n\n*Tindaklanjuti laporan melalui laman :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*NB :*\nLapor Bupati Wonosobo tidak akan pernah meminta anda untuk memberi tahu kata sandi atau informasi akun pribadi anda kepada kami melalui email/whatsapp. Anda hanya akan diminta untuk memasukkan password anda ketika anda masuk ke sistem Lapor Bupati Wonosobo.  Jika anda menerima email/whatsapp yang mencurigakan atau terjadi kesalahan tujuan pengiriman, mohon laporkan hal tersebut kepada kami melalui kontak Email : *laporbupatiwonosobo@gmail.com* untuk penyelidikan lebih lanjut.";
 
 		// $url_whatsapp = 'https://api.whatsapp.com/send?phone=' . $whatsapp . '&text=' . urlencode($message2);
 
@@ -913,6 +922,35 @@ class Laporan extends CI_Controller
 
 		// var_dump($message2);
 		// die;
+
+		// Config Send Whatsapp ke Admin Pimpinan OPD
+
+		$message3 = "*Notifikasi Laporan Aduan Baru*\n\nKepada Yth. :\n*Pimpinan OPD*\n*" . $nama . " Kab. Wonosobo*\n\nDengan hormat,\nDimohon bantuan dan kerjasama untuk segera menindaklanjuti laporan Aduan yang masuk pada Kanal Lapor Bupati Wonosobo, sebagai berikut:\n\n*No. Tiket Aduan :*\nLB" . $sumber_aduan . "-" . $tiketaduan . "\n\n*Judul Laporan :*\n" . $judul_laporan . "\n\n*Tindaklanjuti laporan melalui laman :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*\n\n*Keterangan :*\n1. Mohon bantuan untuk mengkoordinasikan dengan Admin Laporbupati pada OPD Saudara untuk Proses Tindak Lanjut;\n2. Tidak perlu membalas pesan ini, karena pesan notifikasi ini dikirim secara otomatis melalui Whatsapp Sistem Lapor Bupati Wonosobo.";
+
+		// Inisialisasi client Guzzle
+		$client = new Client(['base_uri' => 'https://pati.wablas.com/api/']);
+
+		// Set konfigurasi untuk request
+		$requestConfigPimpinan = [
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Authorization' => 'ACUaUOlDCKoy8XkWsfmDBfr8hQM7zqs7sp18OStbMZ7lTWHz9pDaEAcOM5oEMnKj'
+			],
+			'json' => [
+				'phone' => $whatsapp_pimpinan,
+				'message' => $message3
+			]
+		];
+
+		// Kirim request ke API Chat API untuk mengirim pesan WhatsApp
+		$response = $client->request('POST', 'send-message', $requestConfigPimpinan);
+
+		// Ambil status code dari response
+		$statusCode = $response->getStatusCode();
+
+		// Tampilkan response dalam bentuk JSON
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+
 
 		$this->load->library('email', $config);
 		$this->email->initialize($config);
@@ -1129,7 +1167,7 @@ class Laporan extends CI_Controller
 		// }
 
 		$data = array(
-			'laporan_status' => 1,
+			'laporan_status' => 99,
 			// 'tindaklanjut'=>$tindaklanjut,
 			'id_kepada' => "",
 			'ditujukan_kepada' => "",
