@@ -31,6 +31,7 @@ class Dashboard2 extends CI_Controller
 		$x['jml_selesai'] = $this->m_laporan->get_jml_selesai_custome($dari, $sampai);
 		$x['jml_inbox'] = $this->m_laporan->get_jml_inbox();
 		$x['jml_user'] = $this->m_laporan->get_jml_user();
+		$x['durasi_tl_custome'] = $this->m_laporan->get_durasi_tl_custome($dari, $sampai);
 		$x['linechart_custome'] = $this->m_laporan->linechart_custome($dari, $sampai);
 		$x['linechart_custome_bulan'] = $this->m_laporan->linechart_custome_bulan($dari, $sampai);
 		$x['barchart_custome'] = $this->m_laporan->barchart_custome($dari, $sampai);
@@ -70,6 +71,7 @@ class Dashboard2 extends CI_Controller
 		$x['jml_selesai_opd'] = $this->m_laporan->get_jml_selesai_opd_custome($id_kepada, $dari, $sampai);
 		$x['jml_inbox'] = $this->m_laporan->get_jml_inbox();
 		$x['jml_user'] = $this->m_laporan->get_jml_user();
+		$x['durasi_tl_opd'] = $this->m_laporan->get_durasi_tl_opd_custome($id_kepada, $dari, $sampai);
 		$x['linechart_opd_custome'] = $this->m_laporan->linechart_opd_custome($id_kepada, $dari, $sampai);
 		$x['linechart_opd_custome_bulan'] = $this->m_laporan->linechart_opd_custome_bulan($id_kepada, $dari, $sampai);
 		$x['piechart_opd_custome'] = $this->m_laporan->piechart_opd_custome($id_kepada, $dari, $sampai);

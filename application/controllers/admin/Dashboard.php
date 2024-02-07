@@ -26,6 +26,7 @@ class Dashboard extends CI_Controller
 		$x['jml_selesai'] = $this->m_laporan->get_jml_selesai();
 		$x['jml_inbox'] = $this->m_laporan->get_jml_inbox();
 		$x['jml_user'] = $this->m_laporan->get_jml_user();
+		$x['durasi_tl'] = $this->m_laporan->get_durasi_tl();
 		$x['linechart'] = $this->m_laporan->linechart();
 		$x['barchart'] = $this->m_laporan->barchart();
 		$x['piechart'] = $this->m_laporan->piechart();
@@ -57,6 +58,7 @@ class Dashboard extends CI_Controller
 		$x['jml_selesai_opd'] = $this->m_laporan->get_jml_selesai_opd($id_kepada);
 		$x['jml_inbox'] = $this->m_laporan->get_jml_inbox();
 		$x['jml_user'] = $this->m_laporan->get_jml_user();
+		$x['durasi_tl_opd'] = $this->m_laporan->get_durasi_tl_opd($id_kepada);
 		$x['linechart_opd'] = $this->m_laporan->linechart_opd($id_kepada);
 		$x['piechart_opd'] = $this->m_laporan->piechart_opd($id_kepada);
 		$x['piechart2_opd'] = $this->m_laporan->piechart2_opd($id_kepada);

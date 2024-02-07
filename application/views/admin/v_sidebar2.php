@@ -83,7 +83,7 @@ $uri4 = $this->uri->segment(4);
         </ul>
       </li>
 
-      <li class="treeview">
+      <!-- <li class="treeview">
         <a href="#">
           <i class="fa fa-code"></i>
           <span>Tindak Lanjut</span>
@@ -92,9 +92,9 @@ $uri4 = $this->uri->segment(4);
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="<?php echo base_url() . 'admin/selesai' ?>"><i class="fa fa-list"></i> Daftar TL Aduan</a></li>
+          <li><a href="< ?php echo base_url() . 'admin/selesai2' ?>"><i class="fa fa-list"></i> Daftar TL Aduan</a></li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="treeview">
         <a href="#">

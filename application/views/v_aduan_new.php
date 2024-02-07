@@ -669,7 +669,7 @@
         var recordingMedia = recordingDIV.querySelector('.recording-media');
         var recordingPlayer = recordingDIV.querySelector('video');
         var mediaContainerFormat = recordingDIV.querySelector('.media-container-format');
-        var asudahlah = recordingDIV.querySelector('button');
+        var rekamAduan = recordingDIV.querySelector('button');
 
         recordingDIV.querySelector('button').onclick = function() {
             var button = this;
@@ -1314,9 +1314,10 @@
         };
 
         // Script Upload File Audio
-        $('#upload-to-server-2').click(function() {
+        $('#upload-to-server-2').click(function(a) {
+            a.preventDefault();
             let url = "user/aduan/kirim_aduan_disabilitas";
-            var blob = asudahlah.recordRTC.getBlob();
+            var blob = rekamAduan.recordRTC.getBlob();
             var myformData = new FormData();
             myformData.append('x_audio', blob);
             $.ajax({
@@ -1325,6 +1326,7 @@
                 data: myformData,
                 success: function() {
                     alert("Laporan Anda berhasil dikirim! silahkan tunggu Link Tracking untuk melihat Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.");
+                    window.location.href = "<?php echo base_url('home'); ?>"
                 },
                 enctype: 'multipart/form-data',
                 processData: false,
@@ -1336,7 +1338,7 @@
         // Script Upload File Audio
         // $('#upload-to-server-2').click(function(a) {
         //     let url = "user/aduan/kirim_aduan_disabilitas";
-        //     var blob = asudahlah.recordRTC.getBlob();
+        //     var blob = rekamAduan.recordRTC.getBlob();
         //     var myformData = new FormData();
         //     myformData.append('x_audio', blob);
         //     $.ajax({

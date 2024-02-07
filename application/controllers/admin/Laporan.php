@@ -164,6 +164,13 @@ class Laporan extends CI_Controller
 		echo json_encode($data);
 	}
 
+	function get_selesai()
+	{
+		$x['title'] = 'Lapor Bupati Wonosobo';
+		$data = $this->m_laporan->get_all_laporan_selesai()->result();
+		echo json_encode($data);
+	}
+
 	function get_verifikasi()
 	{
 		$x['title'] = 'Lapor Bupati Wonosobo';

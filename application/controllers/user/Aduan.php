@@ -286,8 +286,8 @@ class Aduan extends CI_Controller
 
 				// Config Send Whatsapp
 				// Ambil nomor penerima dan pesan dari post data
-				// $whatsapp = '6282111557773';
-				$whatsapp = '6282314313335-1589939868'; // Group Tim Lapor Bupati - Bot Lapor Bupati
+				$whatsapp = '6282111557773';
+				// $whatsapp = '6282314313335-1589939868'; // Group Tim Lapor Bupati - Bot Lapor Bupati
 
 				$message2 = "*Notifikasi Laporan Aduan Disabilitas Baru*\n\nKepada Yth. :\n*Admin Lapor Bupati Wonosobo*\n\nDengan hormat,\nDimohon untuk segera *Memproses/Verifikasi* laporan Aduan Disabilitas baru sebagai berikut:\n\n*File Audio Aduan :*\n" . $nama_file . "\n\n*Proses Verifikasi Disini :*\nhttps://laporbupati.wonosobokab.go.id/admin\n\nTerima Kasih\n*Lapor Bupati Wonosobo*";
 
@@ -302,8 +302,9 @@ class Aduan extends CI_Controller
 					],
 					'json' => [
 						'phone' => $whatsapp,
-						'message' => $message2,
-						'isGroup' => 'true'
+						// 'message' => $message2,
+						'message' => $message2
+						// 'isGroup' => 'true'
 					]
 				];
 
@@ -321,11 +322,11 @@ class Aduan extends CI_Controller
 				redirect('home');
 			} else {
 				// $this->output->set_header('HTTP/1.0 400 Bad Request');
-				$this->session->set_flashdata('gagal', 'Laporan Anda gagal dikirim! silahkan coba lagi.');
+				$this->session->set_flashdata('gagal', '[Laporan Anda gagal dikirim! silahkan coba lagi]');
 				redirect('home');
 			}
 		} else {
-			$this->session->set_flashdata('gagal', 'Laporan Anda gagal dikirim! silahkan coba lagi.');
+			$this->session->set_flashdata('gagal', '[Laporan Anda gagal dikirim! silahkan coba lagi]');
 			redirect('home');
 		}
 	}

@@ -91,8 +91,8 @@ if (empty($pengguna_level)) {
         <!-- TITLE CONTENT -->
         <div class="row">
           <div class="col-md-12">
-            <!-- <div class="text-center" style="margin-left: -30px;"><img src="< ?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1920px" height="130px"> -->
-            <div class="text-center" style="margin-left: -30px;"><img src="<?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1530px" height="115px">
+            <div class="text-center" style="margin-left: -30px;"><img src="<?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1920px" height="130px">
+              <!-- <div class="text-center" style="margin-left: -30px;"><img src="< ?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1530px" height="115px"> -->
               <div id="clock"><br>
                 <p class="date" style="color:black;letter-spacing: 0.1em; font-size: 14px;">{{ date }}</p>
                 <p class="time" style="color:red;letter-spacing: 0.05em; font-size: 24px; padding: 2px 0;">{{ time }}</p>
@@ -129,8 +129,8 @@ if (empty($pengguna_level)) {
                     $jml_btl=$btl->num_rows();
                     ?> -->
         <div class="row">
-          <!-- <div class="col-md-12" style="margin-top:5px;margin-bottom:15px;"> -->
-          <div class="col-md-12" style="margin-left:-40px;margin-top:5px;margin-bottom:15px;">
+          <div class="col-md-12" style="margin-left:-10px;margin-top:5px;margin-bottom:15px;">
+            <!-- <div class="col-md-12" style="margin-left:-40px;margin-top:5px;margin-bottom:15px;"> -->
             <div class="col-md-5">
             </div>
             <div class="col-md-4 justify-content-center">

@@ -191,7 +191,13 @@ $jum_komentar = $query1->num_rows();
               </div>
             </div>
             <div class="form-group">
-              <label for="inputUserName" class="col-sm-3 control-label">Upload Foto TL</label>
+              <label for="inputUserName" class="col-sm-3 control-label">Foto TL</label>
+              <div class="col-sm-8" id="foto_tindaklanjut_edit_view" name="foto_tindaklanjut_edit_view">
+                <img src="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputUserName" class="col-sm-3 control-label">Upload / Ubah Foto TL</label>
               <div class="col-sm-8">
                 <input type="file" name="x_foto_tindaklanjut_edit" class="form-control" id="x_foto_tindaklanjut_edit">
                 <input type="hidden" name="x_foto_tindaklanjut" id="x_foto_tindaklanjut">
@@ -491,14 +497,27 @@ $jum_komentar = $query1->num_rows();
               menitTl = selisihMenit - (selisihHari * 24 * 60) - (jamTl * 60);
               detikTl = selisihDetik - (selisihHari * 24 * 60 * 60) - (jamTl * 60 * 60) - (menitTl * 60);
 
+              // Foto Aduan
               var fileName = data[i].foto;
               var fileExtension = fileName.split('.').pop();
               if (fileExtension == "pdf") {
-                tampilimagefoto = '<embed src="' + base_urlx + data[i].foto + '" width="90px" height="90px" /> <center><a href="' + base_urlx + data[i].foto + '" style="width:90px;">view Pdf</a></center>';
+                tampilimagefoto = '<embed src="' + base_urlx + data[i].foto + '" width="90px" height="90px" /><a href="' + base_urlx + data[i].foto + '" style="width:90px;"><br>View Dokumen</a>';
               } else if (fileExtension === "") {
                 tampilimagefoto = '[ - ]';
               } else {
-                tampilimagefoto = '<img src="' + base_urlx + data[i].foto + '" style="width:90px;">';
+                // tampilimagefoto = '<img src="' + base_urlx + data[i].foto + '" style="width:90px;"><a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;"><br>View Detail</a>';
+                tampilimagefoto = '<a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail foto aduan"><img src="' + base_urlx + data[i].foto + '" style="width:90px;"></a>';
+              }
+
+              // Foto Tindak Lanjut
+              var fileName = data[i].foto_tindaklanjut;
+              var fileExtension = fileName.split('.').pop();
+              if (fileExtension == "pdf") {
+                tampilimagefotoTL = '<embed src="' + base_urlx + data[i].foto_tindaklanjut + '" width="90px" height="90px" /><a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;"><br>View Bukti TL</a>';
+              } else if (fileExtension === "") {
+                tampilimagefotoTL = '[ - ]';
+              } else {
+                tampilimagefotoTL = '<a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail bukti TL"><img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="width:90px;"></a>';
               }
 
               html += '<tr>' +
@@ -506,7 +525,7 @@ $jum_komentar = $query1->num_rows();
                 '<td><b style="color:red;">' + 'LB' + data[i].sumber_aduan + '-' + data[i].id + '</b><br><br>' + data[i].tanggal_laporan + '<br><br>' + sumber + '</td>' +
                 '<td style="text-align:justify;">' + '<b>[' + data[i].judul_laporan + ']</b><br><br>' + data[i].isi_laporan + '<br><br><i class="fa fa-map-marker"></i> ' + data[i].lokasi + '<br><br>' + tampilimagefoto + '</td>' +
                 '<td>' + data[i].ditujukan_kepada + '</td>' +
-                '<td style="text-align:justify;">' + tanggal_tindaklanjut + '<br><br>' + data[i].tindaklanjut + '</td>' +
+                '<td style="text-align:justify;">' + tanggal_tindaklanjut + '<br><br>' + data[i].tindaklanjut + '<br><br>' + tampilimagefotoTL + '</td>' +
                 '<td style="text-align:center;">' + laporan_status + '<br><br>' + '<b>' + selisihHari + '</b>' + " hari " + '<br><b>' + jamTl + '</b>' + " jam " + '<b>' + menitTl + '</b>' + " menit " + '<b>' + detikTl + '</b>' + " detik" + '<br><br>' + rating + '</td>' +
                 '<td style="text-align:center;">' +
                 '<a href="javascript:;" data-toggle="tooltip" title="Lihat Rincian" class="btn btn-success btn-xs item_view" data="' + data[i].id + '"><span class="fa fa-eye">&nbsp; Detail &nbsp;&nbsp;&nbsp;</span></a>' + '<br>' +
@@ -595,10 +614,13 @@ $jum_komentar = $query1->num_rows();
               var fileNameFotoView = data[i].foto;
               var fileExtension = fileNameFotoView.split('.').pop();
               if (fileExtension == "pdf") {
-                gbr1 += '<embed src="' + base_urlx + data[i].foto + '" width="90px" height="90px" alt="no img"/>';
+                gbr1 += '<embed src="' + base_urlx + data[i].foto + '" width="90px" height="90px" alt="no img"/><a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;"><br>View Dokumen</a>';
+                $('#foto_view').append(gbr1);
+              } else if (fileExtension == "") {
+                gbr1 += '[ - ]';
                 $('#foto_view').append(gbr1);
               } else {
-                gbr1 += '<img src="' + base_urlx + data[i].foto + '" style="height:250px;width:350px;" alt="no img">';
+                gbr1 += '<a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail foto aduan"><img src="' + base_urlx + data[i].foto + '" style="height:250px;width:350px;" alt="no img"></a>';
                 $('#foto_view').append(gbr1);
               }
 
@@ -606,12 +628,13 @@ $jum_komentar = $query1->num_rows();
               var fileNameFotoTL = data[i].foto_tindaklanjut;
               var fileExtension = fileNameFotoTL.split('.').pop();
               if (fileExtension == "pdf") {
-
-                gbr2 += '<embed src="' + base_urlx + data[i].foto_tindaklanjut + '" width="90px" height="90px" alt="no img"/>';
+                gbr2 += '<embed src="' + base_urlx + data[i].foto_tindaklanjut + '" width="90px" height="90px" alt="no img"/><a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;"><br>View Bukti TL</a>';
                 $('#foto_tindaklanjut_view').append(gbr2);
-
+              } else if (fileExtension == "") {
+                gbr2 += '[ - ]';
+                $('#foto_tindaklanjut_view').append(gbr2);
               } else {
-                gbr2 += '<img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="height:250px;width:350px;" alt="no img">';
+                gbr2 += '<a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail foto TL"><img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="height:250px;width:350px;" alt="no img"></a>';
                 $('#foto_tindaklanjut_view').append(gbr2);
               }
 
@@ -625,7 +648,7 @@ $jum_komentar = $query1->num_rows();
       // Modal Input Tindak Lanjut
       $('#tbl_laporan').on('click', '.item_tindaklanjut', function() {
         var id = $(this).attr('data');
-        var gbr = '';
+        var gbr1 = '';
         var base_urlx = "<?php echo base_url('assets/images/') ?>";;
 
         $.ajax({
@@ -656,6 +679,21 @@ $jum_komentar = $query1->num_rows();
               $('[name="x_laporanstatus_tindaklanjut"]').val(data[i].laporan_status);
               $('[name="x_tanggal_tl"]').val(data[i].tanggal_tindaklanjut);
               $('[name="x_keterangan_status_tindaklanjut"]').val(data[i].keterangan_status);
+              $('[name="foto_tindaklanjut_edit_view"]').html('');
+
+              // Foto Tindak Lanjut
+              var fileNameFotoTL = data[i].foto_tindaklanjut;
+              var fileExtension = fileNameFotoTL.split('.').pop();
+              if (fileExtension == "pdf") {
+                gbr1 += '<embed src="' + base_urlx + data[i].foto_tindaklanjut + '" width="90px" height="90px" alt="no img"/><a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;"><br>View Bukti TL</a>';
+                $('#foto_tindaklanjut_edit_view').append(gbr1);
+              } else if (fileExtension == "") {
+                gbr1 += '[ - ]';
+                $('#foto_tindaklanjut_edit_view').append(gbr1);
+              } else {
+                gbr1 += '<a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail foto TL"><img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="height:250px;width:350px;" alt="no img"></a>';
+                $('#foto_tindaklanjut_edit_view').append(gbr1);
+              }
 
             });
           }
@@ -738,7 +776,7 @@ $jum_komentar = $query1->num_rows();
                 gbr1 += '<embed src="' + base_urlx + data[i].foto + '" width="90px" height="90px" alt="no img"/>';
                 $('#foto_view').append(gbr1);
               } else if (fileNameFotoView == "") {
-                gbr1 += '-';
+                gbr1 += '[ - ]';
                 $('#foto_view').append(gbr1);
               } else {
                 gbr1 += '<img src="' + base_urlx + data[i].foto + '" style="height:250px;width:350px;" alt="no img">';
@@ -753,7 +791,7 @@ $jum_komentar = $query1->num_rows();
                 gbr2 += '<embed src="' + base_urlx + data[i].foto_tindaklanjut + '" width="90px" height="90px" alt="no img"/>';
                 $('#foto_tindaklanjut_view').append(gbr2);
               } else if (fileNameFotoTL == "") {
-                gbr2 += '-';
+                gbr2 += '[ - ]';
                 $('#foto_tindaklanjut_view').append(gbr2);
               } else {
                 gbr2 += '<img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="height:250px;width:350px;" alt="no img">';

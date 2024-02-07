@@ -84,9 +84,9 @@ $id_kepada = $this->session->userdata('pengguna_idskpd');
             <div class="col">
               <div class="col-xl-6 col-lg-6">
                 <div class="btn-group" role="group">
-                  <button type="button" title="Custom Rekap & Statistik Aduan"><a href="#" data-toggle="modal" data-target="#ModalCustomStatistik"><i class="fa fa-bar-chart"></i></a></button>
-                  <button type="button" title="Reset Data"><a href="<?php echo base_url() . 'admin/dashboard/opd' ?>"><i class="fa fa-refresh"></i></a></button>
-                  &nbsp;Statistik &nbsp;:&nbsp; <b style="color:red;"><?php echo mediumdate_indo($tanggal_dari); ?></b> s/d <b style="color:red;"><?php echo mediumdate_indo($tanggal_sampai); ?></b>
+                  <button type="button" title="Customize Rekap & Statistik Aduan" class="btn-lg" style="border: solid 1px;"><a href="#" data-toggle="modal" data-target="#ModalCustomStatistik"><i class="fa fa-bar-chart"></i>&nbsp; Filter</a></button>
+                  <button type="button" title="Reset Data" class="btn-lg" style="border: solid 1px;"><a href="<?php echo base_url() . 'admin/dashboard/opd' ?>"><i class="fa fa-refresh"></i>&nbsp; Reset</a></button>
+                  &nbsp;Periode &nbsp;:&nbsp; <b style="color:red;"><?php echo mediumdate_indo($tanggal_dari); ?></b> s/d <b style="color:red;"><?php echo mediumdate_indo($tanggal_sampai); ?></b>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6">
@@ -196,21 +196,21 @@ $id_kepada = $this->session->userdata('pengguna_idskpd');
           <div class="row">
             <!-- ./col -->
 
-            <!-- <div class="col-lg-3 col-xs-6"> -->
-            <!-- small box -->
-            <!-- <div class="small-box bg-yellow">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-purple">
                 <div class="inner">
                   <center>
-                    <h3>< ?php echo $jml_inbox; ?></h3>
-                    <h2>Inbox</h2>
+                    <h3><?php echo $durasi_tl_opd; ?></h3>
+                    <h2>X̄ Kecepatan TL</h2>
                   </center>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">Lihat Detail <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div> -->
+            </div>
 
             <?php if ($level === '1') : ?>
               <!-- ./col -->

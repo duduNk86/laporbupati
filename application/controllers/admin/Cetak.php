@@ -124,8 +124,22 @@ class Cetak extends CI_Controller
 				if ($fotoTindaklanjut == "") {
 					$fotoTindaklanjutView = '';
 				} else {
-					$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+					$fileExtension = pathinfo($fotoTindaklanjut, PATHINFO_EXTENSION);
+					$imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+					if (in_array(strtolower($fileExtension), $imageExtensions)) {
+						$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $fotoTindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+					} elseif (strtolower($fileExtension) === 'pdf') {
+						$fotoTindaklanjutView = '<embed src="' . base_url('assets/images/') . $fotoTindaklanjut . '" type="application/pdf" width="100%" height="100%" />';
+					} else {
+						$fotoTindaklanjutView = '<p>Berkas tidak dapat ditampilkan. <a href="' . base_url('assets/images/') . $fotoTindaklanjut . '" target="_blank">Unduh</a></p>';
+					}
 				}
+				// $fotoTindaklanjut = $br->foto_tindaklanjut;
+				// if ($fotoTindaklanjut == "") {
+				// 	$fotoTindaklanjutView = '';
+				// } else {
+				// 	$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+				// }
 
 				// Hitung Durasi TL
 				$awal  = date_create($br->tanggal_laporan);
@@ -137,7 +151,7 @@ class Cetak extends CI_Controller
 					$diffView = '';
 				} else {
 					$diff  = date_diff($awal, $akhir);
-					$diffView = $diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
+					$diffView = $diff->format('<p style="color:blue; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
 				}
 
 				echo
@@ -250,7 +264,7 @@ class Cetak extends CI_Controller
 					$diffView = '';
 				} else {
 					$diff  = date_diff($awal, $akhir);
-					$diffView = $diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
+					$diffView = $diff->format('<p style="color:blue; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
 				}
 
 				echo
@@ -376,7 +390,7 @@ class Cetak extends CI_Controller
 						$diffView = '';
 					} else {
 						$diff  = date_diff($awal, $akhir);
-						$diffView = $diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
+						$diffView = $diff->format('<p style="color:blue; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
 					}
 
 					echo
@@ -509,8 +523,23 @@ class Cetak extends CI_Controller
 					if ($fotoTindaklanjut == "") {
 						$fotoTindaklanjutView = '';
 					} else {
-						$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+						$fileExtension = pathinfo($fotoTindaklanjut, PATHINFO_EXTENSION);
+						$imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+						if (in_array(strtolower($fileExtension), $imageExtensions)) {
+							$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $fotoTindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+						} elseif (strtolower($fileExtension) === 'pdf') {
+							$fotoTindaklanjutView = '<embed src="' . base_url('assets/images/') . $fotoTindaklanjut . '" type="application/pdf" width="100%" height="100%" />';
+						} else {
+							$fotoTindaklanjutView = '<p>Berkas tidak dapat ditampilkan. <a href="' . base_url('assets/images/') . $fotoTindaklanjut . '" target="_blank">Unduh</a></p>';
+						}
 					}
+
+					// $fotoTindaklanjut = $br->foto_tindaklanjut;
+					// if ($fotoTindaklanjut == "") {
+					// 	$fotoTindaklanjutView = '';
+					// } else {
+					// 	$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+					// }
 
 					// Hitung Durasi TL
 					$awal  = date_create($br->tanggal_laporan);
@@ -679,7 +708,7 @@ class Cetak extends CI_Controller
 						$diffView = '';
 					} else {
 						$diff  = date_diff($awal, $akhir);
-						$diffView = $diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
+						$diffView = $diff->format('<p style="color:blue; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
 					}
 
 					// Hitung Durasi TL
@@ -838,8 +867,22 @@ class Cetak extends CI_Controller
 					if ($fotoTindaklanjut == "") {
 						$fotoTindaklanjutView = '';
 					} else {
-						$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100px; height: 100px;">';
+						$fileExtension = pathinfo($fotoTindaklanjut, PATHINFO_EXTENSION);
+						$imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+						if (in_array(strtolower($fileExtension), $imageExtensions)) {
+							$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $fotoTindaklanjut . '" alt="Foto TL" style="max-width: 100; height: 100px;">';
+						} elseif (strtolower($fileExtension) === 'pdf') {
+							$fotoTindaklanjutView = '<embed src="' . base_url('assets/images/') . $fotoTindaklanjut . '" type="application/pdf" width="100%" height="100%" />';
+						} else {
+							$fotoTindaklanjutView = '<p>Berkas tidak dapat ditampilkan. <a href="' . base_url('assets/images/') . $fotoTindaklanjut . '" target="_blank">Unduh</a></p>';
+						}
 					}
+					// $fotoTindaklanjut = $br->foto_tindaklanjut;
+					// if ($fotoTindaklanjut == "") {
+					// 	$fotoTindaklanjutView = '';
+					// } else {
+					// 	$fotoTindaklanjutView = '<img src="' . base_url('assets/images/') . $br->foto_tindaklanjut . '" alt="Foto TL" style="max-width: 100px; height: 100px;">';
+					// }
 
 					// Hitung Durasi TL
 					$awal  = date_create($br->tanggal_laporan);
@@ -851,7 +894,7 @@ class Cetak extends CI_Controller
 						$diffView = '';
 					} else {
 						$diff  = date_diff($awal, $akhir);
-						$diffView = $diff->format('<p style="color:red; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
+						$diffView = $diff->format('<p style="color:blue; font-size:16px;"><b>%Y</b> th <b>%m</b> bl <b>%d</b> hr <b>%h</b> jam <b>%i</b> mnt <b>%s</b> dtk</p>');
 					}
 
 					echo

@@ -21,6 +21,12 @@ class M_laporan extends CI_Model
 		return $hsl;
 	}
 
+	function get_all_laporan_selesai()
+	{
+		$hsl = $this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='3' ORDER BY nomor DESC");
+		return $hsl;
+	}
+
 	function get_all_laporan_ditolak()
 	{
 		$hsl = $this->db->query("SELECT tbl_laporan.*,DATE_FORMAT(tanggal_laporan,'%d/%m/%Y') AS tanggal FROM tbl_laporan WHERE laporan_status='99' ORDER BY nomor DESC");
@@ -663,6 +669,45 @@ class M_laporan extends CI_Model
 		return $this->db->get()->num_rows();
 	}
 
+	function get_durasi_tl()
+	{
+		$this->db->select('tanggal_laporan, tanggal_tindaklanjut');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_tindaklanjut IS NOT NULL', null, false);
+		$this->db->where('laporan_status', '3');
+		$query = $this->db->get();
+
+		$totalDetik = 0;
+		$jumlahBarisDenganDurasiValid = 0;
+
+		foreach ($query->result() as $row) {
+			$tanggalLaporan = new DateTime($row->tanggal_laporan);
+			$tanggalTindaklanjut = new DateTime($row->tanggal_tindaklanjut);
+
+			if ($tanggalLaporan < $tanggalTindaklanjut) {
+				$durasi = $tanggalLaporan->diff($tanggalTindaklanjut);
+				$totalDetik += $durasi->days * 24 * 60 * 60 + $durasi->h * 60 * 60 + $durasi->i * 60 + $durasi->s;
+				$jumlahBarisDenganDurasiValid++;
+			}
+		}
+
+		if ($jumlahBarisDenganDurasiValid > 0) {
+			$durasiRataRata = round($totalDetik / $jumlahBarisDenganDurasiValid);
+
+			// Hitung jumlah hari, jam, menit, dan detik
+			$hari = floor($durasiRataRata / (24 * 60 * 60));
+			$jam = floor(($durasiRataRata % (24 * 60 * 60)) / (60 * 60));
+			$menit = floor(($durasiRataRata % (60 * 60)) / 60);
+			// $detik = $durasiRataRata % 60;
+
+			// $rataRataWaktu = "{$hari} hari, {$jam} jam, {$menit} menit, {$detik} detik";
+			$rataRataWaktu = "{$hari} h {$jam} j {$menit} m";
+			return $rataRataWaktu;
+		} else {
+			return 'Tidak ada data';
+		}
+	}
+
 	// Dashboard Rekapitulasi Penanganan Aduan All per OPD masing-masing
 	function get_jml_laporan_opd($id_kepada)
 	{
@@ -706,6 +751,46 @@ class M_laporan extends CI_Model
 		$this->db->where("id_kepada = '$id_kepada'");
 		$this->db->where("laporan_status ='3'");
 		return $this->db->get()->num_rows();
+	}
+
+	function get_durasi_tl_opd($id_kepada)
+	{
+		$this->db->select('tanggal_laporan, tanggal_tindaklanjut');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_tindaklanjut IS NOT NULL', null, false);
+		$this->db->where("id_kepada = '$id_kepada'");
+		$this->db->where('laporan_status', '3');
+		$query = $this->db->get();
+
+		$totalDetik = 0;
+		$jumlahBarisDenganDurasiValid = 0;
+
+		foreach ($query->result() as $row) {
+			$tanggalLaporan = new DateTime($row->tanggal_laporan);
+			$tanggalTindaklanjut = new DateTime($row->tanggal_tindaklanjut);
+
+			if ($tanggalLaporan < $tanggalTindaklanjut) {
+				$durasi = $tanggalLaporan->diff($tanggalTindaklanjut);
+				$totalDetik += $durasi->days * 24 * 60 * 60 + $durasi->h * 60 * 60 + $durasi->i * 60 + $durasi->s;
+				$jumlahBarisDenganDurasiValid++;
+			}
+		}
+
+		if ($jumlahBarisDenganDurasiValid > 0) {
+			$durasiRataRata = round($totalDetik / $jumlahBarisDenganDurasiValid);
+
+			// Hitung jumlah hari, jam, menit, dan detik
+			$hari = floor($durasiRataRata / (24 * 60 * 60));
+			$jam = floor(($durasiRataRata % (24 * 60 * 60)) / (60 * 60));
+			$menit = floor(($durasiRataRata % (60 * 60)) / 60);
+			// $detik = $durasiRataRata % 60;
+
+			// $rataRataWaktu = "{$hari} hari, {$jam} jam, {$menit} menit, {$detik} detik";
+			$rataRataWaktu = "{$hari} h {$jam} j {$menit} m";
+			return $rataRataWaktu;
+		} else {
+			return 'Tidak ada data';
+		}
 	}
 
 	// Dashboard Admin Rekapitulasi Penanganan Aduan Custome
@@ -756,6 +841,47 @@ class M_laporan extends CI_Model
 		$this->db->where('tanggal_laporan <=', $sampai);
 		$this->db->where("laporan_status ='3'");
 		return $this->db->get()->num_rows();
+	}
+
+	function get_durasi_tl_custome($dari, $sampai)
+	{
+		$this->db->select('tanggal_laporan, tanggal_tindaklanjut');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_tindaklanjut IS NOT NULL', null, false);
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where('laporan_status', '3');
+		$query = $this->db->get();
+
+		$totalDetik = 0;
+		$jumlahBarisDenganDurasiValid = 0;
+
+		foreach ($query->result() as $row) {
+			$tanggalLaporan = new DateTime($row->tanggal_laporan);
+			$tanggalTindaklanjut = new DateTime($row->tanggal_tindaklanjut);
+
+			if ($tanggalLaporan < $tanggalTindaklanjut) {
+				$durasi = $tanggalLaporan->diff($tanggalTindaklanjut);
+				$totalDetik += $durasi->days * 24 * 60 * 60 + $durasi->h * 60 * 60 + $durasi->i * 60 + $durasi->s;
+				$jumlahBarisDenganDurasiValid++;
+			}
+		}
+
+		if ($jumlahBarisDenganDurasiValid > 0) {
+			$durasiRataRata = round($totalDetik / $jumlahBarisDenganDurasiValid);
+
+			// Hitung jumlah hari, jam, menit, dan detik
+			$hari = floor($durasiRataRata / (24 * 60 * 60));
+			$jam = floor(($durasiRataRata % (24 * 60 * 60)) / (60 * 60));
+			$menit = floor(($durasiRataRata % (60 * 60)) / 60);
+			// $detik = $durasiRataRata % 60;
+
+			// $rataRataWaktu = "{$hari} hari, {$jam} jam, {$menit} menit, {$detik} detik";
+			$rataRataWaktu = "{$hari} h {$jam} j {$menit} m";
+			return $rataRataWaktu;
+		} else {
+			return 'Tidak ada data';
+		}
 	}
 
 	// Dashboard OPD Rekapitulasi Penanganan Aduan Custome
@@ -811,6 +937,48 @@ class M_laporan extends CI_Model
 		$this->db->where('tanggal_laporan <=', $sampai);
 		$this->db->where("laporan_status ='3'");
 		return $this->db->get()->num_rows();
+	}
+
+	function get_durasi_tl_opd_custome($id_kepada, $dari, $sampai)
+	{
+		$this->db->select('tanggal_laporan, tanggal_tindaklanjut');
+		$this->db->from('tbl_laporan');
+		$this->db->where('tanggal_tindaklanjut IS NOT NULL', null, false);
+		$this->db->where("id_kepada = '$id_kepada'");
+		$this->db->where('tanggal_laporan >=', $dari);
+		$this->db->where('tanggal_laporan <=', $sampai);
+		$this->db->where('laporan_status', '3');
+		$query = $this->db->get();
+
+		$totalDetik = 0;
+		$jumlahBarisDenganDurasiValid = 0;
+
+		foreach ($query->result() as $row) {
+			$tanggalLaporan = new DateTime($row->tanggal_laporan);
+			$tanggalTindaklanjut = new DateTime($row->tanggal_tindaklanjut);
+
+			if ($tanggalLaporan < $tanggalTindaklanjut) {
+				$durasi = $tanggalLaporan->diff($tanggalTindaklanjut);
+				$totalDetik += $durasi->days * 24 * 60 * 60 + $durasi->h * 60 * 60 + $durasi->i * 60 + $durasi->s;
+				$jumlahBarisDenganDurasiValid++;
+			}
+		}
+
+		if ($jumlahBarisDenganDurasiValid > 0) {
+			$durasiRataRata = round($totalDetik / $jumlahBarisDenganDurasiValid);
+
+			// Hitung jumlah hari, jam, menit, dan detik
+			$hari = floor($durasiRataRata / (24 * 60 * 60));
+			$jam = floor(($durasiRataRata % (24 * 60 * 60)) / (60 * 60));
+			$menit = floor(($durasiRataRata % (60 * 60)) / 60);
+			// $detik = $durasiRataRata % 60;
+
+			// $rataRataWaktu = "{$hari} hari, {$jam} jam, {$menit} menit, {$detik} detik";
+			$rataRataWaktu = "{$hari} h {$jam} j {$menit} m";
+			return $rataRataWaktu;
+		} else {
+			return 'Tidak ada data';
+		}
 	}
 
 	// Dashboard Jumlah Inbox & User (Seluruh & Custome)

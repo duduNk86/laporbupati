@@ -91,8 +91,8 @@ if (empty($pengguna_level)) {
       <!-- TITLE CONTENT -->
       <div class="row">
         <div class="col-md-12">
-          <!-- <div class="text-center" style="margin-left: -30px;"><img src="< ?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1920px" height="130px"> -->
-          <div class="text-center" style="margin-left: -30px;"><img src="<?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1530px" height="115px">
+          <div class="text-center" style="margin-left: -30px;"><img src="<?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1920px" height="130px">
+            <!-- <div class="text-center" style="margin-left: -30px;"><img src="< ?php echo base_url() . 'assets/lapor/dashboard-title.png' ?>" width="1530px" height="115px"> -->
             <div id="clock"><br>
               <p class="date" style="color:black;letter-spacing: 0.1em; font-size: 14px;">{{ date }}</p>
               <p class="time" style="color:red;letter-spacing: 0.05em; font-size: 24px; padding: 2px 0;">{{ time }}</p>
@@ -110,8 +110,8 @@ if (empty($pengguna_level)) {
         $jml_btl = $btl->num_rows();
         ?>
         <div class="row">
-          <!-- <div class="col-md-12" style="margin-top:5px;margin-bottom:15px;"> -->
-          <div class="col-md-12" style="margin-left:-40px;margin-top:5px;margin-bottom:15px;">
+          <div class="col-md-12" style="margin-left:-10px;margin-top:5px;margin-bottom:15px;">
+            <!-- <div class="col-md-12" style="margin-left:-40px;margin-top:5px;margin-bottom:15px;"> -->
             <div class="col-md-5">
             </div>
             <div class="col-md-4 justify-content-center">
@@ -149,7 +149,7 @@ if (empty($pengguna_level)) {
                 </h3>
                 <!----row----->
                 <div class="row" style="margin-top: 20pt;">
-                  <div class="col-lg-3 col-xs-6">
+                  <div class="col-lg-4 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-blue">
                       <div class="inner">
@@ -168,7 +168,7 @@ if (empty($pengguna_level)) {
                     </div>
                   </div>
                   <!-- ./col -->
-                  <div class="col-lg-2 col-xs-6">
+                  <div class="col-lg-4 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-red">
                       <div class="inner">
@@ -187,7 +187,7 @@ if (empty($pengguna_level)) {
                     </div>
                   </div>
                   <!-- ./col -->
-                  <div class="col-lg-2 col-xs-6">
+                  <div class="col-lg-4 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                       <div class="inner">
@@ -205,7 +205,7 @@ if (empty($pengguna_level)) {
                       <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
-                  <div class="col-lg-2 col-xs-6">
+                  <div class="col-lg-4 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                       <div class="inner">
@@ -223,7 +223,7 @@ if (empty($pengguna_level)) {
                       <a href="#" class="small-box-footer" data-toggle="modal" data-target="#ModalCustomStatistik2"><i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-xs-6">
+                  <div class="col-lg-4 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-green">
                       <div class="inner">
@@ -240,6 +240,21 @@ if (empty($pengguna_level)) {
                     </div>
                   </div>
                   <!-- ./col -->
+                  <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-purple">
+                      <div class="inner">
+                        <center>
+                          <h3 style="color:white;"><b><?php echo $durasi_tl; ?></b></h3>
+                          <h2 style="color:white;">X̄ Kecepatan TL</h2>
+                        </center>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-person-add" style="color:white;"></i>
+                      </div>
+                      <a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
                 </div>
               </section>
             </section>

@@ -62,7 +62,7 @@
       <!-- /.social-auth-links -->
       <hr />
       <p>
-        <center>Lapor Bupati</center>
+        <center style="font-size: 8pt;">&copy; Lapor Bupati Wonosobo V.3</center>
       </p>
     </div>
     <!-- /.login-box-body -->
