@@ -517,7 +517,7 @@ $jum_komentar = $query1->num_rows();
               } else if (fileExtension === "") {
                 tampilimagefotoTL = '[ - ]';
               } else {
-                tampilimagefotoTL = '<a href="' + base_urlx + data[i].foto + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail bukti TL"><img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="width:90px;"></a>';
+                tampilimagefotoTL = '<a href="' + base_urlx + data[i].foto_tindaklanjut + '" target="_blank" style="width:90px;" title="Klik untuk melihat detail bukti TL"><img src="' + base_urlx + data[i].foto_tindaklanjut + '" style="width:90px;"></a>';
               }
 
               html += '<tr>' +
