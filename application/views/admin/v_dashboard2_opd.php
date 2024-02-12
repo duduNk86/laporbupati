@@ -66,7 +66,7 @@ $id_kepada = $this->session->userdata('pengguna_idskpd');
       <section class="content-header">
         <h1>
           Dashboard Lapor Bupati
-          <small>[Laporbup]</small>
+          <small>[Laporbup V.3]</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

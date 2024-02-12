@@ -11,6 +11,7 @@ class Dashboard extends CI_Controller
 		$this->load->model('m_dashboard');
 		$this->load->model('m_laporan');
 		$this->load->helper('dateindo_helper');
+		$this->load->helper('formatDurasi_helper');
 	}
 
 	function index()
@@ -35,6 +36,7 @@ class Dashboard extends CI_Controller
 		$x['radarchart'] = $this->m_laporan->radarchart();
 		$x['tablechart1'] = $this->m_laporan->tablechart1();
 		$x['tablechart2'] = $this->m_laporan->tablechart2();
+		$x['tablechart3'] = $this->m_laporan->tablechart3();
 		$x['opd_tlproses'] = $this->m_laporan->opd_tlproses();
 		if ($pengguna_level == '1') {
 			$this->load->view('admin/v_dashboard2', $x);

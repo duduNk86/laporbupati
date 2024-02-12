@@ -519,9 +519,34 @@ if (empty($pengguna_level)) {
                     </div>
                   </div>
                 </div>
+                <div class="col-xl-6 col-lg-6">
+                  <div class="card">
+                    <div class="box box-gold">
+                      <div class="card-header">
+                        <h3 class="m-0 font-weight-bold text-black" align="center" style="margin-top:20pt;"><b>X̄ Kecepatan TL OPD</b></h3>
+                      </div>
+                      <table class="table">
+                        <tbody>
+                          <?php
+                          $no = 1;
+                          foreach ($tablechart4 as $i) :
+                            $durasiRataRata = round($i->durasi_rata_rata);
+                            $formattedDurasi = formatDurasi($durasiRataRata);
+                          ?>
+                            <tr>
+                              <td align="center"><b>#<?= $no++; ?></b></td>
+                              <td style="color:red;"><b><?php echo $i->ditujukan_kepada; ?></b></td>
+                              <td align="right"><?php echo $formattedDurasi; ?></td>
+                              <td></td>
+                            </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
-
           </div>
         </div>
       </div>

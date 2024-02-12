@@ -225,6 +225,23 @@ class M_laporan extends CI_Model
 		return $this->db->get()->result();
 	}
 
+	// Top #50 X̄ Kecepatan TL OPD
+	function tablechart3()
+	{
+		$this->db->select('id_kepada, ditujukan_kepada, AVG(durasi) as durasi_rata_rata');
+		$this->db->from('(SELECT id_kepada, ditujukan_kepada, tanggal_laporan, tanggal_tindaklanjut,
+                    TIMESTAMPDIFF(SECOND, tanggal_laporan, tanggal_tindaklanjut) as durasi
+                    FROM tbl_laporan
+                    WHERE tanggal_tindaklanjut IS NOT NULL
+                    AND laporan_status = 3
+                    ) AS subquery', false);
+		$this->db->group_by('id_kepada');
+		$this->db->order_by('durasi_rata_rata', 'ASC');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	// Top #10 Topik Aduan khusus Dashboard Bupati
 	function tablechart1_bupati()
 	{
@@ -261,6 +278,23 @@ class M_laporan extends CI_Model
 		$this->db->order_by('total', 'DESC');
 		// $this->db->limit(10);
 		return $this->db->get()->result();
+	}
+
+	function tablechart4_bupati()
+	{
+		$this->db->select('id_kepada, ditujukan_kepada, AVG(durasi) as durasi_rata_rata');
+		$this->db->from('(SELECT id_kepada, ditujukan_kepada, tanggal_laporan, tanggal_tindaklanjut,
+                    TIMESTAMPDIFF(SECOND, tanggal_laporan, tanggal_tindaklanjut) as durasi
+                    FROM tbl_laporan
+                    WHERE tanggal_tindaklanjut IS NOT NULL
+                    AND laporan_status = 3
+                    ) AS subquery', false);
+		$this->db->group_by('id_kepada');
+		$this->db->order_by('durasi_rata_rata', 'ASC');
+		// $this->db->limit(10);
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	function opd_tlproses()
@@ -497,6 +531,25 @@ class M_laporan extends CI_Model
 		return $this->db->get()->result();
 	}
 
+	// Top #50 X̄ Kecepatan TL OPD
+	function tablechart3_custome($dari, $sampai)
+	{
+		$this->db->select('id_kepada, ditujukan_kepada, AVG(durasi) as durasi_rata_rata');
+		$this->db->from('(SELECT id_kepada, ditujukan_kepada, tanggal_laporan, tanggal_tindaklanjut,
+                    TIMESTAMPDIFF(SECOND, tanggal_laporan, tanggal_tindaklanjut) as durasi
+                    FROM tbl_laporan
+					WHERE tanggal_laporan >= ' . $this->db->escape($dari) . ' 
+                    AND tanggal_laporan <= ' . $this->db->escape($sampai) . '
+                    AND tanggal_tindaklanjut IS NOT NULL
+                    AND laporan_status = 3
+                    ) AS subquery', false);
+		$this->db->group_by('id_kepada');
+		$this->db->order_by('durasi_rata_rata', 'ASC');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	// Top #10 Topik Aduan khusus Dashboard Bupati
 	function tablechart1_custome_bupati($dari, $sampai)
 	{
@@ -539,6 +592,25 @@ class M_laporan extends CI_Model
 		$this->db->order_by('total', 'DESC');
 		$this->db->limit(50);
 		return $this->db->get()->result();
+	}
+
+	// Top #50 X̄ Kecepatan TL OPD
+	function tablechart4_custome_bupati($dari, $sampai)
+	{
+		$this->db->select('id_kepada, ditujukan_kepada, AVG(durasi) as durasi_rata_rata');
+		$this->db->from('(SELECT id_kepada, ditujukan_kepada, tanggal_laporan, tanggal_tindaklanjut,
+                    TIMESTAMPDIFF(SECOND, tanggal_laporan, tanggal_tindaklanjut) as durasi
+                    FROM tbl_laporan
+					WHERE tanggal_laporan >= ' . $this->db->escape($dari) . ' 
+                    AND tanggal_laporan <= ' . $this->db->escape($sampai) . '
+                    AND tanggal_tindaklanjut IS NOT NULL
+                    AND laporan_status = 3
+                    ) AS subquery', false);
+		$this->db->group_by('id_kepada');
+		$this->db->order_by('durasi_rata_rata', 'ASC');
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	// Chart JS - Dashboard OPD 2 (Custom Statistik)

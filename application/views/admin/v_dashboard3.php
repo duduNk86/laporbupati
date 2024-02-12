@@ -61,7 +61,7 @@ $jum_komentar = $query1->num_rows();
       <section class="content-header">
         <h1>
           Dashboard Lapor Bupati
-          <small>[Laporbup]</small>
+          <small>[Laporbup V.3]</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -466,6 +466,40 @@ $jum_komentar = $query1->num_rows();
             </div>
           </div>
         </section>
+      </section>
+
+      <br>
+
+      <section class="content" style="margin-top: -35pt;">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6">
+            <div class="card">
+              <div class="box box-success">
+                <div class="card-header">
+                  <h3 class="m-0 font-weight-bold text-black" align="center" style="margin-top:21pt;margin-bottom:17pt;"><b>Top #50 X̄ Kecepatan TL OPD</b></h3>
+                </div>
+                <table class="table">
+                  <tbody>
+                    <?php
+                    $no = 1;
+                    // foreach ($tablechart3() as $i) :
+                    foreach ($tablechart3_custome as $i) :
+                      $durasiRataRata = round($i->durasi_rata_rata);
+                      $formattedDurasi = formatDurasi($durasiRataRata);
+                    ?>
+                      <tr>
+                        <td align="center"><b>#<?= $no++; ?></b></td>
+                        <td style="color:red;"><b><?php echo $i->ditujukan_kepada; ?></b></td>
+                        <td align="right"><?php echo $formattedDurasi; ?></td>
+                        <td></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Statistik Pengunjung -->

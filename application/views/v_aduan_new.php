@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/font-awesome/css/font-awesome.min.css' ?>">
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Text to Speech -->
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=fd5OcpKB"></script> -->
@@ -1325,8 +1328,28 @@
                 url: url,
                 data: myformData,
                 success: function() {
-                    alert("Laporan Anda berhasil dikirim! silahkan tunggu Link Tracking untuk melihat Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.");
-                    window.location.href = "<?php echo base_url('home'); ?>"
+                    let timerInterval;
+                    Swal.fire({
+                        title: "Success!",
+                        html: "I will close in <b></b> milliseconds.<br><br><b style='color:green;'>Laporan Anda berhasil dikirim!</b><br>silahkan tunggu Link Tracking untuk melihat Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            const timer = Swal.getPopup().querySelector("b");
+                            timerInterval = setInterval(() => {
+                                timer.textContent = `${Swal.getTimerLeft()}`;
+                            }, 100);
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval);
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            window.location.href = "<?php echo base_url('home'); ?>";
+                        }
+                    });
+                    // alert("Laporan Anda berhasil dikirim! silahkan tunggu Link Tracking untuk melihat Progres Tindaklanjutnya yang akan dikirimkan melalui nomor HP/WA yang telah disampaikan.");
                 },
                 enctype: 'multipart/form-data',
                 processData: false,
@@ -1335,7 +1358,7 @@
             });
         });
 
-        // Script Upload File Audio
+        // Script Upload File Audio Asli
         // $('#upload-to-server-2').click(function(a) {
         //     let url = "user/aduan/kirim_aduan_disabilitas";
         //     var blob = rekamAduan.recordRTC.getBlob();

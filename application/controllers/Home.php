@@ -8,6 +8,7 @@ class Home extends CI_Controller
 		$this->load->model('m_laporan');
 		$this->load->model('m_kategori_laporan');
 		$this->load->helper('dateindo_helper');
+		$this->load->helper('formatDurasi_helper');
 	}
 
 	function index()
@@ -64,7 +65,8 @@ class Home extends CI_Controller
 			'radarchart' 	=> $this->m_laporan->radarchart(),
 			'tablechart1' 	=> $this->m_laporan->tablechart1_bupati(),
 			'tablechart2' 	=> $this->m_laporan->tablechart2_bupati(),
-			'tablechart3' 	=> $this->m_laporan->tablechart3_bupati()
+			'tablechart3' 	=> $this->m_laporan->tablechart3_bupati(),
+			'tablechart4' 	=> $this->m_laporan->tablechart4_bupati()
 
 		);
 		$this->load->view('v_dashboard_tayang', $x);
@@ -115,7 +117,8 @@ class Home extends CI_Controller
 			'radarchart_custome' 	 => $this->m_laporan->radarchart_custome($dari, $sampai),
 			'tablechart1_custome' 	 => $this->m_laporan->tablechart1_custome_bupati($dari, $sampai),
 			'tablechart2_custome' 	 => $this->m_laporan->tablechart2_custome_bupati($dari, $sampai),
-			'tablechart3_custome' 	=> $this->m_laporan->tablechart3_custome_bupati($dari, $sampai)
+			'tablechart3_custome' 	=> $this->m_laporan->tablechart3_custome_bupati($dari, $sampai),
+			'tablechart4_custome' 	=> $this->m_laporan->tablechart4_custome_bupati($dari, $sampai)
 		);
 		if ($format == 'tahun') {
 			$this->load->view('v_dashboard_tayang3', $x);

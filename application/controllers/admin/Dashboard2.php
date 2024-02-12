@@ -11,6 +11,7 @@ class Dashboard2 extends CI_Controller
 		$this->load->model('m_dashboard');
 		$this->load->model('m_laporan');
 		$this->load->helper('dateindo_helper');
+		$this->load->helper('formatDurasi_helper');
 	}
 
 	function index()
@@ -41,6 +42,7 @@ class Dashboard2 extends CI_Controller
 		$x['radarchart_custome'] = $this->m_laporan->radarchart_custome($dari, $sampai);
 		$x['tablechart1_custome'] = $this->m_laporan->tablechart1_custome($dari, $sampai);
 		$x['tablechart2_custome'] = $this->m_laporan->tablechart2_custome($dari, $sampai);
+		$x['tablechart3_custome'] = $this->m_laporan->tablechart3_custome($dari, $sampai);
 		if ($pengguna_level == '1' && $format == 'tahun') {
 			$this->load->view('admin/v_dashboard3', $x);
 		}
